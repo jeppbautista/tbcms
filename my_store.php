@@ -1,0 +1,224 @@
+<?php
+	session_start();
+	include 'class3.php';
+	$class=new mydesign;
+	$class->database_connect();
+
+	date_default_timezone_set('Asia/Manila');
+	$sessiondate=date('mdY');
+
+	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+		header("location: https://tbcmerchantservices.com/welcome/");
+	}
+
+	$ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
+
+	$query="select * from xtbl_account_info WHERE Main_Ctr='$ctr'";
+	$rs=mysql_query($query);
+	$row=mysql_fetch_assoc($rs);
+	$email_status=$row['Email_Status'];
+	$account_type=$row['Account_Type'];
+	$account_status=$row['Account_Status'];
+	$card_status=$row['Card_Status'];
+	$username=$row['Username'];
+
+	$query="select * from xtbl_adminaccount";
+	$rs=mysql_query($query);
+	$row=mysql_fetch_assoc($rs);
+	$our_btc=$row['BTC'];
+	$our_coinsph=$row['CoinPH'];
+	$our_paypal=$row['Paypal'];
+	$tbc_to_peso=$row['Tbc_to_Peso'];
+
+	$query="select * from xtbl_main_info WHERE Ctr='$ctr'";
+	$rs=mysql_query($query);
+	$row=mysql_fetch_assoc($rs);
+	$current_email=$row['Email'];
+	$business_logo=$row['Business_Logo'];
+	$business_name=$row['Business_Name'];
+	$business_category=$row['Business_Category'];
+	$business_description=$row['Description'];
+	$business_country=$row['Country'];
+
+	if(isset($_POST['submit'])){
+	    
+        
+    
+        $tmpFilePath = $_FILES['p_upload']['tmp_name'];
+
+        if($tmpFilePath != ""){
+        	$endfilename=str_replace(" ", '', $_FILES["p_upload"]["name"]);
+            $shortname = $_FILES['p_upload']['name'];
+            $filen=$ctr.md5(date('dmYHis')).$endfilename;
+            $filePath = "products/".$ctr.md5(date('dmYHis')).$endfilename;
+            $txtid=$_POST['txtid'];
+            $check = getimagesize($_FILES["p_upload"]["tmp_name"]);
+            if($check !== false) {
+            	$upload_query="select Image from xtbl_product WHERE Ctr='$txtid' and Main_Ctr='$ctr'";
+            	$rs=mysql_query($upload_query);
+            	$row=mysql_fetch_assoc($rs);
+            	if(file_exists('products/'.$row['Image'])) {
+            		unlink('products/'.$row['Image']);
+            	}
+
+            	if(move_uploaded_file($tmpFilePath, $filePath)) {
+                    $files[] = $shortname;
+
+                    $upload_query="update xtbl_product set Image='$filen', Datetime='".date('Y-m-d H:i:s')."' WHERE Ctr='$txtid' and Main_Ctr='$ctr'";
+                    $upload_rs=@mysql_query($upload_query);
+                    echo '<script>window.location.href = "https://tbcmerchantservices.com/my_store/";</script>';
+                }
+            }
+      	}
+	       	
+       
+	    
+	}
+
+	if($email_status=='INACTIVE' || $account_status=='INACTIVE' || $card_status=='INACTIVE'){
+		header("location: https://tbcmerchantservices.com/home/");
+	}
+	else {
+		if($account_type=='BUYER') {header("location: https://tbcmerchantservices.com/welcome/"); }
+		else {
+if(isset($_POST['product_requestnumber']) && isset($_POST['product_requestcharacter']) ) {
+
+				$product_requestnumber=str_replace("'", '', $_REQUEST['product_requestnumber']);
+				$product_requestnumber=str_replace('"', '', $product_requestnumber);
+				$product_requestnumber=str_replace("<", '', $product_requestnumber);
+				$product_requestnumber=str_replace('>', '', $product_requestnumber);
+
+				if(md5(md5($product_requestnumber))==$_POST['product_requestcharacter']) {
+					$query="delete from xtbl_product WHERE Ctr='".$product_requestnumber."'";
+					$rs=@mysql_query($query);
+					echo '<script>window.location.assign("https://tbcmerchantservices.com/my_store/");</script>';
+				}
+			}
+
+			$class->doc_type();
+				$class->html_start('');
+				$class->head_start();
+					echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+					$class->title_page('TBCMS-'.$username);
+					$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+					$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
+					$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+				$class->head_end();
+				$class->body_start('');
+					$class->page_home_header_start();
+						$class->page_home2_header_content();
+					$class->page_home_header_end();
+					echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
+
+					$query="select * from xtbl_mytransaction".$ctr." WHERE Status='ACTIVE'";
+					$rs=mysql_query($query);
+					$my_amount=0;
+					while($row=mysql_fetch_assoc($rs)) {
+						$my_amount=$my_amount+$row['Amount'];
+					}
+?>
+					<div class="container">
+						<div class="col-md-3">
+							<h4><b>ACCOUNT BALANCE</b></h4>
+							<center>
+								<div style="color: #339933; font-size: 40px">
+									<?php echo number_format($my_amount, 8);?>&nbsp
+								</div>
+								<div style="color: #339933; font-size: 20px">
+									<?php echo 'Php '.number_format($tbc_to_peso*$my_amount, 2);?>&nbsp
+								</div>
+							</center><hr>
+							<a class="btn btn-warning btn-block btn-lg" href="https://tbcmerchantservices.com/new_product/"
+								style="border-radius: 0px">ADD NEW PRODUCT</a><br>
+							<a class="btn btn-warning btn-block btn-lg" href="https://tbcmerchantservices.com/product_request/" 
+								style="border-radius: 0px">PRODUCT REQUEST</a>
+						</div>
+						<div class="col-md-9">
+							<h3>Product List (Maximum of 50 Products)</h3>
+<?php
+						$query="select * from xtbl_product WHERE Main_Ctr='$ctr' order by Datetime DESC";
+						$rs=mysql_query($query);
+						while($row=mysql_fetch_assoc($rs)){
+?>
+							<form action="" enctype="multipart/form-data" method="post" hidden>
+								<input <?php echo 'id="p_upload'.$row['Ctr'].'"';?> name="p_upload" 
+									<?php echo 'onchange=$("#txtsubmit_p_upload'.$row['Ctr'].'").click();';?> 
+										type="file" accept="image/*"/>
+								<input name="txtid" <?php echo 'value="'.$row['Ctr'].'"';?> />
+								<input <?php echo 'id="txtsubmit_p_upload'.$row['Ctr'].'"';?>  type="submit"  name="submit" value="Submit" />
+							</form>
+
+							<table class="table table-bordered">
+								<tr style="background-color: #CD853F; color: white">
+									<td colspan="2">
+										<div class="col-md-11"><h4><b><?php echo $row['Product_Name'];?></b></h4></div>
+										<div class="col-md-1" align="right" style="padding-top: 5px">
+										<form method="POST" hidden>
+											<input name="product_requestnumber" <?php echo 'value="'.$row['Ctr'].'"';?> />
+											<input name="product_requestcharacter" <?php echo 'value="'.md5(md5($row['Ctr'])).'"';?> />
+											<input type="submit" <?php echo 'id="product_requestnumber'.md5(md5(md5($row['Ctr']))).'"';?> />
+										</form>
+										<?php 
+											$checktransact_query="select * from xtbl_product_request WHERE Product_Ctr='".$row['Ctr']."'";
+											$checktransact_rs=mysql_query($checktransact_query);
+											$checktransact_rows=mysql_num_rows($checktransact_rs);
+											if($checktransact_rows>0){
+												echo '<span class="glyphicon glyphicon-ok glyphicon-lg" style="font-size:15px"></span>';
+											}
+											else{
+												echo '<a href="javascript:void(0)" onclick=$("#product_requestnumber'.md5(md5(md5($row['Ctr']))).'").click();
+													class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span></a>';
+											}
+										?>
+
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td width="30%">
+										<?php 
+											if(file_exists('products/'.$row['Image'])) {
+												echo '<img src="https://tbcmerchantservices.com/products/'.$row['Image'].'" width="100%">';
+											}
+											else{
+												echo '<img src="https://tbcmerchantservices.com/products/0000.jpg" width="100%">';
+											}
+										?>
+										
+										<a href="javascript:void(0)" <?php echo 'onclick=$("#p_upload'.$row['Ctr'].'").click();';?>
+											 id="btn_upload_products" class="btn btn-primary btn-block">UPLOAD</a>
+									</td>
+									<td width="70%">
+										<?php
+											echo '<h3 style="color: red"><b> &#x20B1;'.$row['Product_Price'].'</b></h3><br>';
+											echo 'Description<br><h5><b>'.nl2br($row['Product_Description']).'</b><h5><br>';
+										?>
+									</td>
+								</tr>
+							</table>
+<?php
+						}
+?>
+						</div>
+					</div>
+
+					<div id="modal_shopping_announce" class="modal fade">
+						<div class="modal-dialog modal-md">
+							<div class="modal-content">
+								<div class="modal-header"><h4>SOON</h4></div>
+								<div class="modal-body">
+									<b>THE REQUEST BUTTON WILL BE AVAILABLE SOON SAME AS THE SHOPPING CENTER OPEN</b>
+								</div>
+								<div class="modal-footer">
+									<a href="javascript:void(0)" class="btn btn-danger" data-dismiss="modal">&nbsp CLOSE &nbsp</a>
+								</div>
+							</div>
+						</div>
+					</div>
+<?php
+					$class->page_welcome_header_content_start_footer();
+				$class->body_end();	
+			$class->html_end();
+		}
+	}
+?>
