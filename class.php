@@ -1,14 +1,12 @@
 <?php
-function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
-  return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
-}
+
 
 class mydesign
 {
 
     public function database_connect()
     {
-        if (isLocalhost()== true)
+        if ($this->isLocalhost()== true)
         {
             $conn = @mysql_connect('localhost', 'root', '');
         }
@@ -20,6 +18,10 @@ class mydesign
         }
         mysql_select_db('xdb_tbcmerchantservices', $conn);
         
+    }
+
+    public function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
+        return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
     }
 
     public function doc_type()

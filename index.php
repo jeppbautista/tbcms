@@ -1,11 +1,10 @@
 <?php
-	function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
-		return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
-	}
-
-	if(isLocalhost()==true)
+	include 'class.php';
+	$class = new mydesign;
+	if($class->isLocalhost()==true)
 	{
-		header("location: maintenance.php");
+
+		header("location: welcome.php");
 	}
 	else
 	{

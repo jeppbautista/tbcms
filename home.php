@@ -11,6 +11,10 @@
 	if (isset($_GET['test'])) {
 	    $GLOBALS['test'] = 1;
 	}
+
+  if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+		header("location: https://tbcmerchantservices.com/welcome/");
+	}
 	// else {
 	// 	header("location: https://tbcmerchantservices.com/welcome/");
 	// }
