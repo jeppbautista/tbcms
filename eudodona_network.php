@@ -29,7 +29,8 @@ $class->html_start('');
 
 ?>
 <style>
-  td th {height: 100px}
+  td, th {height: 100px}
+  table {border: none}
 </style>
 
 <div class="container">
