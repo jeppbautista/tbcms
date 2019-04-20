@@ -92,7 +92,7 @@
 //----------------------------------------------------------------------------------------CHECKLOGIN END
 
 //----------------------------------------------------------------------------------------SIGNUP_FORM START
-	
+
 
 	$class->doc_type();
 	$class->html_start('');
@@ -105,7 +105,7 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
+		$class->body_start('');
 		?>
 			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
 	    	background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
@@ -124,10 +124,11 @@
 			<div class="container">
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>	
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>		
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
+				<a class="btn btn-primary" href="htpps://tbcmerchantservices.com/admin_eudodona/">EUDODONA</a>
 </div>
 <br>
 
@@ -170,24 +171,24 @@
 									<td width="20%">
 
 										<form method="POST" hidden>
-											<input type="text" name="clientno" 
+											<input type="text" name="clientno"
 												<?php echo 'id="clientno'.$row['Main_Ctr'].'" value="'.$row['Main_Ctr'].'"';?> />
-											<input type="text" name="clientcode" 
+											<input type="text" name="clientcode"
 												<?php echo 'id="clientcode'.$row['Main_Ctr'].'" value="'.md5(md5($row['Main_Ctr'])).'"';?> />
 											<input type="submit" <?php echo 'id="clientsub'.$row['Main_Ctr'].'"';?> />
 										</form>
 
 										<form method="POST" hidden>
-											<input type="text" name="clientnod" 
+											<input type="text" name="clientnod"
 												<?php echo 'id="clientnod'.$row['Main_Ctr'].'" value="'.$row['Main_Ctr'].'"';?> />
-											<input type="text" name="clientcoded" 
+											<input type="text" name="clientcoded"
 												<?php echo 'id="clientcoded'.$row['Main_Ctr'].'" value="'.md5(md5($row['Main_Ctr'])).'"';?> />
 											<input type="submit" <?php echo 'id="clientsubd'.$row['Main_Ctr'].'"';?> />
 										</form>
 
-										<a href="javascript:void(0)" class="btn btn-success" 
+										<a href="javascript:void(0)" class="btn btn-success"
 											<?php echo 'onclick=$("#clientsub'.$row['Main_Ctr'].'").click();';?> >APPROVE</a>
-										<a href="javascript:void(0)" class="btn btn-danger" 
+										<a href="javascript:void(0)" class="btn btn-danger"
 											<?php echo 'onclick=$("#clientsubd'.$row['Main_Ctr'].'").click();';?> >DISMISS</a>
 									</td>
 								</tr>
@@ -262,7 +263,7 @@
 						<input id="prev_page" type="submit" />
 					</form>
 				<?php if($page>1) { ?>
-					<a href="javascript:void(0)" onclick="$('#prev_page').click();" 
+					<a href="javascript:void(0)" onclick="$('#prev_page').click();"
 						class="btn btn-warning btn-lg" style="border-radius: 0px">
 					<span class="glyphicon glyphicon-chevron-left"></span> PREVIOUS PAGE</a>
 				<?php } ?>
@@ -283,12 +284,11 @@
 					NEXT PAGE <span class="glyphicon glyphicon-chevron-right"></span></a>
 				<?php } ?>
 				</div>
-				
+
 			</div>
 		<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 ?>
-

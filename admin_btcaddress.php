@@ -76,11 +76,11 @@
 		}
 
 	}
-	
+
 //----------------------------------------------------------------------------------------CHECKLOGIN END
 
 //----------------------------------------------------------------------------------------SIGNUP_FORM START
-	
+
 
 	$class->doc_type();
 	$class->html_start('');
@@ -93,7 +93,7 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
+		$class->body_start('');
 		?>
 
 			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
@@ -139,14 +139,13 @@
 						</form>
 					</div>
 				</div>
-				
+
 
 			</div>
 
 		<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 ?>
-

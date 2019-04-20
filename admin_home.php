@@ -6,6 +6,9 @@
 	$class=new mydesign;
 	$class->database_connect();
 
+	include 'model.php';
+	$model = new eudodona_model;
+
 	date_default_timezone_set('Asia/Manila');
 	$sessiondate=date('mdY');
 
@@ -43,12 +46,12 @@
 			$trans_id=md5(md5(1).md5(date('mdYHis'))).md5(md5(date('mdYHis')).md5(1));
 
 			if($row['Remarks']=='ACTIVATION') {
-				$query="update xtbl_account_info SET Account_Status='ACTIVE' 
+				$query="update xtbl_account_info SET Account_Status='ACTIVE'
 					WHERE Ctr='$temp_ctr'";
 				$rs=@mysql_query($query);
 			}
 
-			$query="Insert into xtbl_mytransaction".$temp_ctr."(Amount, Status, Transact_Id, Type, Date) 
+			$query="Insert into xtbl_mytransaction".$temp_ctr."(Amount, Status, Transact_Id, Type, Date)
 				values(
 					'$tbc_value',
 					'ACTIVE',
@@ -58,9 +61,28 @@
 					)";
 			$rs=@mysql_query($query);
 
-			$query="update xtbl_admin_transaction SET Status='SUCCESS' 
+			$query="update xtbl_admin_transaction SET Status='SUCCESS'
 				WHERE Ctr='$temvalue'";
 			$rs=@mysql_query($query);
+
+			$Mainctr = $temp_ctr;
+			$query="select * from xtbl_account_info WHERE Main_Ctr='$Mainctr'";
+		  $rs=mysql_query($query);
+		  $row=mysql_fetch_assoc($rs);
+			$username=$row['Username'];
+
+			$query="select * from xtbl_main_info WHERE Ctr='$Mainctr'";
+		  $rs=mysql_query($query);
+		  $row=mysql_fetch_assoc($rs);
+			$refcode  = $row['Sponsor_Id'];
+
+			$table_id = $model->get_tableid($refcode);
+			$rank = $model->get_rank($table_id, $refcode);
+			$paid = 1;
+
+			$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
+			mysql_query($query);
+
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/admin_home/");</script>';
 		}
 
@@ -85,14 +107,14 @@
 			$trans_id=md5(md5(1).md5(date('mdYHis'))).md5(md5(date('mdYHis')).md5(1));
 
 			if($row['Remarks']=='ACTIVATION') {
-				$query="update xtbl_account_info SET Account_Status='INACTIVE' 
+				$query="update xtbl_account_info SET Account_Status='INACTIVE'
 					WHERE Ctr='$temp_ctr'";
 				$rs=@mysql_query($query);
 				$query="delete from xtbl_admin_transaction WHERE Ctr='$temvalue'";
 				$rs=@mysql_query($query);
 			}
 
-			$query="update xtbl_admin_transaction SET Status='DENIED' 
+			$query="update xtbl_admin_transaction SET Status='DENIED'
 				WHERE Ctr='$temvalue'";
 			$rs=@mysql_query($query);
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/admin_home/");</script>';
@@ -105,7 +127,7 @@
 		$newtbcvalue=str_replace("'", '', $_POST['newtbcvalue']);
 		$newtbcvalue=str_replace('"', '', $newtbcvalue);
 		$newtbcvalue=str_replace("<", '', $newtbcvalue);
-		$newtbcvalue=str_replace('>', '', $newtbcvalue);	
+		$newtbcvalue=str_replace('>', '', $newtbcvalue);
 
 		$query="update xtbl_adminaccount SET Tbc_to_Peso='$newtbcvalue'";
 		$rs=@mysql_query($query);
@@ -125,7 +147,7 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
+		$class->body_start('');
 
 		?>
 			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
@@ -145,10 +167,11 @@
 			<div class="container">
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>	
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_eudodona/">EUDODONA</a>
 		</div>
 <br>
 
@@ -187,9 +210,9 @@ $query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
 						<td width="40%"><?php echo $row2['Fname'].' '.$row2['Lname'].'<br>'.$row['Transaction'];?></td>
 						<td width="10%"><?php echo $row['Remarks'];?></td>
 						<td width="20%">
-							<a class="btn btn-success" href="javascript:void(0)" 
+							<a class="btn btn-success" href="javascript:void(0)"
 								<?php echo 'onclick="btnaccept('.$row['Ctr'].')"';?> >ACCEPT</a>
-							<a class="btn btn-danger" href="javascript:void(0)" 
+							<a class="btn btn-danger" href="javascript:void(0)"
 								<?php echo 'onclick="btndenied('.$row['Ctr'].')"';?> >DENIED</a>
 						</td>
 					</tr>
@@ -210,7 +233,7 @@ $query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
 						<td width="40%"><?php echo $row2['Fname'].' '.$row2['Lname'].'<br>'.$row['Transaction'];?></td>
 						<td width="10%"><?php echo $row['Remarks'];?></td>
 						<td width="20%">
-						<?php 
+						<?php
 							if($row['Status']=='SUCCESS'){
 								echo '<img src="https://tbcmerchantservices.com/images/1482106046_tick_16.png" height="30px"> SUCCESS';
 							}
@@ -237,7 +260,7 @@ $query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
 									<input name="temporary_value" hidden/>
 									<input type="submit" name="temporary_value_submit" hidden />
 								</form>
-								<a href="javascript:void(0)" onclick="$('[name=temporary_value_submit]').click();" 
+								<a href="javascript:void(0)" onclick="$('[name=temporary_value_submit]').click();"
 									class="btn btn-primary">&nbsp YES &nbsp</a>
 								<a href="javascript:void(0)" class="btn btn-danger" data-dismiss="modal">
 									&nbsp&nbsp NO &nbsp&nbsp</a>
@@ -259,7 +282,7 @@ $query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
 									<input name="temporary_valueD" hidden/>
 									<input type="submit" name="temporary_value_submitD" hidden />
 								</form>
-								<a href="javascript:void(0)" onclick="$('[name=temporary_value_submitD]').click();" 
+								<a href="javascript:void(0)" onclick="$('[name=temporary_value_submitD]').click();"
 									class="btn btn-primary">&nbsp YES &nbsp</a>
 								<a href="javascript:void(0)" class="btn btn-danger" data-dismiss="modal">
 									&nbsp&nbsp NO &nbsp&nbsp</a>
@@ -271,8 +294,7 @@ $query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
 			<div>
 				<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 ?>
-

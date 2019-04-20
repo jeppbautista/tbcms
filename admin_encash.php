@@ -38,11 +38,11 @@
 	$tbc_to_peso=$row['Tbc_to_Peso'];
 
 
-	
+
 //----------------------------------------------------------------------------------------CHECKLOGIN END
 
 //----------------------------------------------------------------------------------------SIGNUP_FORM START
-	
+
 
 	$class->doc_type();
 	$class->html_start('');
@@ -55,7 +55,7 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
+		$class->body_start('');
 		?>
 
 			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
@@ -75,10 +75,11 @@
 			<div class="container">
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/"> ENCASHMENT</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
+				<a class="btn btn-primary" href="htpps://tbcmerchantservices.com/admin_eudodona/">EUDODONA</a>
 			</div><br>
 
 			<div class="container">
@@ -94,7 +95,7 @@
 				$rowsi=mysql_num_rows($rsi);
 				$p=ceil($rowsi/$limit);
 				$start=($page-1)*$limit;
-				
+
 				$query="select * from xtbl_reward Order By Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
 				$rs=mysql_query($query);
 				while($row=mysql_fetch_assoc($rs)){
@@ -118,7 +119,7 @@
 						<input id="prev_page" type="submit" />
 					</form>
 				<?php if($page>1) { ?>
-					<a href="javascript:void(0)" onclick="$('#prev_page').click();" 
+					<a href="javascript:void(0)" onclick="$('#prev_page').click();"
 						class="btn btn-warning btn-lg" style="border-radius: 0px">
 					<span class="glyphicon glyphicon-chevron-left"></span> PREVIOUS PAGE</a>
 				<?php } ?>
@@ -139,13 +140,12 @@
 					NEXT PAGE <span class="glyphicon glyphicon-chevron-right"></span></a>
 				<?php } ?>
 				</div>
-				
+
 			</div>
 
 		<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 ?>
-

@@ -21,4 +21,8 @@ $( document ).ready(function() {
 		$('#txtsubmit_upload').click();
 	});
 
+	$('#btn_phpeud_transact').click(function(){
+		$('[name=submit_phpeud_transact]').click();
+	});
+
 });

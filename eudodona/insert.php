@@ -1,8 +1,8 @@
-<?php 
+<?php
 
     include 'model.php';
-    $class = new eudodona_model;
-    $class->database_connect();
+    $model = new eudodona_model;
+    $model->database_connect();
 
     $Mainctr = 1;
     # TODO get MainCTR
@@ -30,8 +30,8 @@
 
     if ($eudodona_count_rows < 1) # if not existing in table
     {
-        $table_id = $class->get_tableid($refcode);
-        $rank = $class->get_rank($table_id, $refcode);
+        $table_id = $model->get_tableid($refcode);
+        $rank = $model->get_rank($table_id, $refcode);
         $paid = 1;
 
         $query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$ctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
@@ -48,9 +48,9 @@
     }
 
     // check if all are paid
-    if($class->checkAllPaid($table_id, $refcode) == 1){
+    if($model->checkAllPaid($table_id, $refcode) == 1){
         #TODO fix payment system
-        $class->update_ranks($table_id, $refcode);
+        $model->update_ranks($table_id, $refcode);
     }
-    
+
 ?>

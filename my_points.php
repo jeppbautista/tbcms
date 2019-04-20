@@ -77,6 +77,7 @@
 		while($row=mysql_fetch_assoc($rs)){
 			$total_reward=$total_reward-$row['Amount'];
 		}
+
 		if($total_reward<1000) {
 			$error='Insufficient Balance<br>';
 		}
