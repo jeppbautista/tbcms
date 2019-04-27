@@ -6,8 +6,7 @@
 	$class=new mydesign;
 	$class->database_connect();
 
-	include 'model.php';
-	$model = new eudodona_model;
+
 
 	date_default_timezone_set('Asia/Manila');
 	$sessiondate=date('mdY');
@@ -75,13 +74,6 @@
 		  $rs=mysql_query($query);
 		  $row=mysql_fetch_assoc($rs);
 			$refcode  = $row['Sponsor_Id'];
-
-			$table_id = $model->get_tableid($refcode);
-			$rank = $model->get_rank($table_id, $refcode);
-			$paid = 1;
-
-			$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
-			mysql_query($query);
 
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/admin_home/");</script>';
 		}

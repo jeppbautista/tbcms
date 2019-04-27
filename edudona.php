@@ -53,7 +53,7 @@
 	$mycoinsph_account=$row['Coinsph_Account'];
 	$mypaypal_email=$row['Paypal_Email'];
 
-  $query="select * from xtbl_admin_transaction WHERE Main_Ctr='$Mainctr'";
+  $query="select * from xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr'";
   $rs=mysql_query($query);
   $row=mysql_fetch_assoc($rs);
   $admin_transaction_id=$row['Transaction'];
@@ -69,6 +69,7 @@
   $query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
   $rs=mysql_query($query);
   $row=mysql_fetch_assoc($rs);
+  $table_id = $row['table_id'];
 
   $rows=mysql_num_rows($rs);
 
@@ -83,7 +84,7 @@
     $mobile=str_replace("<", '', $mobile);
     $mobile=str_replace('>', '', $mobile);
 
-    if($total_reward<700){
+    if($total_reward<=700){
       echo "Insufficient Balance";
     }
     else if(strlen($mobile)<10) {
@@ -92,7 +93,7 @@
     else {
       # TODO fix this
       $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
-				values('$total_reward', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EUDODONA GCASH Card',
+				values('$total_reward', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
 				'$mobile')";
 			$rs=mysql_query($query);
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
@@ -106,29 +107,21 @@
     $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
     $txtphpeud_trans=str_replace('>', '', $txtphpeud_trans);
 
-    $query78="select * from xtbl_admin_transaction WHERE Transaction='$txtphpeud_trans'";
+    $query78="select * from xtbl_admin_eudodona WHERE Transaction='$txtphpeud_trans'";
     $rs78=mysql_query($query78);
     $row78=mysql_fetch_assoc($rs78);
     if(mysql_num_rows($rs78)==0){
       if($trans_count==1) { echo '<script>console.log("Request already sent")</script>';}
       else if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>console.log("Invalid Transaction ID")</script>';}
       else{
-        $phpeud_query="insert into xtbl_admin_transaction
+        $phpeud_query="insert into xtbl_admin_eudodona
         (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
         values('$activation_tbc_amount', '$activation_amount',
-        '$mycoinsph_account', 'EUDODONA COINSPH', '$Mainctr', 'WAITING', NOW(),
-        '$txtphpeud_trans', 'EUDODONA ENTRY')";
+        '$mycoinsph_account', 'EDUDONA COINSPH', '$Mainctr', 'WAITING', NOW(),
+        '$txtphpeud_trans', 'EDUDONA ENTRY')";
 
         $eud_rs=@mysql_query($phpeud_query);
-
-        // $query="select * from xtbl_admin_transaction WHERE Main_Ctr='$Mainctr'";
-        // $rs=mysql_query($query);
-        // $row=mysql_fetch_assoc($rs);
-        // $admin_transaction_id=$row['Transaction'];
-        // $admin_transaction_status=$row['Status'];
-        // $admin_transaction_type=$row['Type'];
-        // $trans_count=mysql_num_rows($rs);
-        echo '<script>window.location.href = "https://tbcmerchantservices.com/eudodona/";</script>';
+        echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
       }
     }
     else{
@@ -136,10 +129,6 @@
       $error2='Transaction ID already used';
     }
   }
-
-
-
-
   ?>
 
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -221,9 +210,8 @@
     </script> -->
 
 <?php
-  // if ($card_status == "INACTIVE" || $email_status=='INACTIVE' || $account_status=='INACTIVE'){
-  if(1==2){
-    echo "<script>alert('You are not qualified to access eudodona. Please activate your account first.')</script>";
+  if ($card_status == "INACTIVE" || $email_status=='INACTIVE' || $account_status=='INACTIVE'){
+    echo "<script>alert('You are not qualified to access edudona. Please activate your account first.')</script>";
     echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
   }
 
@@ -233,7 +221,7 @@
     $class->html_start('');
       $class->head_start();
         echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-        $class->title_page('TBCMS: EUDODONA');
+        $class->title_page('TBCMS: EDUDONA');
         $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
         $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
         $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
@@ -241,6 +229,13 @@
       $class->head_end();
 
       $class->body_start('');
+
+      $query = "select * from xtbl_eudodona WHERE table_id='$table_id'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_array($rs);
+
+      // var_dump(mysql_fetch_array($rs)['username']);
+
     ?>
 
     <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
@@ -254,14 +249,14 @@
       </div>
 
 
-    <div class="container"><h3>Welcome back,  <b><?php echo $current_email ?></b></h3></div>'
+    <div class="container"><h3>Welcome back to your EDUDONA dashboard,  <b><?php echo $current_email ?></b></h3></div>'
     <br>
 
     <div class="container">
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <div class="alert alert-success" align="center" style="background-color:#DAA520; border-radius: 20px; color: white">
-          Total Eudodona balance<br>
+          Total Edudona balance<br>
            <h1><?php echo '<small>PHP</small> '.number_format($total_balance,2); ?></h1>
            Thank you for trusting TBCMS<br>
         </div><br>
@@ -271,18 +266,197 @@
           <h4>Note: Minimum withdrawal is P1,000</h4> -->
 
           <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');" class="btn btn-info btn-lg">
-              WITHDRAW TO EUDODONA GCASH CARD
+              WITHDRAW TO EDUODONA GCASH CARD
           </a>
           <h4>Withdrawal might take 1-2 working days to transfer on GCASH</h4>
           <br><br>
           <hr>
-          <a href="https://tbcmerchantservices.com/eudodona_network/"  class="btn btn-info btn-lg">
-              View Eudodona table
-          </a>
         </div>
       </div>
       <div class="col-md-3"></div>
     </div>
+
+
+    <div class="container">
+      <br>
+      <h3><b>EDUDONA Table</b></h3>
+      <table class="table borderless">
+        <thead>
+          <tr >
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="height : 50px">
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+          </tr>
+          <tr style="height : 60px">
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col">
+              <!-- <div class="table-div"> -->
+                <!-- <div class="dot" style="">
+                  <span>
+                  </span>
+                </div> -->
+              <!-- </div> -->
+              <?php
+                mysql_data_seek($rs, 0);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+          </tr>
+          <tr style="height : 100px">
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"> </th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+            <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
+          </tr>
+          <tr style="height : 20px">
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 1);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 2);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 3);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col"> </th>
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 4);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 5);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col">
+              <?php
+                mysql_data_seek($rs, 6);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br><br>
+
+    <style>
+      td, th { border: none !important; vertical-align: center; text-align: center;}
+      .dot {
+        border-radius: 50%;
+        color: white;
+        display: table-cell;
+        font-size: 14px;
+        height: 60px;
+        margin: auto;
+        vertical-align: middle;
+        width: 60px;
+      }
+
+      .table-div{
+        display: table;
+        margin: auto;
+      }
+    </style>
 
 
     <!-- ---------------------- MODAL  -->
@@ -322,7 +496,7 @@
     $class->html_start('');
       $class->head_start();
         echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-        $class->title_page('TBCMS: EUDODONA');
+        $class->title_page('TBCMS: EDUDONA');
         $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
         $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
         $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
@@ -348,7 +522,7 @@
 
 
     <center>
-      <h3>Be part of TBCMS' Eudodona network.</h3><br>
+      <h3>Be part of TBCMS' Edudona network.</h3><br>
       <!-- <img src="https://tbcmerchantservices.com/images/Red-Gift-Bow-PNG.png" width="200px"> -->
       <h4>You can register for 1,000 pesos only! </h4>
     </center>
