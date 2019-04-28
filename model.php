@@ -100,12 +100,9 @@ class eudodona_model
         }
         $q2 = "UPDATE xtbl_eudodona SET rank = 7 WHERE rank = 0 AND table_id = '$tableId'  AND refcode='$refcode'";
         mysql_query($q2);
-        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId'  AND refcode='$refcode'";
+        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId'  AND refcode='$refcode' AND rank<>7";
         mysql_query($q3);
 
-
-
-        echo "UPDATE COMPLETE";
     }
 
     public function update_wallet($tableId, $refcode){
@@ -132,10 +129,15 @@ class eudodona_model
 
       $update_wallet = "
         UPDATE xtbl_eudodona_wallet
-      "
-
+        SET balance = '$new_balance'
+        WHERE Main_Ctr = '$ctr'
+      ";
+      mysql_query($update_wallet);
     }
 
+    public function reset_wallet(){
+
+    }
 
 }
 ?>

@@ -163,7 +163,7 @@
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
 				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_eudodona/">EUDODONA</a>
+				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_edudona/">EDUDONA</a>
 		</div>
 <br>
 

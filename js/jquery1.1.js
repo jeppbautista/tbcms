@@ -25,4 +25,9 @@ $( document ).ready(function() {
 		$('[name=submit_phpeud_transact]').click();
 	});
 
+	$('#btn_phpeud_transact2').click(function(){
+		$('[name=submit_phpeud_transact2]').click();
+	});
+
+
 });

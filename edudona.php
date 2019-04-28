@@ -66,14 +66,19 @@
   $row=mysql_fetch_assoc($rs);
   $total_balance = $row['Balance'];
 
+  $query="select * from xtbl_eudodona_wallet WHERE Main_Ctr='$Mainctr'";
+  $rs=mysql_query($query);
+  $row=mysql_fetch_assoc($rs);
+  $total_reward = $row['Balance'];
+
   $query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
   $rs=mysql_query($query);
   $row=mysql_fetch_assoc($rs);
   $table_id = $row['table_id'];
+  $is_paid = $row['paid'];
 
   $rows=mysql_num_rows($rs);
 
-  $total_reward = 0;
   # TODO get if paid already
 
 
@@ -85,17 +90,22 @@
     $mobile=str_replace('>', '', $mobile);
 
     if($total_reward<=700){
+      echo $total_reward;
       echo "Insufficient Balance";
     }
     else if(strlen($mobile)<10) {
+
       echo 'Mobile GCash Number Error<br>';
     }
     else {
-      # TODO fix this
       $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
 				values('$total_reward', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
 				'$mobile')";
 			$rs=mysql_query($query);
+
+      $query2 = "update xtbl_eudodona_wallet SET Balance = 0 WHERE Main_Ctr = '$Mainctr'";
+      mysql_query($query2);
+
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
     }
   }
@@ -129,85 +139,28 @@
       $error2='Transaction ID already used';
     }
   }
-  ?>
 
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <h1>You are not yet register click here</h1>
-    <div id="paypal-button-container"></div>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-    <script>
+  if(isset($_POST['txtphpeud_trans_id2']))
+  {
+    $txtphpeud_trans=str_replace("'", '', $_POST['txtphpeud_trans_id2']);
+    $txtphpeud_trans=str_replace('"', '', $txtphpeud_trans);
+    $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
+    $txtphpeud_trans=str_replace('>', '', $txtphpeud_trans);
+    if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>console.log("Invalid Transaction ID")</script>';}
+    else{
+      //TODO re-entry
+      $phpeud_query="insert into xtbl_admin_eudodona
+      (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
+      values('$activation_tbc_amount', '$activation_amount',
+      '$mycoinsph_account', 'EDUDONA COINSPH', '$Mainctr', 'WAITING', NOW(),
+      '$txtphpeud_trans', 'EDUDONA RE-ENTRY')";
 
-
-    paypal.Button.render({
-    env: 'sandbox', // sandbox | production
-
-    style: {
-                label: 'paypal',
-                size:  'medium',    // small | medium | large | responsive
-                shape: 'rect',     // pill | rect
-                color: 'blue',     // gold | blue | silver | black
-                tagline: false
-            },
-
-    funding: {
-      allowed: [
-        paypal.FUNDING.CARD,
-        // paypal.FUNDING.CREDIT
-      ],
-      disallowed: []
-    },
-
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-
-    // PayPal Client IDs - replace with your own
-    // Create a PayPal app: https://developer.paypal.com/developer/applications/create
-    client: {
-      sandbox: 'AcbAorOUrYTMMGKbTf1FTXRqOb2CwIbw86NU7SjmLcyW671Cf3Bax52MeHVD09Vf4y7y0akNx19Wed5r',
-      //production: 'AeVUKSad_DseckErsDT3xuxwi3o4PkxKfWqI_a0siIn94A8zsPw1kfv1Ic1JSK9c-A8OCWh57V0DSJdt'
-    },
-
-    payment: function (data, actions) {
-      return actions.payment.create({
-        payment: {
-          transactions: [
-            {
-              amount: {
-                total: '0.1',
-                currency: 'USD'
-              }
-            }
-          ]
-        }
-      });
-    },
-
-    onAuthorize: function (data, actions) {
-      return actions.payment.execute()
-        .then(function () {
-            window.alert('Payment Complete!');
-            // var xhttp = new XMLHttpRequest();
-            // xhttp.open('GET', 'https://tbcmerchantservices.com/insert.php', false);
-            // xhttp.send();
-
-            $.ajax({
-              type:'POST',
-              url : 'insert.php',
-              success : function(data){
-                console.log(data);
-                // if(data == 1){
-                //   window.location.href = 'index.php';
-                // }
-                // else{
-                //   window.location.href = "test_welcome.php";
-                // }
-              }
-          });
-        });
+      $eud_rs=@mysql_query($phpeud_query);
+      echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
     }
+  }
 
-    }, '#paypal-button-container');
-    </script> -->
+  ?>
 
 <?php
   if ($card_status == "INACTIVE" || $email_status=='INACTIVE' || $account_status=='INACTIVE'){
@@ -226,11 +179,12 @@
         $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
         $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
         $class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
+        $class->script('https://tbcmerchantservices.com/js/jquery1.1.js');
       $class->head_end();
 
       $class->body_start('');
 
-      $query = "select * from xtbl_eudodona WHERE table_id='$table_id'";
+      $query = "select * from xtbl_eudodona WHERE table_id='$table_id' ORDER BY rank";
       $rs=mysql_query($query);
       $row=mysql_fetch_array($rs);
 
@@ -458,6 +412,47 @@
       }
     </style>
 
+    <?php
+    $query = "select * FROM  xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr' AND STATUS = 'WAITING'";
+    $rs=mysql_query($query);
+    $row=mysql_fetch_assoc($rs);
+    $waiting = mysql_num_rows($rs);
+    if($waiting == 1)
+    {
+      ?>
+      <div class="container">
+        <hr>
+        <h4>Payment submitted please wait for approval.</h4>
+        <br>
+      </div>
+      <?php
+    }
+
+    if ($is_paid == 0 && $waiting==0){
+      ?>
+
+      <div class="container">
+      <hr>
+      <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
+      Send Amount to our PHP Address below <span style="color: red"><?php echo $error2;?></span>
+      <input class="form-control"/ readonly name="txtemail_phpeud_trans_id2"
+             placeholder="PHP Transaction ID Here" value=<?php echo '"3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG"';?> >
+      <span style="font-size: 5px">&nbsp</span>
+      <form method="POST">
+        <div width="50%">
+          <input class="form-control"/ name="txtphpeud_trans_id2" placeholder="PHP Transaction ID Here">
+        </div><br>
+        <input name="submit_phpeud_transact2" type="submit" hidden />
+        <a href="javascript:void(0)" id="btn_phpeud_transact2" class="btn btn-primary btn-lg">SEND REQUEST</a>
+      </form>
+
+    </div>
+
+      <?php
+    }
+
+    ?>
+
 
     <!-- ---------------------- MODAL  -->
 
@@ -548,3 +543,82 @@
 
 
 ?>
+
+
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <h1>You are not yet register click here</h1>
+    <div id="paypal-button-container"></div>
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+
+
+    paypal.Button.render({
+    env: 'sandbox', // sandbox | production
+
+    style: {
+                label: 'paypal',
+                size:  'medium',    // small | medium | large | responsive
+                shape: 'rect',     // pill | rect
+                color: 'blue',     // gold | blue | silver | black
+                tagline: false
+            },
+
+    funding: {
+      allowed: [
+        paypal.FUNDING.CARD,
+        // paypal.FUNDING.CREDIT
+      ],
+      disallowed: []
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+    // PayPal Client IDs - replace with your own
+    // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+    client: {
+      sandbox: 'AcbAorOUrYTMMGKbTf1FTXRqOb2CwIbw86NU7SjmLcyW671Cf3Bax52MeHVD09Vf4y7y0akNx19Wed5r',
+      //production: 'AeVUKSad_DseckErsDT3xuxwi3o4PkxKfWqI_a0siIn94A8zsPw1kfv1Ic1JSK9c-A8OCWh57V0DSJdt'
+    },
+
+    payment: function (data, actions) {
+      return actions.payment.create({
+        payment: {
+          transactions: [
+            {
+              amount: {
+                total: '0.1',
+                currency: 'USD'
+              }
+            }
+          ]
+        }
+      });
+    },
+
+    onAuthorize: function (data, actions) {
+      return actions.payment.execute()
+        .then(function () {
+            window.alert('Payment Complete!');
+            // var xhttp = new XMLHttpRequest();
+            // xhttp.open('GET', 'https://tbcmerchantservices.com/insert.php', false);
+            // xhttp.send();
+
+            $.ajax({
+              type:'POST',
+              url : 'insert.php',
+              success : function(data){
+                console.log(data);
+                // if(data == 1){
+                //   window.location.href = 'index.php';
+                // }
+                // else{
+                //   window.location.href = "test_welcome.php";
+                // }
+              }
+          });
+        });
+    }
+
+    }, '#paypal-button-container');
+    </script> -->
