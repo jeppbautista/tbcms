@@ -91,19 +91,22 @@
     $amount=str_replace("<", '', $amount);
     $amount=str_replace('>', '', $amount);
 
-    $amount=intval($amount);
+    $amount=(int)$amount;
 
     if($total_reward<3700){
-      echo "<script>alert('Minimum withdraw amoutn is 3700 PHP!')</script>";
+      $class->show_alert('Minimum withdraw amoutn is 3700 PHP!');
+    }
+    else if ($amount == 0){
+      $class->show_alert('Amount could not be blank!');
     }
     else if ($total_reward<$amount){
-        echo "<script>alert('Insufficient balance')</script>";
+      $class->show_alert('Insufficient balance');
     }
     else if(strlen($mobile)<10) {
-
-      echo "<script>alert('Mobile GCASH number invalid')</script>";
+      $class->show_alert('Mobile GCASH number invalid');
     }
     else {
+      $class->show_alert('Payment transaction successful! Please wait for 2-3 working days.');
       $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
 				values('$total_reward', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
 				'$mobile')";
@@ -112,7 +115,7 @@
       $query2 = "update xtbl_eudodona_wallet SET Balance = 0 WHERE Main_Ctr = '$Mainctr'";
       mysql_query($query2);
 
-			echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
+			echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
     }
   }
 

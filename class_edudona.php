@@ -83,12 +83,8 @@ class mydesign {
       echo '</div>';
     }
 
-    public function edudona_table() {
-      ?>
-
-
-      
-      <?php
+    public function show_alert($message) {
+      echo "<script>alert('$message')</script>";
     }
 }
 
