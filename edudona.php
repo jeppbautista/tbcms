@@ -2,7 +2,7 @@
   session_start();
   date_default_timezone_set('Asia/Manila');
 	$sessiondate=date('mdY');
-  include 'class_admin.php';
+  include 'class_edudona.php';
   $class=new mydesign;
   $class->database_connect();
 
@@ -179,6 +179,7 @@
 
   if($rows == 1)
   {
+    # if exists in edudona table
     $class->doc_type();
     $class->html_start('');
       $class->head_start();
@@ -196,8 +197,6 @@
       $query = "select * from xtbl_eudodona WHERE table_id='$table_id' ORDER BY rank";
       $rs=mysql_query($query);
       $row=mysql_fetch_array($rs);
-
-      // var_dump(mysql_fetch_array($rs)['username']);
 
     ?>
 
@@ -239,7 +238,6 @@
       <div class="col-md-3"></div>
     </div>
 
-
     <div class="container">
       <br>
       <h3><b>EDUDONA Table</b></h3>
@@ -270,12 +268,6 @@
             <th scope="col"> </th>
             <th scope="col"> </th>
             <th scope="col">
-              <!-- <div class="table-div"> -->
-                <!-- <div class="dot" style="">
-                  <span>
-                  </span>
-                </div> -->
-              <!-- </div> -->
               <?php
                 mysql_data_seek($rs, 0);
                 $sq = mysql_fetch_array($rs);
@@ -498,6 +490,7 @@
   }
   else
   {
+    # if not existing in edudona table
     $class->doc_type();
     $class->html_start('');
       $class->head_start();
