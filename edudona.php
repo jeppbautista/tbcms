@@ -78,7 +78,7 @@
 
   $rows=mysql_num_rows($rs);
 
-  if(isset($_POST['gcashmobile2'])) {
+  if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
     # withdrawal
 
     $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);
@@ -86,13 +86,22 @@
     $mobile=str_replace("<", '', $mobile);
     $mobile=str_replace('>', '', $mobile);
 
+    $amount=str_replace("'", '', $_REQUEST['gcashwithdraw']);
+    $amount=str_replace('"', '', $amount);
+    $amount=str_replace("<", '', $amount);
+    $amount=str_replace('>', '', $amount);
+
+    $amount=intval($amount);
+
     if($total_reward<3700){
-      echo $total_reward;
-      echo "Insufficient Balance";
+      echo "<script>alert('Minimum withdraw amoutn is 3700 PHP!')</script>";
+    }
+    else if ($total_reward<$amount){
+        echo "<script>alert('Insufficient balance')</script>";
     }
     else if(strlen($mobile)<10) {
 
-      echo 'Mobile GCash Number Error<br>';
+      echo "<script>alert('Mobile GCASH number invalid')</script>";
     }
     else {
       $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
@@ -120,8 +129,8 @@
     $rs78=mysql_query($query78);
     $row78=mysql_fetch_assoc($rs78);
     if(mysql_num_rows($rs78)==0){
-      if($trans_count==1) { echo '<script>console.log("Request already sent")</script>';}
-      else if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>console.log("Invalid Transaction ID")</script>';}
+      if($trans_count==1) { echo '<script>alert("Request already sent")</script>';}
+      else if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>alert("Invalid Transaction ID")</script>';}
       else{
         $phpeud_query="insert into xtbl_admin_eudodona
         (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
@@ -145,9 +154,10 @@
     $txtphpeud_trans=str_replace('"', '', $txtphpeud_trans);
     $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
     $txtphpeud_trans=str_replace('>', '', $txtphpeud_trans);
-    if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>console.log("Invalid Transaction ID")</script>';}
+    if($txtphpeud_trans=='' || strlen($txtphpeud_trans)<9){echo '<script>alert("Invalid Transaction ID")</script>';}
+
     else{
-      //TODO re-entry
+
       $phpeud_query="insert into xtbl_admin_eudodona
       (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
       values('$activation_tbc_amount', '$activation_amount',
@@ -468,10 +478,12 @@
             <form method="POST">
               <input name="sendnew" hidden value="us56udg668h28hcb7w7eg6" />
               <input name="submitnew2" hidden type="submit" />
+              <label>How much would you like to withdraw?</label>
+              <input type="number" class="form-control" name="gcashwithdraw" />
               <label>TBCMS GCash Mobile Number</label>
               <input class="form-control" name="gcashmobile2" />
             </form>
-            <b>ARE YOU SURE YOU WANT TO WITHDRAW ALL?</b>
+            <!-- <b>ARE YOU SURE YOU WANT TO WITHDRAW ALL?</b> -->
           </div>
           <div class="modal-footer">
             <a href="javascript:void(0)" onclick="$('[name=submitnew2]').click();" class="btn btn-primary" data-dismiss="modal" style="border-radius: 0px">&nbsp YES &nbsp</a>
