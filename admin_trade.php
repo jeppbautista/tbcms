@@ -38,11 +38,11 @@
 	$tbc_to_peso=$row['Tbc_to_Peso'];
 
 
-	
+
 //----------------------------------------------------------------------------------------CHECKLOGIN END
 
 //----------------------------------------------------------------------------------------SIGNUP_FORM START
-	
+
 
 	$class->doc_type();
 	$class->html_start('');
@@ -55,40 +55,42 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
-		?>
+		$class->body_start('');
+		$class->admin_page_header();
+	?>
 
-			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
-	    		background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
-	    		<div class="container">
-		    		<div class="col-md-10" style="padding-bottom: 5px;">
-		    			<img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
-		    		</div>
-		    		<div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
-		    			<a href="https://tbcmerchantservices.com/logout/" style="color: red">
-		    				LOGOUT <img width="35px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
-		    			</a>
-		    		</div>
-		    	</div>
-	    	</div><br>
+	<!-- <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
+		background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
+		<div class="container">
+			<div class="col-md-10" style="padding-bottom: 5px;">
+				<img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+			</div>
+			<div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
+				<a href="https://tbcmerchantservices.com/logout/" style="color: red">
+					LOGOUT <img width="35px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
+				</a>
+			</div>
+		</div>
+	</div><br>
 
-			<div class="container">
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/"> ENCASHMENT</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
-<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
-			</div><br>
+	<div class="container">
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/">ENCASHMENT</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
+		<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_edudona/">EDUDONA</a>
+	</div><br> -->
 
-			<?php 
+			<?php
 				$mquery="select * from xtbl_btc_request where Status='UNCONFIRM' order by Ctr ASC";
 				$mrs=mysql_query($mquery);
 
 			?>
 			<div class="container">
 				<table class="table table-bordered">
-				<?php 
+				<?php
 				while($mrow=mysql_fetch_assoc($mrs)) {
 				?>
 				<tr>
@@ -117,7 +119,7 @@
 
 		<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 	function dateformat_created($date) {
@@ -135,8 +137,7 @@
     		else if($date[5].$date[6]=='10') {$bday='October';}
     		else if($date[5].$date[6]=='11') {$bday='November';}
     		else if($date[5].$date[6]=='12') {$bday='December';}
-    		echo $bday.' '.$date[8].$date[9].', '.$date[0].$date[1].$date[2].$date[3]; 
+    		echo $bday.' '.$date[8].$date[9].', '.$date[0].$date[1].$date[2].$date[3];
     	}
     }
 ?>
-

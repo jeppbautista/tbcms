@@ -75,7 +75,7 @@
 				$yrown=mysql_num_rows($yrs);
 
 				if($yrown==0){
-					$iquery="insert into xtbl_btc_request(Tbc_Value, Peso_Value, Main_Ctr, Status, Date, Btc_Address) 
+					$iquery="insert into xtbl_btc_request(Tbc_Value, Peso_Value, Main_Ctr, Status, Date, Btc_Address)
 						values('".$itbcvalue."', '".$usertargetvalue."', '".$sctr."', 'CONFIRM', '".date('Y-m-d')."', 'CASH IN by Username ".$usertargetname."')";
 					$irs=@mysql_query($iquery);
 					if($irs){ header("location: https://tbcmerchantservices.com/admin_cashin/");}
@@ -88,11 +88,11 @@
 		}
 
 	}
-	
+
 //----------------------------------------------------------------------------------------CHECKLOGIN END
 
 //----------------------------------------------------------------------------------------SIGNUP_FORM START
-	
+
 
 	$class->doc_type();
 	$class->html_start('');
@@ -105,31 +105,9 @@
 			$class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
 		$class->head_end();
 
-		$class->body_start('');	
-		?>
-
-			<div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
-	    		background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
-	    		<div class="container">
-		    		<div class="col-md-10" style="padding-bottom: 5px;">
-		    			<img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
-		    		</div>
-		    		<div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
-		    			<a href="https://tbcmerchantservices.com/logout/" style="color: red">
-		    				LOGOUT <img width="35px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
-		    			</a>
-		    		</div>
-		    	</div>
-	    	</div><br>
-
-			<div class="container">
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_home/">REQUEST</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_doc/">DOCUMENTS</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_encash/"> ENCASHMENT</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/info/">INFO</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_trade/">TRADING</a>
-				<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
-			</div><br>
+		$class->body_start('');
+		$class->admin_page_header();
+	?>
 
 			<div class="container">
 
@@ -153,13 +131,13 @@
 						</form>
 					</div>
 				</div>
-				
+
 
 			</div>
 
 			<div class="container">
 				<table class="table table-bordered">
-				<?php 
+				<?php
 				$query="select * from xtbl_btc_request where Tbc_Value>'0' order by Ctr DESC LIMIT 200";
 				$rs=mysql_query($query);
 				while($row=mysql_fetch_assoc($rs)) {
@@ -171,8 +149,8 @@
 						<td><?php echo $row['Peso_Value'];?> PHP</td>
 						<td width="120px" style="padding: 0px; padding-top: 2px">
 							<a href="javascript:void" style="border-radius: 0px"
-							<?php 
-								if($row['Status']=='UNCONFIRM'){ echo 'class="btn btn-danger btn-block"';} 
+							<?php
+								if($row['Status']=='UNCONFIRM'){ echo 'class="btn btn-danger btn-block"';}
 								else {echo 'class="btn btn-success btn-block"';}
 							?> > <?php echo $row['Status']; ?>
 							</a>
@@ -180,8 +158,8 @@
 						<td width="10px"></td>
 						<td width="120px" style="padding: 0px; padding-top: 2px">
 							<a href="javascript:void" style="border-radius: 0px"
-							<?php 
-								if($row['Tbc_Value']<=0){ echo 'class="btn btn-danger btn-block"';} 
+							<?php
+								if($row['Tbc_Value']<=0){ echo 'class="btn btn-danger btn-block"';}
 								else {echo 'class="btn btn-success btn-block"';}
 							?> > <?php echo $row['Tbc_Value']; ?> TBC
 							</a>
@@ -196,7 +174,7 @@
 
 		<?php
 
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 	function dateformat_created($date) {
@@ -214,8 +192,7 @@
     		else if($date[5].$date[6]=='10') {$bday='October';}
     		else if($date[5].$date[6]=='11') {$bday='November';}
     		else if($date[5].$date[6]=='12') {$bday='December';}
-    		echo $bday.' '.$date[8].$date[9].', '.$date[0].$date[1].$date[2].$date[3]; 
+    		echo $bday.' '.$date[8].$date[9].', '.$date[0].$date[1].$date[2].$date[3];
     	}
     }
 ?>
-

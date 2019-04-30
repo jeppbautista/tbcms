@@ -11,7 +11,6 @@
   }
 
   $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
-
   $Mainctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
 
   $query="select * from xtbl_adminaccount";
@@ -79,17 +78,15 @@
 
   $rows=mysql_num_rows($rs);
 
-  # TODO get if paid already
-
-
   if(isset($_POST['gcashmobile2'])) {
+    # withdrawal
 
     $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);
     $mobile=str_replace('"', '', $mobile);
     $mobile=str_replace("<", '', $mobile);
     $mobile=str_replace('>', '', $mobile);
 
-    if($total_reward<=700){
+    if($total_reward<3700){
       echo $total_reward;
       echo "Insufficient Balance";
     }
@@ -112,6 +109,8 @@
 
   if(isset($_POST['txtphpeud_trans_id']))
   {
+    # payment sent
+
     $txtphpeud_trans=str_replace("'", '', $_POST['txtphpeud_trans_id']);
     $txtphpeud_trans=str_replace('"', '', $txtphpeud_trans);
     $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
@@ -216,8 +215,8 @@
         </div><br>
         <div align="center">
           <span style="color:red; font-size: 25px"><?php echo $error;?></span>
-          <!-- <h4>P300 will be deducted to your reward for the TBCMS GCash Card</h4>
-          <h4>Note: Minimum withdrawal is P1,000</h4> -->
+          <!-- <h4>P300 will be deducted to your reward for the TBCMS GCash Card</h4> -->
+          <h4>Note: Minimum withdrawal is P3,700</h4>
 
           <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');" class="btn btn-info btn-lg">
               WITHDRAW TO EDUODONA GCASH CARD
