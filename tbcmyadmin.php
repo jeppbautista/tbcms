@@ -58,18 +58,18 @@
 			$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
 		$class->head_end();
 
-		$class->body_start('');	
+		$class->body_start('');
 		?>
 			<div class="container">
 				<center><img src="https://tbcmerchantservices.com/images/tbslogo.png" width="300px"></center>
 				<div class="alert">
-					
+
 					<center>
 						<?php echo $logerror.'<br>';?>
 						<form method="POST">
-						<input name="username_login" class="form-control" placeholder="Username" 
+						<input name="username_login" class="form-control" placeholder="Username"
 							style="width: 280px" required/><br>
-						<input name="password_login" class="form-control" placeholder="Password" 
+						<input name="password_login" class="form-control" placeholder="Password"
 							style="width: 280px" type="password" required/><br>
 						<input name="submit_login" class="btn btn-primary" type="submit" value="SIGN IN"/>
 						</form>
@@ -78,8 +78,7 @@
 			</div>
 
 		<?php
-		$class->body_end();	
+		$class->body_end();
 	$class->html_end();
 
 ?>
-

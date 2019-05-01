@@ -32,6 +32,7 @@
 		}
 
 		if(isset($_POST['temporary_value'])) {
+			# APPROVAL
 			$temvalue=str_replace("'", '', $_POST['temporary_value']);
 			$temvalue=str_replace('"', '', $temvalue);
 			$temvalue=str_replace("<", '', $temvalue);
@@ -85,8 +86,14 @@
 
 
 				if($count == 0){
+					# if not yet in edudona table
 					$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
 					mysql_query($query);
+
+					$starting_balance = 700;
+					$update_query = "update xtbl_eudodona_wallet SET Balance = '$starting_balance' WHERE MainCtr='$Mainctr'";
+					mysql_query($update_query);
+
 				}else{
 					$table_id = $row['table_id'];
 					$query="update xtbl_eudodona SET paid = 1
@@ -100,7 +107,7 @@
 						#TODO fix payment system
 						$model->update_wallet($table_id, $refcode);
 						$model->update_ranks($table_id, $refcode);
-						echo '<script>alert("Table exit occured!")</script>';
+						echo "<script>alert('Table exit occured!')</script>";
 				}
 
 				# echo '<script>window.location.assign("https://tbcmerchantservices.com/admin_edudona/");</script>';

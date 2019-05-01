@@ -65,7 +65,7 @@
   $row=mysql_fetch_assoc($rs);
   $total_balance = $row['Balance'];
 
-  $query="select * from xtbl_eudodona_wallet WHERE Main_Ctr='$Mainctr'";
+  $query="select * from xtbl_eudodona_wallet WHERE MainCtr='$Mainctr'";
   $rs=mysql_query($query);
   $row=mysql_fetch_assoc($rs);
   $total_reward = $row['Balance'];
@@ -112,7 +112,9 @@
 				'$mobile')";
 			$rs=mysql_query($query);
 
-      $query2 = "update xtbl_eudodona_wallet SET Balance = 0 WHERE Main_Ctr = '$Mainctr'";
+      $new_balance = $total_reward - $amount;
+
+      $query2 = "update xtbl_eudodona_wallet SET Balance = '$new_balance' WHERE Main_Ctr = '$Mainctr'";
       mysql_query($query2);
 
 			echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
@@ -142,6 +144,7 @@
         '$txtphpeud_trans', 'EDUDONA ENTRY')";
 
         $eud_rs=@mysql_query($phpeud_query);
+        $class->show_alert('Request sent Successfully, please wait 2-3 working days for approval');
         echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
       }
     }
@@ -430,9 +433,6 @@
         <br>
       </div>
       <?php
-    }
-    else {
-        $class->show_alert('Request already sent please wait for approval.');
     }
 
     if ($is_paid == 0 && $waiting==0){

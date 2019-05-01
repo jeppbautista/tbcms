@@ -130,7 +130,7 @@ class eudodona_model
       $update_wallet = "
         UPDATE xtbl_eudodona_wallet
         SET balance = '$new_balance'
-        WHERE Main_Ctr = '$ctr'
+        WHERE MainCtr = '$ctr'
       ";
       mysql_query($update_wallet);
     }
