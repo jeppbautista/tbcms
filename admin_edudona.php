@@ -83,6 +83,7 @@
 				$rs=mysql_query($query);
 				$row=mysql_fetch_assoc($rs);
 				$count=mysql_num_rows($rs);
+				$sponsor_id = $row['refcode'];
 
 
 				if($count == 0){
@@ -90,9 +91,31 @@
 					$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
 					mysql_query($query);
 
+					$query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
+					$rs=mysql_query($query);
+					$row=mysql_fetch_assoc($rs);
+					$count=mysql_num_rows($rs);
+					$sponsor_id = $row['refcode'];
+
+					$query="select * from xtbl_account_info WHERE Crypt_Id='$sponsor_id'";
+					$rs2=mysql_query($query);
+					$row2=mysql_fetch_assoc($rs2);
+					$sponsor_ctr = $row2['Main_Ctr'];
+
+					$query="select * from xtbl_eudodona_wallet WHERE MainCtr='$sponsor_ctr'";
+					$rs3=mysql_query($query);
+					$row3=mysql_fetch_assoc($rs3);
+					$curr_sponsor_balance = $row3['Balance'];
+
 					$starting_balance = 700;
 					$update_query = "update xtbl_eudodona_wallet SET Balance = '$starting_balance' WHERE MainCtr='$Mainctr'";
 					mysql_query($update_query);
+
+					# TODO update referral balance
+					$new_sponsor_balance = $curr_sponsor_balance + 100;
+
+					$update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
+					mysql_query($update_query2);
 
 				}else{
 					$table_id = $row['table_id'];
