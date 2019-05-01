@@ -108,7 +108,7 @@
     else {
       $class->show_alert('Payment transaction successful! Please wait for 2-3 working days.');
       $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
-				values('$total_reward', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
+				values('$amount', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
 				'$mobile')";
 			$rs=mysql_query($query);
 
@@ -146,7 +146,7 @@
       }
     }
     else{
-      echo '<script>console.log("Transaction ID already in use")</script>';
+      $class->show_alert('Transaction ID already in use');
       $error2='Transaction ID already used';
     }
   }
@@ -431,8 +431,12 @@
       </div>
       <?php
     }
+    else {
+        $class->show_alert('Request already sent please wait for approval.');
+    }
 
     if ($is_paid == 0 && $waiting==0){
+      // If not paid and no request
       ?>
 
       <div class="container">
