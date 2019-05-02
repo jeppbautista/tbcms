@@ -125,7 +125,7 @@ class eudodona_model
       $wallet_rs = mysql_query($wallet_query);
       $balance = mysql_fetch_assoc($wallet_rs)["Balance"];
 
-      $new_balance = $balance + 3700;
+      $new_balance = $balance + 2500;
 
       $update_wallet = "
         UPDATE xtbl_eudodona_wallet

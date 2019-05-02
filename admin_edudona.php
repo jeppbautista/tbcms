@@ -107,11 +107,10 @@
 					$row3=mysql_fetch_assoc($rs3);
 					$curr_sponsor_balance = $row3['Balance'];
 
-					$starting_balance = 700;
+					$starting_balance = 500;
 					$update_query = "update xtbl_eudodona_wallet SET Balance = '$starting_balance' WHERE MainCtr='$Mainctr'";
 					mysql_query($update_query);
 
-					# TODO update referral balance
 					$new_sponsor_balance = $curr_sponsor_balance + 100;
 
 					$update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
