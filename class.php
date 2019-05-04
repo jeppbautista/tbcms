@@ -17,7 +17,7 @@ class mydesign
             die('Could not connect: ' . mysql_error());
         }
         mysql_select_db('xdb_tbcmerchantservices', $conn);
-        
+
     }
 
     public function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
@@ -287,6 +287,31 @@ class mydesign
     {
 ?>
      <br><br><br>
+            <div class="footer" style="background:#008B8B;width:100%;height:42px;position:fixed;bottom:0;left:0; font-size: 15px">
+                <div class="container" align="center">
+                    <span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
+
+                </div>
+            </div>
+
+            <!-- <div class="footer" style="background:#008B8B;width:100%;height:42px;position:fixed;bottom:0;left:0; font-size: 15px">
+                <div class="container" align="right">
+                    <span style="color: white">Copyright @TheBillionCoin Merchant</span>
+                    <span style="color: white; text-align: right;" >
+                        <a style="color: white;" href="javascript:void(0)">About</a> |
+                        <a style="color: white;" href="javascript:void(0)">Advertise</a> |
+                        <a style="color: white;" href="javascript:void(0)">Online Store</a> |
+                        <a style="color: white;" href="javascript:void(0)">Exchange</a> |
+                        <a style="color: white;" href="javascript:void(0)">Terms and Condition</a>
+                    </span>
+                </div>
+            </div> -->
+        <?php
+    }
+
+    public function page_welcome_header_content_start_footer2()
+    {
+?>
             <div class="footer" style="background:#008B8B;width:100%;height:42px;position:fixed;bottom:0;left:0; font-size: 15px">
                 <div class="container" align="center">
                     <span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
