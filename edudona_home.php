@@ -213,7 +213,8 @@
       <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
           <div class="container">
             <div class="col-md-10" style="padding-bottom: 5px;">
-              <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+              <a href="https://tbcmerchantservices.com/home/">
+              <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"></a>
             </div>
             <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
             </div>
@@ -519,7 +520,8 @@
       <div style="background-color: r gb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
           <div class="container">
             <div class="col-md-10" style="padding-bottom: 5px;">
-              <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+              <a href="https://tbcmerchantservices.com/home/">
+              <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"></a>
             </div>
             <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
             </div>
@@ -534,7 +536,7 @@
       <center>
         <h3>Be part of TBCMS' Edudona network.</h3><br>
         <!-- <img src="https://tbcmerchantservices.com/images/Red-Gift-Bow-PNG.png" width="200px"> -->
-        <h4>You can register for 1,000 pesos only! </h4>
+        <h4>You can now register P1,000 only as your donation!</h4>
       </center>
 
       <div class="container">

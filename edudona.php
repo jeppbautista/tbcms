@@ -5,6 +5,7 @@
   $class->doc_type();
   $class->html_start('');
   $class->head_start();
+  echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
   $class->title_page('TBCMS : EDUDONA');
 
   $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
@@ -16,7 +17,9 @@
 <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
     <div class="container">
       <div class="col-md-10" style="padding-bottom: 5px;">
+        <a href="https://tbcmerchantservices.com/home/">
         <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+      </a>
       </div>
       <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
       </div>

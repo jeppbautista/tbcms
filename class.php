@@ -148,7 +148,8 @@ class mydesign
 ?>
            <div class="container">
                 <div class="col-md-5" style="padding-bottom: 5px;">
-                    <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+                  <a href="https://tbcmerchantservices.com/home/">
+                  <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"> </a>
                 </div>
                 <div class="col-md-3" style="color: red; text-align: right;"><?php
         echo $error;
