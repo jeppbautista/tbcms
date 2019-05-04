@@ -86,6 +86,28 @@ class mydesign {
     public function show_alert($message) {
       echo "<script>alert('$message')</script>";
     }
+
+    public function display_nologin() {
+      ?>
+        <div id="article">
+        <h1>Oops! Looks like you're not yet logged in</h1>
+        <div>
+            <p>Please log-in your TBCMS account first, or register if you don't have one yet.</p>
+            <p>— TBCMS</p>
+            <a class="btn btn-success" href = "https://tbcmerchantservices.com/welcome/" target = "_blank"> Click here to log in </a>
+        </div>
+        </div>
+
+        <style type="text/css">
+          body { text-align: center; padding: 150px; }
+          h1 { font-size: 50px; }
+          body { font: 20px Helvetica, sans-serif; color: #333; }
+          #article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+          a { color: #dc8100; text-decoration: none; margin:auto;}
+          a:hover { color: #333; text-decoration: none; }
+        </style>
+      <?php
+    }
 }
 
 ?>
