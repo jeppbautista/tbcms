@@ -11,13 +11,11 @@
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
     $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
     $class->display_nologin();
-    // header("location: https://tbcmerchantservices.com/welcome/");
   }
 
   else {
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
     $Mainctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
-
     $query="select * from xtbl_adminaccount";
   	$rs=mysql_query($query);
   	$row=mysql_fetch_assoc($rs);
@@ -79,6 +77,7 @@
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
     $table_id = $row['table_id'];
+    $refcode = $row['refcode'];
     $is_paid = $row['paid'];
 
     $rows=mysql_num_rows($rs);
@@ -205,7 +204,7 @@
 
         $class->body_start('');
 
-        $query = "select * from xtbl_eudodona WHERE table_id='$table_id' ORDER BY rank";
+        $query = "select * from xtbl_eudodona WHERE table_id='$table_id' AND refcode='$refcode' ORDER BY rank";
         $rs=mysql_query($query);
         $row=mysql_fetch_array($rs);
 
