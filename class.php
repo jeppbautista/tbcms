@@ -257,6 +257,8 @@ class mydesign
 <center>TBC to BTC Trading is Now Available</center>
                         <a href="javascript:void(0)" class="btn btn-warning btn-block btn-lg"
                             style="border-radius: 0px">LOGIN AND START TRADING</a>
+                        <a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
+                                style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a>
                     </div>
 
                     <center><h3>Other Services</h3></center>
