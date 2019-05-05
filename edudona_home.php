@@ -82,6 +82,7 @@
 
     $rows=mysql_num_rows($rs);
 
+
     if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
       # withdrawal
 
@@ -127,8 +128,7 @@
 
     if(isset($_POST['txtphpeud_trans_id']))
     {
-      # payment sent
-
+      # payment 1 PHP
       $txtphpeud_trans=str_replace("'", '', $_POST['txtphpeud_trans_id']);
       $txtphpeud_trans=str_replace('"', '', $txtphpeud_trans);
       $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
@@ -160,6 +160,7 @@
 
     if(isset($_POST['txtphpeud_trans_id2']))
     {
+      # payment 2 PHP
       $txtphpeud_trans=str_replace("'", '', $_POST['txtphpeud_trans_id2']);
       $txtphpeud_trans=str_replace('"', '', $txtphpeud_trans);
       $txtphpeud_trans=str_replace("<", '', $txtphpeud_trans);
@@ -175,8 +176,58 @@
         '$txtphpeud_trans', 'EDUDONA RE-ENTRY')";
 
         $eud_rs=@mysql_query($phpeud_query);
-        echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
+        echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona_home/";</script>';
       }
+    }
+
+    if(isset($_POST['txtbtceud_trans_id'])){
+      # payment 1 BTC
+      $txtbtceud_trans=str_replace("'", '', $_POST['txtbtceud_trans_id']);
+      $txtbtceud_trans=str_replace('"', '', $txtbtceud_trans);
+      $txtbtceud_trans=str_replace("<", '', $txtbtceud_trans);
+      $txtbtceud_trans=str_replace('>', '', $txtbtceud_trans);
+
+      $query78="select * from xtbl_admin_eudodona WHERE Transaction='$txtbtceud_trans'";
+      $rs78=mysql_query($query78);
+      $row78=mysql_fetch_assoc($rs78);
+      if(mysql_num_rows($rs78)==0){
+        if($trans_count==1) { echo '<script>alert("Request already sent")</script>';}
+        else{
+          $btceud_query="insert into xtbl_admin_eudodona
+          (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
+          values('$activation_tbc_amount', '$activation_amount',
+          '$mycoinsph_account', 'EDUDONA BTC', '$Mainctr', 'WAITING', NOW(),
+          '$txtbtceud_trans', 'EDUDONA ENTRY')";
+
+          $eud_rs=@mysql_query($btceud_query);
+          $class->show_alert('Request sent Successfully, please wait 2-3 working days for approval');
+          echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
+        }
+      }
+      else{
+        $class->show_alert('Transaction ID already in use');
+        $error2='Transaction ID already used';
+      }
+
+    }
+
+    if(isset($_POST['txtbtceud_trans_id2']))
+    {
+      # payment 2 BTC
+      $txtbtceud_trans=str_replace("'", '', $_POST['txtbtceud_trans_id2']);
+      $txtbtceud_trans=str_replace('"', '', $txtbtceud_trans);
+      $txtbtceud_trans=str_replace("<", '', $txtbtceud_trans);
+      $txtbtceud_trans=str_replace('>', '', $txtbtceud_trans);
+
+        $phpeud_query="insert into xtbl_admin_eudodona
+        (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
+        values('$activation_tbc_amount', '$activation_amount',
+        '$mycoinsph_account', 'EDUDONA BTC', '$Mainctr', 'WAITING', NOW(),
+        '$txtbtceud_trans', 'EDUDONA RE-ENTRY')";
+
+        $eud_rs=@mysql_query($phpeud_query);
+        echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona_home/";</script>';
+
     }
 
     ?>
@@ -441,32 +492,9 @@
       }
 
       if ($is_paid == 0 && $waiting==0){
-        // If not paid and no request
-        ?>
-
-        <div class="container">
-        <hr>
-        <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
-        Send Amount to our PHP Address below <span style="color: red"><?php echo $error2;?></span>
-        <input class="form-control"/ readonly name="txtemail_phpeud_trans_id2"
-               placeholder="PHP Transaction ID Here" value=<?php echo '"3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG"';?> >
-        <span style="font-size: 5px">&nbsp</span>
-        <form method="POST">
-          <div width="50%">
-            <input class="form-control"/ name="txtphpeud_trans_id2" placeholder="PHP Transaction ID Here">
-          </div><br>
-          <input name="submit_phpeud_transact2" type="submit" hidden />
-          <a href="javascript:void(0)" id="btn_phpeud_transact2" class="btn btn-primary btn-lg">SEND REQUEST</a>
-        </form>
-
-      </div>
-
-        <?php
+        $class->show_payforms2();
       }
-
       ?>
-
-
       <!-- ---------------------- MODAL  -->
 
       <div id="modal_eudodona" class="modal fade">
@@ -536,28 +564,15 @@
       <center>
         <h3>Be part of TBCMS' Edudona network.</h3><br>
         <!-- <img src="https://tbcmerchantservices.com/images/Red-Gift-Bow-PNG.png" width="200px"> -->
-        <h4>You can now register P1,000 only as your donation!</h4>
+        <h4>You can now register P1,000 ($20) only as your donation!</h4>
       </center>
 
-      <div class="container">
-      <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
-      Send Amount to our PHP Address below <span style="color: red"><?php echo $error2;?></span>
-      <input class="form-control"/ readonly name="txtemail_phpeud_trans_id"
-             placeholder="PHP Transaction ID Here" value=<?php echo '"3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG"';?> >
-      <span style="font-size: 5px">&nbsp</span>
-      <form method="POST">
-        <div width="50%">
-          <input class="form-control"/ name="txtphpeud_trans_id" placeholder="PHP Transaction ID Here">
-        </div><br>
-        <input name="submit_phpeud_transact" type="submit" hidden />
-        <a href="javascript:void(0)" id="btn_phpeud_transact" class="btn btn-primary btn-lg">SEND REQUEST</a>
-      </form>
 
-    </div>
 
-  <?php
+      <?php
+        $class->show_payforms();
+
     }
-
   }
   ?>
 

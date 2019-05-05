@@ -121,6 +121,7 @@ class mydesign
         echo '</div>';
     }
 
+
     public function chatscript()
     {
 ?>

@@ -87,6 +87,109 @@ class mydesign {
       echo "<script>alert('$message')</script>";
     }
 
+    public function show_payforms(){
+      ?>
+      <div class="container">
+      <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
+
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="col-md-12">
+            <form method="POST">
+              <a href="javascript:void(0)" id="btn_php_payment" class="btn btn-warning" style="width: 48%">PHP/Dollar</a>
+              <a href="javascript:void(0)" id="btn_btc_payment" class="btn btn-warning" style="width: 48%">BTC</a>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+      <div id = "div-PHP">
+        Send Amount to our PHP Address below <span style="color: red"><?php echo $error2;?></span>
+        <input class="form-control"/ readonly name="txtemail_phpeud_trans_id"
+               placeholder="PHP Transaction ID Here" value=<?php echo '"3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG"';?> >
+        <span style="font-size: 5px">&nbsp</span>
+        <form method="POST">
+          <div width="50%">
+            <input class="form-control"/ name="txtphpeud_trans_id" placeholder="PHP Transaction ID Here">
+          </div><br>
+          <input name="submit_phpeud_transact2" type="submit" hidden />
+          <a href="javascript:void(0)" id="btn_phpeud_transact" class="btn btn-primary btn-lg">SEND REQUEST</a>
+        </form>
+      </div>
+
+      <div id = "div-BTC" hidden>
+        Send Amount to our BTC Address below <span style="color: red"><?php echo $error2;?></span>
+        <input class="form-control"/ readonly name="txtemail_btceud_trans_id"
+               placeholder="BTC Transaction ID Here" value=<?php echo '"3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL"';?> >
+        <span style="font-size: 5px">&nbsp</span>
+        <form method="POST">
+          <div width="50%">
+            <input class="form-control"/ name="txtbtceud_trans_id" placeholder="BTC Transaction ID Here">
+          </div><br>
+          <input name="submit_btceud_transact" type="submit" hidden />
+          <a href="javascript:void(0)" id="btn_btceud_transact" class="btn btn-primary btn-lg">SEND REQUEST</a>
+        </form>
+      </div>
+    </div>
+      <?php
+    }
+
+    public function show_payforms2(){
+      ?>
+
+      <div class="container">
+      <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
+
+
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="col-md-12">
+            <form method="POST">
+              <a href="javascript:void(0)" id="btn_php_payment" class="btn btn-warning" style="width: 48%">PHP/Dollar</a>
+              <a href="javascript:void(0)" id="btn_btc_payment" class="btn btn-warning" style="width: 48%">BTC</a>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+      <div id = "div-PHP">
+        Send Amount to our PHP Address below <span style="color: red"><?php echo $error2;?></span>
+        <input class="form-control"/ readonly name="txtemail_phpeud_trans_id2"
+               placeholder="PHP Transaction ID Here" value=<?php echo '"3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG"';?> >
+        <span style="font-size: 5px">&nbsp</span>
+        <form method="POST">
+          <div width="50%">
+            <input class="form-control"/ name="txtphpeud_trans_id2" placeholder="PHP Transaction ID Here">
+          </div><br>
+          <input name="submit_phpeud_transact2" type="submit" hidden />
+          <a href="javascript:void(0)" id="btn_phpeud_transact2" class="btn btn-primary btn-lg">SEND REQUEST</a>
+        </form>
+      </div>
+
+      <div id = "div-BTC" hidden>
+        Send Amount to our BTC Address below <span style="color: red"><?php echo $error2;?></span>
+        <input class="form-control"/ readonly name="txtemail_btceud_trans_id2"
+               placeholder="BTC Transaction ID Here" value=<?php echo '"3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL"';?> >
+        <span style="font-size: 5px">&nbsp</span>
+        <form method="POST">
+          <div width="50%">
+            <input class="form-control"/ name="txtbtceud_trans_id2" placeholder="BTC Transaction ID Here">
+          </div><br>
+          <input name="submit_btceud_transact2" type="submit" hidden />
+          <a href="javascript:void(0)" id="btn_btceud_transact2" class="btn btn-primary btn-lg">SEND REQUEST</a>
+        </form>
+      </div>
+    </div>
+
+
+      <?php
+    }
+
     public function display_nologin() {
       ?>
         <div id="article">

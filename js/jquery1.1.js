@@ -29,5 +29,23 @@ $( document ).ready(function() {
 		$('[name=submit_phpeud_transact2]').click();
 	});
 
+	$('#btn_btceud_transact').click(function(){
+		$('[name=submit_btceud_transact]').click();
+	});
+
+	$('#btn_btceud_transact2').click(function(){
+		$('[name=submit_btceud_transact2]').click();
+	});
+
+	$('#btn_php_payment').click(function(){
+		$('#div-BTC').hide();
+		$('#div-PHP').show();
+	});
+
+	$('#btn_btc_payment').click(function(){
+		$('#div-PHP').hide();
+		$('#div-BTC').show();
+	});
+
 
 });
