@@ -70,7 +70,7 @@
 				$rs=mysql_query($query);
 				if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h4></div>';}
 				else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
-				
+
 				echo '<br><div class="container" align="center">';
 				while($row=mysql_fetch_assoc($rs)) {
 			?>		<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
@@ -90,16 +90,16 @@
 				            <?php
 				            	}
 							?>
-							
+
 						</div>
-						
+
 						<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
-						
+
 						<div style="height: 20px;">
 							<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
 								style="font-size: 20px; border-radius: 0px">VIEW INFO</a>
 						</div>
-						
+
 					</div>
 			<?php
 				}
@@ -131,7 +131,7 @@
 				echo '</div><br><br><br>';
 			$class->page_welcome_header_content_start_footer();
                         $class->chatscript();
-			$class->body_end();	
+			$class->body_end();
 		$class->html_end();
 
 
@@ -200,7 +200,7 @@
 							<tr>
 								<td><?php echo '<b>'.$row['Datetime'].'</b>';?></td>
 								<td>
-								<?php 
+								<?php
 
 									$mer_query="select * from xtbl_main_info Where Ctr='".$row['To_Ctr']."'";
 									$mer_rd=mysql_query($mer_query);
@@ -214,7 +214,7 @@
 								?>
 								</td>
 								<td>
-								<?php 
+								<?php
 									echo '<b>Qnty: '.$row['Quantity'].'</b><br>';
 									echo 'PHP '.number_format($row['Amount'],2);
 								?>
@@ -222,7 +222,7 @@
 
 								<td><?php echo '<b>'.$row['Transact_Id'].'</b>';?></td>
 								<td><?php echo '<b>'.$row['Status'].'</b>';?></td>
-							</tr>	
+							</tr>
 					<?php
 						}
 					?>
@@ -247,7 +247,7 @@
 					$rs=mysql_query($query);
 					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
 					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
-					
+
 					echo '<br><div class="container" align="center">';
 					while($row=mysql_fetch_assoc($rs)) {
 				?>		<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
@@ -268,14 +268,14 @@
 					            	}
 								?>
 							</div>
-							
+
 							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
-							
+
 							<div style="height: 20px;">
 								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
 									style="font-size: 20px; border-radius: 0px">VIEW INFO</a>
 							</div>
-							
+
 						</div>
 				<?php
 					}
@@ -308,7 +308,7 @@
 
 					$class->page_welcome_header_content_start_footer();
                                         $class->chatscript();
-				$class->body_end();	
+				$class->body_end();
 			$class->html_end();
 		}
 	}

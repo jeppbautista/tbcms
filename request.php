@@ -108,7 +108,7 @@
 				$btctype=str_replace('"', '', $btctype);
 				$btctype=str_replace("<", '', $btctype);
 				$btctype=str_replace('>', '', $btctype);
-				
+
 				if($btcamount=='' || $btcamount==0 || $btcamount==null || !is_numeric($btcamount) ) {
 					$error='<br>Invalid Amount Format';
 				}
@@ -127,7 +127,7 @@
 							'$btcamount',
 							'$my_btc_account',
 							'$btctype',
-							'$ctr', 
+							'$ctr',
 							'WAITING',
 							'".date('Y-m-d H:i:s')."',
 							'$btctransid',
@@ -171,8 +171,8 @@
 									<center><img src="https://tbcmerchantservices.com/images/paypal.png" width="100%"></center>
 								</div><br>
 							</div>
-							
-							
+
+
 							<div style="padding: 4px;">
 								<center><h6 style="color: red"><?php echo $error;?>&nbsp</h6></center>
 								<select name="btc_type" class="form-control" >
@@ -184,7 +184,7 @@
 							<div style="padding: 4px;">
 								<input name="btc_receiving_address" class="form-control" readonly style="background-color: white" value="3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG''  placeholder="Receiver Address" />
 							</div>
-							
+
 							<script>
 							    $('[name=btc_type]').change( function() {
 							    	if($('[name=btc_type]').val()=='BTC') {
@@ -196,20 +196,20 @@
 							    	else{
 							    		$('[name=btc_receiving_address]').val('<?php echo $our_paypal;?>');
 							    	}
-							        
+
 							    });
 							</script>
-							
+
 							<div style="padding: 4px;">
-								<input name="btc_trans_id" class="form-control" style="background-color: white" 
+								<input name="btc_trans_id" class="form-control" style="background-color: white"
 									 placeholder="Transaction ID" />
 							</div>
 							<div style="padding: 4px;">
-								<input width="100px" class="form-control" placeholder="Peso Value" 
+								<input width="100px" class="form-control" placeholder="Peso Value"
 									name="btc_amount" />
 								<span id="btc_lbl_amount">&nbsp</span><br>
 								<input type="submit" name="submit_amount_btc" hidden />
-								<a id="btn_submit_amount" href="javascript:void(0)" onclick="$('[name=submit_amount_btc]').click();" 
+								<a id="btn_submit_amount" href="javascript:void(0)" onclick="$('[name=submit_amount_btc]').click();"
 									class="btn btn-primary btn-lg">SEND</a>
 							</div>
 						</form><hr>
@@ -258,7 +258,7 @@
 
 			$class->page_welcome_header_content_start_footer();
                         $class->chatscript();
-			$class->body_end();	
+			$class->body_end();
 		$class->html_end();
 	}
 

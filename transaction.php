@@ -93,7 +93,7 @@
 			}
 
 			if(isset($_POST['txt_amount']) && isset($_POST['txt_receiving_address'])) {
-				
+
 				$amount=str_replace("'", '', $_REQUEST['txt_amount']);
 				$amount=str_replace('"', '', $amount);
 				$amount=str_replace("<", '', $amount);
@@ -123,9 +123,9 @@
 					$reciever=$row['Main_Ctr'];
 
 					if($rows==1 && $reciever!=$ctr){
-						$query="Insert into xtbl_mytransaction".$ctr."(Amount, Status, Transact_Id, Type, Date) 
+						$query="Insert into xtbl_mytransaction".$ctr."(Amount, Status, Transact_Id, Type, Date)
 							values(
-							'-".$amount."', 
+							'-".$amount."',
 							'ACTIVE',
 							'$trans_id',
 							'SEND',
@@ -133,9 +133,9 @@
 							);";
 						$result=@mysql_query($query);
 
-						$query="Insert into xtbl_mytransaction".$reciever."(Amount, Status, Transact_Id, Type, Date) 
+						$query="Insert into xtbl_mytransaction".$reciever."(Amount, Status, Transact_Id, Type, Date)
 							values(
-							'".$amount."', 
+							'".$amount."',
 							'ACTIVE',
 							'$trans_id',
 							'RECEIVE',
@@ -174,11 +174,11 @@
 								<input name="txt_receiving_address" class="form-control" placeholder="Receiver Address"/>
 							</div>
 							<div style="padding: 4px;">
-								<input width="100px" class="form-control" placeholder="Amount in Merchant" 
+								<input width="100px" class="form-control" placeholder="Amount in Merchant"
 									name="txt_amount" />
 								<span id="lbl_amount">&nbsp</span><br>
 								<input type="submit" name="submit_amount" hidden />
-								<a id="btn_submit_amount" href="javascript:void(0)" onclick="$('[name=submit_amount]').click();" 
+								<a id="btn_submit_amount" href="javascript:void(0)" onclick="$('[name=submit_amount]').click();"
 									class="btn btn-primary btn-lg">SEND</a>
 							</div>
 						</form><hr>
@@ -224,7 +224,7 @@
 
 			$class->page_welcome_header_content_start_footer();
                         $class->chatscript();
-			$class->body_end();	
+			$class->body_end();
 		$class->html_end();
 	}
 

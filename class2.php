@@ -127,7 +127,7 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 	    				 	<img width="120px" src="https://tbcmerchantservices.com/images/my_account.png">
 	    				 </a>
 	    				 <ul class="dropdown-menu">
-                <li><a href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
+
                 <li><a href="https://tbcmerchantservices.com/details/"><img width="30px" src="https://tbcmerchantservices.com/images/settimng.png">&nbsp DETAILS</a></li>
                 <li><a href="https://tbcmerchantservices.com/xdestroy/"><img width="30px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
                 &nbsp SIGNOUT</a></li>
@@ -168,8 +168,14 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 	    			</div>
 
 	    			<div class="col-md-2" style="padding-top: 10px;">
-	    				<a href="https://tbcmerchantservices.com/exchange/">
-	    					<img width="120px" src="https://tbcmerchantservices.com/images/tbc_exchange.png">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <img width="120px" src="https://tbcmerchantservices.com/images/tbc_exchange.png">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a target="_blank" href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
+              </ul>
+	    				<!-- <a href="https://tbcmerchantservices.com/exchange/"> -->
 	    				</a>
 	    			</div>
 	    		</div>
@@ -194,9 +200,7 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 	    				 	<img width="120px" src="https://tbcmerchantservices.com/images/my_account.png">
 	    				 </a>
 	    				 <ul class="dropdown-menu">
-                 <li><a href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
 	    				 	<li><a href="https://tbcmerchantservices.com/details/"><img width="30px" src="https://tbcmerchantservices.com/images/settimng.png">&nbsp DETAILS</a></li>
-
                 <li><a href="https://tbcmerchantservices.com/xdestroy/"><img width="30px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
 	    				 	&nbsp SIGNOUT</a></li>
 	    				 </ul>
@@ -234,6 +238,18 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 	    				 </ul>
 	    			</div>
 
+            <div class="col-md-2" style="padding-top: 10px;">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <img width="120px" src="https://tbcmerchantservices.com/images/tbc_exchange.png">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a target="_blank" href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
+              </ul>
+              <!-- <a href="https://tbcmerchantservices.com/exchange/"> -->
+              </a>
+            </div>
+
 	   			</div>
 	   		</div>
 	   	<?php
@@ -257,7 +273,6 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
               <img width="120px" src="https://tbcmerchantservices.com/images/my_account.png">
              </a>
              <ul class="dropdown-menu">
-               <li><a href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
               <li><a href="https://tbcmerchantservices.com/details/"><img width="30px" src="https://tbcmerchantservices.com/images/settimng.png">&nbsp DETAILS</a></li>
               <li><a href="https://tbcmerchantservices.com/xdestroy/"><img width="30px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
               &nbsp SIGNOUT</a></li>
