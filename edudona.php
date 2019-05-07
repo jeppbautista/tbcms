@@ -32,8 +32,8 @@
         <div class="col-md-6 left align-middle"><img id = "img-network" src="https://tbcmerchantservices.com/images/network.jpg" alt=""></div>
         <div class="col-md-6 col-xs-12 right">
           <div class="row">
-            <h1 class="text-left"> Be a part of </h1>
-            <h1 class="text-right"> TBCMS Edudona Network</h1>
+            <h1 class="text-left"> Be a part of TBCMS</h1>
+            <h1 class="text-right">  Edudona Exchange Network</h1>
           </div>
           <br>
           <div class = "row">
@@ -64,8 +64,8 @@
         <div class = "col-md-6">
           <div class = "col-md-6 div-center">
             <h3 class = "text-justify"> <strong>How does EDUDONA works?</strong> </h3>
-            <p>Watch our slideshow presentation and start donating and earning.</p>
-            <a href="https://docs.google.com/presentation/d/1LbQLboXtDeczKGSf4kzaXjzxrs8G7y5mhr9_h7YEYnA/edit?usp=sharing" target="_blank" class = "btn btn-success">  WATCH SLIDESHOW</a>
+            <p>Watch our video presentation to learn more and start donating and earning.</p>
+            <a href="https://youtu.be/gnQjV8gTk88" target="_blank" class = "btn btn-success">  WATCH Video</a>
           </div>
         </div>
         <div class = "col-md-6">

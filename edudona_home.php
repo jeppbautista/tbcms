@@ -588,6 +588,7 @@
         $class->show_payforms();
 
     }
+    $class->page_welcome_header_content_start_footer2();
   }
   ?>
 
