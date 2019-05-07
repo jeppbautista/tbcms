@@ -289,7 +289,7 @@
             <!-- <h4>P300 will be deducted to your reward for the TBCMS GCash Card</h4> -->
             <h4>Note: Minimum withdrawal is P2,500</h4>
 
-            <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');" class="btn btn-info btn-lg">
+            <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');" class="btn btn-info">
                 WITHDRAW TO EDUODONA GCASH CARD
             </a>
             <h4>Withdrawal might take 1-2 working days to transfer on GCASH</h4>
@@ -316,20 +316,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="height : 50px">
+            <tr>
+              <th scope="col" id="padd"> </th>
               <th scope="col"> </th>
               <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-            </tr>
-            <tr style="height : 60px">
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col">
+              <th scope="col" >
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 0);
                   $sq = mysql_fetch_array($rs);
@@ -349,16 +342,9 @@
               <th scope="col"> </th>
             </tr>
             <tr style="height : 100px">
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"> </th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-              <th scope="col"><img src="https://tbcmerchantservices.com/images/network.png"></th>
-            </tr>
-            <tr style="height : 20px">
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 1);
                   $sq = mysql_fetch_array($rs);
@@ -373,7 +359,9 @@
                   }
                 ?>
               </th>
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 2);
                   $sq = mysql_fetch_array($rs);
@@ -388,7 +376,9 @@
                   }
                 ?>
               </th>
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 3);
                   $sq = mysql_fetch_array($rs);
@@ -404,7 +394,9 @@
                 ?>
               </th>
               <th scope="col"> </th>
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 4);
                   $sq = mysql_fetch_array($rs);
@@ -419,7 +411,9 @@
                   }
                 ?>
               </th>
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 5);
                   $sq = mysql_fetch_array($rs);
@@ -434,7 +428,9 @@
                   }
                 ?>
               </th>
-              <th scope="col">
+              <th scope="col" class="c">
+                <img src="https://tbcmerchantservices.com/images/network.png">
+                <br>
                 <?php
                   mysql_data_seek($rs, 6);
                   $sq = mysql_fetch_array($rs);
@@ -450,6 +446,7 @@
                 ?>
               </th>
             </tr>
+
           </tbody>
         </table>
       </div>
@@ -458,6 +455,9 @@
 
       <style>
         td, th { border: none !important; vertical-align: center; text-align: center;}
+        tr {
+          height: 100px;
+        }
         .dot {
           border-radius: 50%;
           color: white;
@@ -472,6 +472,21 @@
         .table-div{
           display: table;
           margin: auto;
+        }
+
+        @media screen and (max-width: 700px) {
+          tr{
+            height: 100px;
+            display: block;
+          }
+
+          .c{
+            display: inline-block;
+          }
+
+          #padd {
+            width: 30%;
+          }
         }
       </style>
 

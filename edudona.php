@@ -25,58 +25,61 @@
       </div>
     </div>
   </div>
-<div class="wrapper">
-  <div class="container">
-    <div class="row ph-1">
-      <div class="col-md-6 left align-middle"><img id = "img-network" src="https://tbcmerchantservices.com/images/network.jpg" alt=""></div>
-      <div class="col-md-6 col-xs-12 right">
-        <div class="row">
-          <h1 class="text-left"> Be a part of </h1>
-          <h1 class="text-right"> TBCMS Edudona Network</h1>
-        </div>
-        <br>
-        <div class = "row">
-          <div class="col-md-4 div-center">
-            <a href = "https://tbcmerchantservices.com/welcome/" target = "_blank" class="btn btn-primary" id = "btn-register">Register Now</a>
+<div class="page">
+  <div class="wrapper">
+    <div class="container">
+      <div class="row ph-1">
+        <div class="col-md-6 left align-middle"><img id = "img-network" src="https://tbcmerchantservices.com/images/network.jpg" alt=""></div>
+        <div class="col-md-6 col-xs-12 right">
+          <div class="row">
+            <h1 class="text-left"> Be a part of </h1>
+            <h1 class="text-right"> TBCMS Edudona Network</h1>
+          </div>
+          <br>
+          <div class = "row">
+            <div class="col-md-4 div-center">
+              <a href = "https://tbcmerchantservices.com/welcome/" target = "_blank" class="btn btn-primary" id = "btn-register">Register Now</a>
+            </div>
+          </div>
+          <br>
+
+          <div class = "row" style="margin-top:5vh">
+            <h4>Download the TBCMS app NOW!</h4>
+          </div>
+
+          <div class = "row">
+            <div class="col-md-4 div-center">
+              <a href='https://play.google.com/store/apps/details?id=tbcservices.thebillioncoinapp&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+                <img id="img-google-play" alt='Get it on Google Play' src='https://tbcmerchantservices.com/images/google-play-badge.png'/>
+              </a>
+            </div>
           </div>
         </div>
-        <br>
-
-        <div class = "row" style="margin-top:10vh">
-          <h4>Download the TBCMS app NOW!</h4>
+      </div>
+    </div>
+  </div>
+  <div class = "ph-2">
+    <div class="container">
+      <div class="row">
+        <div class = "col-md-6">
+          <div class = "col-md-6 div-center">
+            <h3 class = "text-justify"> <strong>How does EDUDONA works?</strong> </h3>
+            <p>Watch our slideshow presentation and start donating and earning.</p>
+            <a href="https://docs.google.com/presentation/d/1LbQLboXtDeczKGSf4kzaXjzxrs8G7y5mhr9_h7YEYnA/edit?usp=sharing" target="_blank" class = "btn btn-success">  WATCH SLIDESHOW</a>
+          </div>
         </div>
-
-        <div class = "row">
-          <div class="col-md-4 div-center">
-            <a href='https://play.google.com/store/apps/details?id=tbcservices.thebillioncoinapp&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-              <img id="img-google-play" alt='Get it on Google Play' src='https://tbcmerchantservices.com/images/google-play-badge.png'/>
-            </a>
+        <div class = "col-md-6">
+          <div class = "col-md-6 div-center">
+            <h3 class = "text-justify"> <strong>Already a part of the EDUDONA family?</strong> </h3>
+            <p>Great! We hope you are having a good time.</p>
+            <a href="https://tbcmerchantservices.com/edudona_home/" class = "btn btn-success">Proceed to Dashboard</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class = "ph-2">
-  <div class="container">
-    <div class="row">
-      <div class = "col-md-6">
-        <div class = "col-md-6 div-center">
-          <h3 class = "text-justify"> <strong>How does EDUDONA works?</strong> </h3>
-          <p>Watch our slideshow presentation and start donating and earning.</p>
-          <a href="https://docs.google.com/presentation/d/1LbQLboXtDeczKGSf4kzaXjzxrs8G7y5mhr9_h7YEYnA/edit?usp=sharing" target="_blank" class = "btn btn-success">  WATCH SLIDESHOW</a>
-        </div>
-      </div>
-      <div class = "col-md-6">
-        <div class = "col-md-6 div-center">
-          <h3 class = "text-justify"> <strong>Already a part of the EDUDONA family?</strong> </h3>
-          <p>Great! We hope you are having a good time.</p>
-          <a href="https://tbcmerchantservices.com/edudona_home/" class = "btn btn-success">Proceed to Dashboard</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <style>
   h1 {
     font-size: 43px;
@@ -91,20 +94,29 @@
     float: none;
   }
 
+  .page {
+    height: 100vh;
+  }
+
   .ph-1 {
-    height: 90vh;
+    height: 50vh;
   }
 
   .ph-2 {
     background: #F49D04 !important;
     color: white;
     height: 50vh;
-    padding: 10vh;
+    padding: 2vh;
   }
 
+  @media screen and (max-width: 700px) {
+    .ph-2 {
+      height: 80vh;
+    }
+  }
 
   .right {
-    margin-top: 15vh;
+    margin-top: 2vh;
   }
 
   .wrapper {
@@ -123,7 +135,7 @@
 
   #img-network {
     width: 100%;
-    margin-top: 15vh;
+    margin-top: 2vh;
   }
 
 </style>
