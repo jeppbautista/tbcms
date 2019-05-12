@@ -21,36 +21,32 @@ class eudodona_model
         mysql_select_db('xdb_tbcmerchantservices', $conn);
     }
 
-    public function get_tableid($refcode){
+    public function get_tableid(){
         /* If the number of people in a table is greater than or equal to 7 then create new table by
-        Max(table_id) + 1 else return the maximum table_id of refcode */
+        Max(table_id) + 1 else return the maximum table_id of the current table id */
         $table_id_query = "
             SELECT IFNULL(table_id, 1) as table_id
             FROM (
-                SELECT CASE WHEN (
-                    SELECT COUNT(1)
-                    FROM xtbl_eudodona
-                        WHERE refcode = '$refcode'
-                        AND table_id = (
-                            SELECT MAX(table_id)
-                            FROM xtbl_eudodona
-                            WHERE refcode = '$refcode'
-                        )) >= 7
+              SELECT CASE WHEN (
+                SELECT COUNT( 1 )
+                FROM `xtbl_eudodona`
+                WHERE table_id = (SELECT MAX(table_id) FROM xtbl_eudodona)
+              ) = 7
+                THEN MAX( table_id ) +1
+                ELSE MAX( table_id )
+              END AS table_id
+            FROM xtbl_eudodona
+            WHERE table_id = (SELECT MAX(table_id) FROM xtbl_eudodona)
 
-                    THEN MAX(table_id) + 1
-                    ELSE MAX(table_id)
-
-                END AS table_id
-
-                FROM xtbl_eudodona
-                WHERE refcode = '$refcode' ) eudodona
+            ) eudodona
         ";
+
         $table_id_rs = mysql_query($table_id_query);
         $table_id_row = mysql_fetch_assoc($table_id_rs);
         return $table_id_row["table_id"];
     }
 
-    public function get_rank($tableId, $refcode) {
+    public function get_rank($tableId) {
         /* If there is row in the table id then return the Maximum rank + 1 else if the table is empty return 1 */
         $rank_query = "
         SELECT
@@ -58,13 +54,13 @@ class eudodona_model
                 SELECT MAX(rank)
                 FROM xtbl_eudodona
                 WHERE table_id = '$tableId'
-                AND refcode = '$refcode') IS NOT NULL
+                ) IS NOT NULL
 
                 THEN (
                     SELECT MAX(rank) + 1
                     FROM xtbl_eudodona
                     WHERE table_id = '$tableId'
-                    AND refcode='$refcode')
+                    )
             ELSE 1
         END AS rank
         ";
@@ -73,12 +69,11 @@ class eudodona_model
         return $rank_row["rank"];
     }
 
-    public function checkAllPaid($tableId, $refcode){
+    public function checkAllPaid($tableId){
         $paid_query = "
         SELECT COUNT(1) AS paid
         FROM xtbl_eudodona
-        WHERE refcode = '$refcode'
-            AND table_id = '$tableId'
+        WHERE table_id = '$tableId'
             AND paid = 1
         ";
         $paid_rs = mysql_query($paid_query);
@@ -91,26 +86,33 @@ class eudodona_model
     }
 
 
-    public function update_ranks($tableId, $refcode){
-        for ($i = 1; $i <= 7; $i++)
+    public function update_ranks($tableId){
+      $count_query = "
+        SELECT COUNT(1) AS row_count FROM xtbl_eudodona
+      ";
+      $rs = mysql_query($count_query);
+      $rs_row = mysql_fetch_assoc($rs);
+
+      $max = $rs_row["row_count"];
+
+        for ($i = 1; $i <= $max; $i++)
         {
             $ii = $i - 1;
-            $q = "UPDATE xtbl_eudodona SET rank = '$ii' WHERE rank = '$i' AND table_id = '$tableId' AND refcode='$refcode'";
+            $q = "UPDATE xtbl_eudodona SET rank = '$ii' WHERE rank = '$i'";
             mysql_query($q);
         }
-        $q2 = "UPDATE xtbl_eudodona SET rank = 7 WHERE rank = 0 AND table_id = '$tableId'  AND refcode='$refcode'";
+        $q2 = "UPDATE xtbl_eudodona SET rank = '$max' WHERE rank = 0";
         mysql_query($q2);
-        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId'  AND refcode='$refcode' AND rank<>7";
+        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId' AND rank<>'$max'";
         mysql_query($q3);
 
     }
 
-    public function update_wallet($tableId, $refcode){
+    public function update_wallet($tableId){
       $exit_query = "
           SELECT MainCtr
           FROM xtbl_eudodona
-          WHERE refcode = '$refcode'
-              AND table_id = '$tableId'
+          WHERE table_id = '$tableId'
               AND rank = 1
       ";
       $exit_rs = mysql_query($exit_query);

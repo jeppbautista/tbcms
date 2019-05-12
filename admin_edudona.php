@@ -75,8 +75,8 @@
 			  $row=mysql_fetch_assoc($rs);
 				$refcode  = $row['Sponsor_Id'];
 
-				$table_id = $model->get_tableid($refcode);
-				$rank = $model->get_rank($table_id, $refcode);
+				$table_id = $model->get_tableid($table_id);
+				$rank = $model->get_rank($table_id);
 				$paid = 1;
 
 				$query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
@@ -85,36 +85,38 @@
 				$count=mysql_num_rows($rs);
 				$sponsor_id = $row['refcode'];
 
+				$class->show_alert($table_id);
+
 
 				if($count == 0){
 					# if not yet in edudona table
-					$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
-					mysql_query($query);
-
-					$query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
-					$rs=mysql_query($query);
-					$row=mysql_fetch_assoc($rs);
-					$count=mysql_num_rows($rs);
-					$sponsor_id = $row['refcode'];
-
-					$query="select * from xtbl_account_info WHERE Crypt_Id='$sponsor_id'";
-					$rs2=mysql_query($query);
-					$row2=mysql_fetch_assoc($rs2);
-					$sponsor_ctr = $row2['Main_Ctr'];
-
-					$query="select * from xtbl_eudodona_wallet WHERE MainCtr='$sponsor_ctr'";
-					$rs3=mysql_query($query);
-					$row3=mysql_fetch_assoc($rs3);
-					$curr_sponsor_balance = $row3['Balance'];
-
-					$starting_balance = 0;
-					$update_query = "update xtbl_eudodona_wallet SET Balance = '$starting_balance' WHERE MainCtr='$Mainctr'";
-					mysql_query($update_query);
-
-					$new_sponsor_balance = $curr_sponsor_balance + 100;
-
-					$update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
-					mysql_query($update_query2);
+					// $query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
+					// mysql_query($query);
+					//
+					// $query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
+					// $rs=mysql_query($query);
+					// $row=mysql_fetch_assoc($rs);
+					// $count=mysql_num_rows($rs);
+					// $sponsor_id = $row['refcode'];
+					//
+					// $query="select * from xtbl_account_info WHERE Crypt_Id='$sponsor_id'";
+					// $rs2=mysql_query($query);
+					// $row2=mysql_fetch_assoc($rs2);
+					// $sponsor_ctr = $row2['Main_Ctr'];
+					//
+					// $query="select * from xtbl_eudodona_wallet WHERE MainCtr='$sponsor_ctr'";
+					// $rs3=mysql_query($query);
+					// $row3=mysql_fetch_assoc($rs3);
+					// $curr_sponsor_balance = $row3['Balance'];
+					//
+					// $starting_balance = 0;
+					// $update_query = "update xtbl_eudodona_wallet SET Balance = '$starting_balance' WHERE MainCtr='$Mainctr'";
+					// mysql_query($update_query);
+					//
+					// $new_sponsor_balance = $curr_sponsor_balance + 100;
+					//
+					// $update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
+					// mysql_query($update_query2);
 
 				}else{
 					$table_id = $row['table_id'];
@@ -124,12 +126,13 @@
 
 				}
 
-				if($model->checkAllPaid($table_id, $refcode) == 1){
+				if($table_id == 1){
+					if($model->checkAllPaid($table_id) == 1){
 
-						#TODO fix payment system
-						$model->update_wallet($table_id, $refcode);
-						$model->update_ranks($table_id, $refcode);
-						echo "<script>alert('Table exit occured!')</script>";
+							// $model->update_wallet($table_id);
+							// $model->update_ranks($table_id);
+							echo "<script>alert('Table exit occured!')</script>";
+					}
 				}
 
 				# echo '<script>window.location.assign("https://tbcmerchantservices.com/admin_edudona/");</script>';

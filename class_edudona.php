@@ -114,7 +114,7 @@ class mydesign {
 
     public function show_payforms(){
       ?>
-      <div class="container">
+      <div class="container" style="margin-bottom:25px">
       <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
 
 
@@ -140,7 +140,7 @@ class mydesign {
           <div width="50%">
             <input class="form-control"/ name="txtphpeud_trans_id" placeholder="PHP Transaction ID Here">
           </div><br>
-          <input name="submit_phpeud_transact2" type="submit" hidden />
+          <input name="submit_phpeud_transact" type="submit" hidden />
           <a href="javascript:void(0)" id="btn_phpeud_transact" class="btn btn-primary btn-lg">SEND REQUEST</a>
         </form>
       </div>
@@ -159,13 +159,14 @@ class mydesign {
         </form>
       </div>
     </div>
+    <br><br>
       <?php
     }
 
     public function show_payforms2(){
       ?>
 
-      <div class="container">
+      <div class="container" style="margin-bottom:25px">
       <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
 
 
@@ -210,7 +211,7 @@ class mydesign {
         </form>
       </div>
     </div>
-
+    <br><br>
 
       <?php
     }

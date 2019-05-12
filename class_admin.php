@@ -56,6 +56,10 @@
 	    	echo '</body>';
 	    }
 
+      public function show_alert($message) {
+        echo "<script>alert('$message')</script>";
+      }
+
 	   	public function category_option() {
 	    	$query="select * from xtbl_category Order by Category ASC";
 	    	$rs=mysql_query($query);
