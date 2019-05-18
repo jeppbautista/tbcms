@@ -85,6 +85,66 @@ class eudodona_model
         }
     }
 
+    public function update_main_payment(){
+      $unpaid_query = "
+        SELECT *
+        FROM xtbl_eudodona
+        WHERE table_id = 1
+          AND paid = 0
+        ORDER BY rank
+      ";
+      $unpaid_rs = mysql_query($unpaid_query);
+      $unpaid_count = mysql_num_rows($unpaid_rs);
+      $unpaid_rows  = mysql_fetch_assoc($unpaid_rs);
+
+      $paid_query = "
+        SELECT *
+        FROM xtbl_eudodona
+        WHERE table_id <> 1
+          AND paid = 1
+        ORDER BY rank
+      ";
+      $paid_rs = mysql_query($paid_query);
+      $paid_count = mysql_num_rows($paid_rs);
+      $paid_rows  = mysql_fetch_assoc($paid_rs);
+
+      if ($unpaid_count > 0){
+        $x = 0;
+        $y = 0;
+        while ( $x < $unpaid_count && $y < $paid_count) {
+
+          mysql_data_seek($unpaid_rs, $x);
+          $unpaid_sq = mysql_fetch_array($unpaid_rs);
+          $unpaid_ctr = $unpaid_sq['MainCtr'];
+
+          mysql_data_seek($paid_rs, $y);
+          $paid_sq  = mysql_fetch_array($paid_rs);
+          $paid_ctr = $paid_sq['MainCtr'];
+
+          $q1 = "
+            UPDATE xtbl_eudodona
+            SET paid = 1
+            WHERE MainCtr = '$unpaid_ctr'
+          ";
+          mysql_query($q1);
+
+          $q2 = "
+            UPDATE xtbl_eudodona
+            SET paid = 0
+            WHERE MainCtr = '$paid_ctr'
+          ";
+          mysql_query($q2);
+
+          // echo "<script>console.log(".json_encode($unpaid_sq).")</script>";
+          // echo "<script>console.log(".json_encode($paid_sq).")</script>";
+
+          $x++;
+          $y++;
+        }
+      }
+
+    }
+
 
     public function update_ranks($tableId){
       $count_query = "
@@ -103,8 +163,12 @@ class eudodona_model
         }
         $q2 = "UPDATE xtbl_eudodona SET rank = '$max' WHERE rank = 0";
         mysql_query($q2);
-        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId' AND rank<>'$max'";
+        $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId'";
         mysql_query($q3);
+        $q4 = "UPDATE xtbl_eudodona SET table_id = 1 ORDER BY rank  LIMIT 7;  ";
+        mysql_query($q4);
+        $q5 = "UPDATE xtbl_eudodona SET table_id = 2 WHERE rank='$max'";
+        mysql_query($q5);
 
     }
 

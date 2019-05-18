@@ -217,7 +217,7 @@
           $class->script('https://tbcmerchantservices.com/js/jquery1.1.js');
         $class->head_end();
         $class->body_start('');
-        $query = "select * from xtbl_eudodona WHERE table_id='$table_id' ORDER BY rank";
+        $query = "select * from xtbl_eudodona WHERE table_id=1 ORDER BY rank";
         $rs=mysql_query($query);
         $row=mysql_fetch_array($rs);
       ?>
@@ -264,7 +264,8 @@
       <div class="container">
         <br>
         <h3><b>EDUDONA Table</b></h3>
-        <table class="table borderless">
+        <?php if($table_id != 1){echo "<h3>You are currently in the WAITING table. This is the current status of the exit table.</h3>";} ?>
+        <table class="table borderless" style="table-layout:fixed">
           <thead>
             <tr >
               <th scope="col"></th>
@@ -389,7 +390,7 @@
                   }
                 ?>
               </th>
-              <th scope="col" class="c">
+              <th scope="col" class="c" style="margin-bottom:100px">
                 <img src="https://tbcmerchantservices.com/images/network.png">
                 <br>
                 <?php
@@ -419,6 +420,7 @@
         tr {
           height: 100px;
         }
+
         .dot {
           border-radius: 50%;
           color: white;
@@ -438,14 +440,17 @@
             height: 100px;
             display: block;
           }
+          td {
+            word-break:break-all;
+          }
           .c{
-            display: inline-block;
+            display: block;
           }
           #padd {
-            width: 30%;
+            width: 32%;
           }
           .table {
-            height: 500px;
+            height: 300px;
           }
         }
       </style>
@@ -467,7 +472,7 @@
         <?php
       }
       if ($is_paid == 0 && $waiting==0){
-        $class->show_payforms2();
+        // $class->show_payforms2();
       }
       ?>
       <br>
