@@ -574,6 +574,41 @@ class mydesign
         <?php
     }
 
+    public function page_welcome_displaymerchants_marquee(){
+      $query = "select Main_Ctr from xtbl_account_info WHERE
+              Email_Status='ACTIVE' AND Account_Type='MERCHANT' AND Account_Status='ACTIVE'
+              AND Card_Status='ACTIVE' ORDER BY Ctr DESC LIMIT 100";
+      $rs    = mysql_query($query);
+      echo '<div class="">';
+      echo '<h3>Our Latest Merchants</h3><hr>';
+?>
+    <MARQUEE behavior="scroll" direction="left" width="100%" scrollamount="5">
+      <?php
+          while ($row = mysql_fetch_assoc($rs)) {
+              $query2 = "select * from xtbl_main_info WHERE Ctr='" . $row['Main_Ctr'] . "'";
+              $rs2    = mysql_query($query2);
+              $row2   = mysql_fetch_assoc($rs2);
+              $img = "";
+              if (file_exists('business/' . $row2['Business_Logo'])) {
+                $img = "https://tbcmerchantservices.com/business/" . $row2['Business_Logo'];
+                $label = $row2['Business_Name'];
+              }else{
+                $img = "https://tbcmerchantservices.com/images/tbslogo.png";
+                $label = $row2['Business_Name'];
+              }
+      ?>
+
+      <img class="mySlides"  src="<?php echo $img; ?>" width="200px" height="200px">
+      <span style="margin-right: 40px; font-size: 17px;"><?php echo $label; ?> &#8226;</span> 
+<?php } ?>
+
+</MARQUEE>
+  <?php
+
+    }
+
+
+
     public function page_welcome_displaymerchants_carousel()
     {
       $query = "select Main_Ctr from xtbl_account_info WHERE

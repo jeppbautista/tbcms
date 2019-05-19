@@ -58,14 +58,14 @@ if (isset($_POST['tbctxt_username_login']) && isset($_POST['tbctxt_password_logi
         $rows = mysql_num_rows($rs);
         $row  = mysql_fetch_assoc($rs);
 
-        
+
 
         if ($rows == 1) {
             $rs   = mysql_query("select * from xtbl_captcha where Ctr='$capctr' AND value='$capctha' ");
             $rows = mysql_num_rows($rs);
             if ($rows == 1) {
                 $_SESSION['session_tbcmerchant_ctr' . $sessiondate] = $row['Main_Ctr'];
-              
+
 
                 ini_set('display_errors', 1);
                 error_reporting(E_ALL);
@@ -200,7 +200,8 @@ if (isset($_POST['txttbc_email_checksignup']) && !empty($_POST['txttbc_email_che
         $class->page_welcome_header_content_start($error);
         $class->page_welcome_header_end();
         $class->page_welcome_header_content_start_body($logerror);
-        $class->page_welcome_displaymerchants_carousel();
+        // $class->page_welcome_displaymerchants_carousel();
+        $class->page_welcome_displaymerchants_marquee();
         $class->chatscript();
 
         $class->body_end();
@@ -263,11 +264,8 @@ else {
     $class->page_welcome_header_content_start($error);
     $class->page_welcome_header_end();
     $class->page_welcome_header_content_start_body($logerror);
-    // if ($GLOBALS['test'] == 1) {
-        $class->page_welcome_displaymerchants_carousel();
-    // } else {
-    //     $class->page_welcome_displaymerchants();
-    // }
+    // $class->page_welcome_displaymerchants_carousel();
+    $class->page_welcome_displaymerchants_marquee();
 
     $class->page_welcome_header_content_start_footer();
     $class->chatscript();
