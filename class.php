@@ -192,7 +192,19 @@ class mydesign
             </div>
             <div class="container alert">
                 <div class="col-md-7">
-                    <img width="100%" src="https://tbcmerchantservices.com/images/boostyoqur.png">
+
+                  <div style="">
+                      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                          <div class="carousel-inner" role="listbox">
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                          </div>
+                        </div>
+                  </div>
+
+                  <div style="width:80%; margin:auto; margin-bottom:20px">                        <a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
+                                                  style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a></div>
 
                     <div style="height: 280px;">
                         <div id="myCarousel" class="carousel slide" data-ride="carousel">
