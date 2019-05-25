@@ -163,12 +163,13 @@ class eudodona_model
         }
         $q2 = "UPDATE xtbl_eudodona SET rank = '$max' WHERE rank = 0";
         mysql_query($q2);
+        $q5 = "UPDATE xtbl_eudodona SET table_id = 2 WHERE rank='$max'";
+        mysql_query($q5);
         $q3 = "UPDATE xtbl_eudodona SET paid = 0 WHERE table_id = '$tableId'";
         mysql_query($q3);
         $q4 = "UPDATE xtbl_eudodona SET table_id = 1 ORDER BY rank  LIMIT 7;  ";
         mysql_query($q4);
-        $q5 = "UPDATE xtbl_eudodona SET table_id = 2 WHERE rank='$max'";
-        mysql_query($q5);
+
 
     }
 

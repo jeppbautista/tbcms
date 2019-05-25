@@ -101,7 +101,7 @@
   				'$mobile')";
   			$rs=mysql_query($query);
         $new_balance = $total_reward - $amount;
-        $query2 = "update xtbl_eudodona_wallet SET Balance = '$new_balance' WHERE Main_Ctr = '$Mainctr'";
+        $query2 = "update xtbl_eudodona_wallet SET Balance = '$new_balance' WHERE MainCtr = '$Mainctr'";
         mysql_query($query2);
   			echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
       }

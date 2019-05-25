@@ -1,3 +1,22 @@
+<?php
+error_reporting(-1);
+ini_set('display_errors', 'On');
+set_error_handler("var_dump");
+
+$email = "tbcmsapp@gmail.com";
+$from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
+$subject = "Email Verification";
+$message = "<html><body>Test email foo</body></html>";
+$headers = "From:" . $from. "\r\n";
+$headers .= "Reply-To: ". $from. "\r\n";
+$headers .= "X-Mailer: PHP/" . phpversion();
+$headers.= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+$headers.= "X-Priority: 1\r\n";
+@mail($email,$subject,$message, $headers);
+
+ ?>
+
 <div id="paypal-button-container"></div>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 <script>

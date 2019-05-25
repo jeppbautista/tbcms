@@ -75,7 +75,8 @@
 			  $row=mysql_fetch_assoc($rs);
 				$refcode  = $row['Sponsor_Id'];
 
-				$table_id = $model->get_tableid($table_id);
+				// $table_id = $model->get_tableid($table_id);
+				$table_id = 2;
 				$rank = $model->get_rank($table_id);
 				$paid = 1;
 
@@ -115,6 +116,9 @@
 					$update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
 					mysql_query($update_query2);
 					$model->update_main_payment();
+
+					
+
 
 				}else{
 					// $table_id = $row['table_id'];

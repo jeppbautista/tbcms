@@ -239,7 +239,6 @@
 	                            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 													    mail($email,$subject,$message, $headers);
 
-
 															$message2 = "<html><body>
 															Customer registration <br>
 															Name : ".$lname .", " . $fname ." <br>
@@ -304,13 +303,14 @@
 													   	$subject = "Email Verification";
 													    // $message = "<html><body>Dear ".$fname.", <br>Welcome to TBC Merchant Services<br>Your Validationcode for TBC Merchant Services is: ".$code."<br>Your Username is: ".$username."<br>Your Password is: ".$password."</body></html>";
 															$message = "<html><body>Dear ".$fname.",
-															<br>Welcome to TBC Merchant Services<br>Please follow the link below to verify your email address. <br>
+																<br>Welcome to TBC Merchant Services<br>Please follow the link below to verify your email address. <br>
 															<a href=https://tbcmerchantservices.com/activation.php?key=".$email_activation_key.">
 															https://tbcmerchantservices.com/activation.php?key=".$email_activation_key."</a></body></html>";
 															$headers = "From:" . $from. "\r\n";
 	                            $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
 													    mail($email,$subject,$message, $headers);
+															// Welcome to TBC Merchant Services. Please reply the words 'ACTIVATE' to this email to verify your email address.
 
 															$message2 = "<html><body>
 															Customer registration <br>

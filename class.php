@@ -582,7 +582,7 @@ class mydesign
       echo '<div class="">';
       echo '<h3>Our Latest Merchants</h3><hr>';
 ?>
-    <MARQUEE behavior="scroll" direction="left" width="100%" scrollamount="5">
+    <MARQUEE behavior="scroll" direction="left" width="100%" scrollamount="15">
       <?php
           while ($row = mysql_fetch_assoc($rs)) {
               $query2 = "select * from xtbl_main_info WHERE Ctr='" . $row['Main_Ctr'] . "'";
@@ -599,7 +599,7 @@ class mydesign
       ?>
 
       <img class="mySlides"  src="<?php echo $img; ?>" width="200px" height="200px">
-      <span style="margin-right: 40px; font-size: 17px;"><?php echo $label; ?> &#8226;</span> 
+      <span style="margin-right: 40px; font-size: 17px;"><?php echo $label; ?> &#8226;</span>
 <?php } ?>
 
 </MARQUEE>
