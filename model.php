@@ -3,6 +3,8 @@
 // function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 //     return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
 // }
+//
+date_default_timezone_set('Asia/Manila');
 
 class eudodona_model
 {
@@ -140,6 +142,24 @@ class eudodona_model
         }
       }
 
+    }
+
+    public function update_edudona_cycle(){
+      $exit_query = "
+        SELECT * FROM xtbl_eudodona WHERE rank = 1";
+      $rs = mysql_query($exit_query);
+      $row = msyql_fetch_assoc($rs);
+
+      $Mainctr = $row['MainCtr'];
+      $username = $row['username'];
+      $refcode = $row['refcode'];
+      $datetime = date('Y-m-d H:i:s');
+
+      $insert_query = "
+        INSERT INTO xtbl_edudona_trans (MainCtr, username, refcode, datetime)
+        VALUES ('$Mainctr', '$username', '$refcode', '$datetime')
+      ";
+      mysql_query($insert_query);
     }
 
 

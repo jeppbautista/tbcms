@@ -138,11 +138,13 @@
 				}
 
 					if($model->checkAllPaid(1) == 1){
-
+							$model->update_edudona_cycle();
 							$model->update_wallet(1);
 							$model->update_ranks(1);
 							$model->update_main_payment();
 							$model->update_table();
+
+
 							$email = "tbcmsapp@gmail.com";
 							$from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
 							$subject = "Edudona Exit";

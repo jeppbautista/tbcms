@@ -461,6 +461,21 @@
       $row=mysql_fetch_assoc($rs);
       $waiting = mysql_num_rows($rs);
 
+      $query2 = "select * from xtbl_edudona_trans";
+      $rs2 = mysql_query($query2);
+      $cycles = mysql_num_rows($rs2);
+
+      ?>
+
+      <div class="container">
+        <div class="row">
+          <h4> Number of Edudona Cycles : <b><?php echo $cycles; ?></b> </h4>
+        </div>
+      </div>
+      <br>
+
+      <?php
+
       if($waiting == 1)
       {
         ?>
