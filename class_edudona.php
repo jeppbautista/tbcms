@@ -218,7 +218,7 @@ class mydesign {
 
     public function display_nologin() {
       ?>
-        <div id="article">
+        <div class="container">
         <h1>Oops! Looks like you're not yet logged in</h1>
         <div>
             <p>Please log-in your TBCMS account first, or register if you don't have one yet.</p>
@@ -229,6 +229,10 @@ class mydesign {
 
         <style type="text/css">
           body { text-align: center; padding: 150px; }
+          @media screen and (max-width: 700px)
+          {
+            body {padding : 50px 15px}
+          }
           h1 { font-size: 50px; }
           body { font: 20px Helvetica, sans-serif; color: #333; }
           #article { display: block; text-align: left; width: 650px; margin: 0 auto; }
@@ -237,6 +241,201 @@ class mydesign {
         </style>
       <?php
     }
+
+    public function diplay_edudona($rs) {
+      ?>
+      <table class="table borderless" style="table-layout:fixed">
+        <thead>
+          <tr >
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="col" id="padd"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col" >
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 0);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+            <th scope="col"> </th>
+          </tr>
+          <tr style="height : 100px">
+            <th scope="col" class="c">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 1);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col" class="c">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 2);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col" class="c">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 3);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col"> </th>
+            <th scope="col" class="c">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 4);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col" class="c">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 5);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+            <th scope="col" class="c" style="margin-bottom:100px">
+              <img src="https://tbcmerchantservices.com/images/network.png">
+              <br>
+              <?php
+                mysql_data_seek($rs, 6);
+                $sq = mysql_fetch_array($rs);
+                $user = $sq['username'];
+                $paid = $sq['paid'];
+                if ($user == null) {
+                  echo "VACANT";
+                } else {
+                  echo $user;
+                  echo "<br>";
+                  if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
+                }
+              ?>
+            </th>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <br><br>
+
+    <style>
+      td, th { border: none !important; vertical-align: center; text-align: center;}
+      tr {
+        height: 100px;
+      }
+
+      .dot {
+        border-radius: 50%;
+        color: white;
+        display: table-cell;
+        font-size: 14px;
+        height: 60px;
+        margin: auto;
+        vertical-align: middle;
+        width: 60px;
+      }
+      .table-div{
+        display: table;
+        margin: auto;
+      }
+      @media screen and (max-width: 700px) {
+        tr{
+          height: 100px;
+          display: block;
+        }
+        td {
+          word-break:break-all;
+        }
+        .c{
+          display: block;
+        }
+        #padd {
+          width: 32%;
+        }
+        .table {
+          height: 300px;
+        }
+      }
+    </style>
+    <?php
+    }
+
 }
 
 ?>

@@ -46,20 +46,17 @@ class eudodona_model
         return $table_id_row["table_id"];
     }
 
-    public function get_rank($tableId) {
+    public function get_rank() {
         /* If there is row in the table id then return the Maximum rank + 1 else if the table is empty return 1 */
         $rank_query = "
         SELECT
             CASE WHEN (
                 SELECT MAX(rank)
                 FROM xtbl_eudodona
-                WHERE table_id = '$tableId'
                 ) IS NOT NULL
-
                 THEN (
                     SELECT MAX(rank) + 1
                     FROM xtbl_eudodona
-                    WHERE table_id = '$tableId'
                     )
             ELSE 1
         END AS rank
@@ -171,6 +168,13 @@ class eudodona_model
         mysql_query($q4);
 
 
+    }
+
+    public function update_table(){
+      $table_query = "
+        UPDATE xtbl_eudodona SET table_id = CEILING(rank/7)
+      ";
+      @mysql_query($table_query);
     }
 
     public function update_wallet($tableId){

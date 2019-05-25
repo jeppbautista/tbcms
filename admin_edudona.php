@@ -77,7 +77,7 @@
 
 				// $table_id = $model->get_tableid($table_id);
 				$table_id = 2;
-				$rank = $model->get_rank($table_id);
+				$rank = $model->get_rank();
 				$paid = 1;
 
 				$query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
@@ -116,8 +116,16 @@
 					$update_query2 = "update xtbl_eudodona_wallet SET Balance = '$new_sponsor_balance' WHERE MainCtr='$sponsor_ctr'";
 					mysql_query($update_query2);
 					$model->update_main_payment();
+					$model->update_table();
 
-					
+					$email = "tbcmsapp@gmail.com";
+					$from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
+					$subject = "Edudona Entry";
+					$message = "<html><body>Entry by ".$username."</body></html>";
+					$headers = "From:" . $from. "\r\n";
+					$headers .= "Reply-To: ". $from. "\r\n";
+					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+					@mail($email,$subject,$message, $headers);
 
 
 				}else{
@@ -134,6 +142,15 @@
 							$model->update_wallet(1);
 							$model->update_ranks(1);
 							$model->update_main_payment();
+							$model->update_table();
+							$email = "tbcmsapp@gmail.com";
+							$from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
+							$subject = "Edudona Exit";
+							$message = "<html><body>Main Table exit occured</body></html>";
+							$headers = "From:" . $from. "\r\n";
+							$headers .= "Reply-To: ". $from. "\r\n";
+							$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+							@mail($email,$subject,$message, $headers);
 							echo "<script>alert('Table exit occured!')</script>";
 					}
 
