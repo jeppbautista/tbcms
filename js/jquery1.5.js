@@ -17,6 +17,10 @@ function edit_product(id){
   //
   $("#div_desc" + id).hide();
   $("#txt_desc" + id).show();
+  $("#price" + id).hide();
+  $("#prod_price" + id).show();
+  $("#raw_description" + id).hide();
+  $("#description" + id).show();
   $('#edit_' + id).show();
 
 }
@@ -26,6 +30,10 @@ function cancel_edit(id){
   $("#txt_desc" + id).text($.trim(divHtml));
   $("#txt_desc" + id).hide();
   $('#edit_' + id).hide();
+  $("#description" + id).hide();
+  $("#prod_price" + id).hide();
+  $("#price" + id).show();
+  $("#raw_description" + id).show();
   $("#div_desc" + id).show();
 
 }

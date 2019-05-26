@@ -70,7 +70,6 @@
       	}
 
 
-
 	}
 
 	if($email_status=='INACTIVE' || $account_status=='INACTIVE' || $card_status=='INACTIVE'){
@@ -106,13 +105,33 @@ if(isset($_POST['product_requestnumber']) && isset($_POST['product_requestcharac
         $text_description = str_replace("<", '', $text_description);
         $text_description = str_replace('>', '', $text_description);
 
-        $query = "
-          UPDATE xtbl_product SET Product_Description = '$text_description'
-          WHERE Ctr = '$desc_requestnumber'
-        ";
-        @mysql_query($query);
+				$price = str_replace("'", '',$_REQUEST["prod_price"]);
+				$price = str_replace('"', '', $price);
+				$price = str_replace("<", '', $price);
+				$price = str_replace('>', '', $price);
 
-        echo "<script>alert('Edit successful')</script>";
+				$pattern = '/^(0|[1-9]\d*)(\.\d{2})?$/';
+				if (preg_match($pattern, $price) != '0') {
+
+	        $query = "
+	          UPDATE xtbl_product SET Product_Description = '$text_description'
+	          WHERE Ctr = '$desc_requestnumber'
+	        ";
+	        @mysql_query($query);
+
+					$query2 = "
+						UPDATE xtbl_product SET Product_Price = '$price'
+						WHERE Ctr = '$desc_requestnumber'
+					";
+					@mysql_query($query2);
+
+					echo "<script>alert('Edit successful')</script>";
+				}else {
+					echo "<script>alert('Invalid price')</script>";
+				}
+
+
+
 
       }
 
@@ -220,18 +239,30 @@ if(isset($_POST['product_requestnumber']) && isset($_POST['product_requestcharac
 											 id="btn_upload_products" class="btn btn-primary btn-block">UPLOAD</a>
 									</td>
 									<td width="70%">
+
+
+										<form method="post">
+											<input style="width:100%" name = "prod_price" id = <?php echo "prod_price".md5(md5(md5($row['Ctr']))) ?>
+											 		<?php echo 'value="'.$row['Product_Price'].'"';?>  type="text" hidden  />
+
+											<h5 hidden class="text-left" id = <?php echo "description".md5(md5(md5($row['Ctr']))) ?> >Description</h5>
+
+											<textarea name="txt_desc"  <?php echo 'value="'.$row['Product_Description'].'"';?>
+													id = <?php echo "txt_desc".md5(md5(md5($row['Ctr']))) ?> hidden rows="7" style="width:100%"><?php echo trim($row['Product_Description']) ?></textarea>
+
+											<input hidden name="desc_requestnumber" <?php echo 'value="'.$row['Ctr'].'"';?> />
+											<input hidden name="desc_requestcharacter" <?php echo 'value="'.md5(md5($row['Ctr'])).'"';?> />
+											<input hidden type="submit" <?php echo 'id="desc_requestnumber'.md5(md5(md5($row['Ctr']))).'"';?> />
+										</form>
+
+										<div class="price" id = <?php echo "price".md5(md5(md5($row['Ctr']))) ?> style="width:100%">
 											<h3 style="color: red"><b> &#x20B1; <?php echo $row['Product_Price'] ?> </b></h3><br>
+
+										</div>
                       <div class="" style="height:100%">
-                        Description
+                        <h5 class="text-left" id = <?php echo "raw_description".md5(md5(md5($row['Ctr']))) ?> >Description</h5>
+
                         <br>
-
-                        <form method="post">
-                          <textarea name="txt_desc"  <?php echo 'value="'.$row['Product_Description'].'"';?>  id = <?php echo "txt_desc".md5(md5(md5($row['Ctr']))) ?> hidden rows="7" style="width:100%"><?php echo trim($row['Product_Description']) ?></textarea>
-                          <input hidden name="desc_requestnumber" <?php echo 'value="'.$row['Ctr'].'"';?> />
-    											<input hidden name="desc_requestcharacter" <?php echo 'value="'.md5(md5($row['Ctr'])).'"';?> />
-                          <input hidden type="submit" <?php echo 'id="desc_requestnumber'.md5(md5(md5($row['Ctr']))).'"';?> />
-                        </form>
-
                         <div class="description" id = <?php echo "div_desc".md5(md5(md5($row['Ctr']))) ?> >
                           <h5> <b><?php echo nl2br($row['Product_Description']) ?></b> </h5>
                         </div>

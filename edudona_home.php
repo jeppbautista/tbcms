@@ -279,10 +279,10 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="col" id="padd"> </th>
               <th scope="col"> </th>
               <th scope="col"> </th>
-              <th scope="col" >
+              <th scope="col"> </th>
+              <th scope="col" style="width:100%" >
                 <img src="https://tbcmerchantservices.com/images/network.png">
                 <br>
                 <?php
@@ -451,6 +451,7 @@
           }
           .table {
             height: 300px;
+            margin-bottom: 630px;
           }
         }
       </style>
@@ -465,11 +466,18 @@
       $rs2 = mysql_query($query2);
       $cycles = mysql_num_rows($rs2);
 
+      $query3 = "select count(1) as members from xtbl_eudodona";
+      $rs3 = mysql_query($query3);
+      $members = mysql_fetch_assoc($rs3)["members"];
+
       ?>
 
       <div class="container">
         <div class="row">
           <h4> Number of Edudona Cycles : <b><?php echo $cycles; ?></b> </h4>
+        </div>
+        <div class="row">
+          <h4>Tota Edudona members : <b> <?php echo $members; ?> </b> </h4>
         </div>
       </div>
       <br>
