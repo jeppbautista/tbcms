@@ -61,36 +61,25 @@
                                </div>
 <?php
 
-				$query="select * from xtbl_product where Type like '$type'";
+				$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
 				$rs=mysql_query($query);
 				$rows=mysql_num_rows($rs);
 				$p=ceil($rows/$limit);
 				$start=($page-1)*$limit;
-				$query="select * from xtbl_product where Type like '$type' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
+				$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
 				$rs=mysql_query($query);
 				if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h4></div>';}
 				else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
 
 				echo '<br><div class="container" align="center">';
-				while($row=mysql_fetch_assoc($rs)) {
-			?>		<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+				while($row=mysql_fetch_assoc($rs)) {?>
+					<?php if(file_exists('products/'.$row['Image'])) { ?>
+						<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
 						<div style="height: 35px;">
 							<h4><b><?php echo $row['Product_Name'];?></b></h4>
 						</div>
 						<div style="height: 330px;">
-							<?php
-								if(file_exists('products/'.$row['Image'])) {
-				            ?>
-				            	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
-				            <?php
-				            	}
-				            	else{
-				            ?>
-				            	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/0000.jpg"';?> >
-				            <?php
-				            	}
-							?>
-
+				    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
 						</div>
 
 						<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
@@ -101,7 +90,7 @@
 						</div>
 
 					</div>
-			<?php
+					<?php }
 				}
 				echo '</div><br><br>';
 				echo '<div class="container" align="center"><br><br>';
@@ -238,35 +227,25 @@
                                </div>
 <?php
 
-					$query="select * from xtbl_product where Type like '$type'";
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
 					$rs=mysql_query($query);
 					$rows=mysql_num_rows($rs);
 					$p=ceil($rows/$limit);
 					$start=($page-1)*$limit;
-					$query="select * from xtbl_product where Type like '$type' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
 					$rs=mysql_query($query);
 					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
 					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
 
 					echo '<br><div class="container" align="center">';
-					while($row=mysql_fetch_assoc($rs)) {
-				?>		<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+					while($row=mysql_fetch_assoc($rs)) {?>
+						<?php if(file_exists('products/'.$row['Image'])) { ?>
+							<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
 							<div style="height: 35px;">
 								<h4><b><?php echo $row['Product_Name'];?></b></h4>
 							</div>
 							<div style="height: 330px;">
-								<?php
-									if(file_exists('products/'.$row['Image'])) {
-					            ?>
-					            	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
-					            <?php
-					            	}
-					            	else{
-					            ?>
-					            	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/0000.jpg"';?> >
-					            <?php
-					            	}
-								?>
+					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
 							</div>
 
 							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
@@ -277,7 +256,7 @@
 							</div>
 
 						</div>
-				<?php
+						<?php }
 					}
 					echo '</div><br><br>';
 					echo '<div class="container" align="center"><br><br>';
