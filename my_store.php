@@ -249,15 +249,17 @@ if(isset($_POST['product_requestnumber']) && isset($_POST['product_requestcharac
 											$checktransact_query="select * from xtbl_product_request WHERE Product_Ctr='".$row['Ctr']."'";
 											$checktransact_rs=mysql_query($checktransact_query);
 											$checktransact_rows=mysql_num_rows($checktransact_rs);
-											if($checktransact_rows>0){
-												echo '<span class="glyphicon glyphicon-ok glyphicon-lg" style="font-size:15px"></span>';
-											}
-											else{
+											// if($checktransact_rows==0){
+											// 	echo '<span class="glyphicon glyphicon-ok glyphicon-lg" style="font-size:15px"></span>';
+											// 	echo '<a href="javascript:void(0)" class="btn btn-success btn-lg" onclick=edit_product("'.md5(md5(md5($row['Ctr']))).'")>
+                      //     <span class="glyphicon glyphicon-pencil"></span></a>';
+											// }
+											// else{
 												echo '<a href="javascript:void(0)" class="btn btn-success btn-lg" onclick=edit_product("'.md5(md5(md5($row['Ctr']))).'")>
                           <span class="glyphicon glyphicon-pencil"></span></a>';
 												echo '<a href="javascript:void(0)" onclick=delete_product("'.md5(md5(md5($row['Ctr']))).'")
 													class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-trash"></span></a>';
-											}
+											// }
 										?>
 										</div>
 									</td>

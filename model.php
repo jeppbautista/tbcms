@@ -148,7 +148,7 @@ class eudodona_model
       $exit_query = "
         SELECT * FROM xtbl_eudodona WHERE rank = 1";
       $rs = mysql_query($exit_query);
-      $row = msyql_fetch_assoc($rs);
+      $row = mysql_fetch_assoc($rs);
 
       $Mainctr = $row['MainCtr'];
       $username = $row['username'];

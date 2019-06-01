@@ -127,6 +127,17 @@ if (isset($_POST['txttbc_email_checksignup']) && !empty($_POST['txttbc_email_che
         google_ad_client: "ca-pub-7719044667689153",
         enable_page_level_ads: true
       });
+      $( document ).ready(function() {
+
+      	$('#birth-text').on('keypress', function(e){
+        	var keyCode = e.which;
+          console.log(keyCode);
+      		if ((keyCode != 8 ) && (keyCode < 48 || keyCode > 57) && (keyCode != 45)){
+      			return false;
+      		}
+
+      	 });
+      });
     </script>
     <?php
             $class->head_end();
@@ -206,6 +217,7 @@ if (isset($_POST['txttbc_email_checksignup']) && !empty($_POST['txttbc_email_che
 
         $class->body_end();
         $class->html_end();
+
     }
 }
 //----------------------------------------------------------------------------------------SIGNUP_FORM END

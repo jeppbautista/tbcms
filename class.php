@@ -426,7 +426,7 @@ class mydesign
                 <div class="container">
                     <div class="col-md-2" style="padding: 3px;">
                         <h4 style="color: #A9A9A9;">Birthday</h4>
-                        <input name="txttbc_bday_signup" class="form-control" type="text" style="font-size: 18px; height: 40px; border-radius: 0px;width: 100%; background-color: white" readonly placeholder="YYYY-MM-DD" />
+                        <input id = "birth-text" name="txttbc_bday_signup" class="form-control" type="text" style="font-size: 18px; height: 40px; border-radius: 0px;width: 100%; background-color: white"  placeholder="YYYY-MM-DD" />
                     </div>
                     <div class="col-md-3" style="padding: 3px;">
                         <h4 style="color: #A9A9A9;">Cellphone No.</h4>

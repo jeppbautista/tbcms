@@ -1,5 +1,25 @@
 $( document ).ready(function() {
 
+	$('#birth-text').on('keypress', function(e){
+  	var keyCode = e.which;
+
+		var numChars = $("#birth-text").val().length;
+
+		if ((keyCode != 8 ) && (keyCode < 48 || keyCode > 57) && (keyCode != 109 || keyCode != 189) || (numChars > 9)){
+			e.preventDefault();
+		}
+
+		if((keyCode !== 8)) {
+			if(numChars === 4 || numChars === 7){
+				var thisVal = $("#birth-text").val();
+				thisVal += '-';
+				$("#birth-text").val(thisVal);
+			}
+		}
+
+
+	 });
+
 	var url=window.location.href;
 	var res = url.split("#");
 
@@ -28,7 +48,7 @@ $( document ).ready(function() {
 	    todayHighlight: 1,
 	    startView: 2,
 	    minView: 2,
-	    forceParse: 0,
+	    // forceParse: 0,
 	    format: "yyyy-mm-dd"
 	});
 
@@ -78,7 +98,8 @@ $( document ).ready(function() {
 				else if(error=='error18') {$('#account_error').html('Please Fill Password'); $('#submit_complete_signupbutton').show();}
 				else if(error=='error19') {$('#account_error').html('Password Mismatch'); $('#submit_complete_signupbutton').show();}
 				else if(error=='error20') {$('#account_error').html('Username not available'); $('#submit_complete_signupbutton').show();}
-				else if(error=='error21') {alert('ERROR CONNECTION'); $('#submit_complete_signupbutton').show();}
+				else if(error=='error21') {$('#account_error').html('Invalid birth date'); $('#submit_complete_signupbutton').show();}
+				// else if(error=='error21') {alert('ERROR CONNECTION'); $('#submit_complete_signupbutton').show();}
 				else { window.location.assign("https://tbcmerchantservices.com/welcome/");}
 			}
 		});

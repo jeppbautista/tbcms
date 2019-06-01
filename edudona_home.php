@@ -477,7 +477,7 @@
           <h4> Number of Edudona Cycles : <b><?php echo $cycles; ?></b> </h4>
         </div>
         <div class="row">
-          <h4>Tota Edudona members : <b> <?php echo $members; ?> </b> </h4>
+          <h4>Total Edudona members : <b> <?php echo $members; ?> </b> </h4>
         </div>
       </div>
       <br>

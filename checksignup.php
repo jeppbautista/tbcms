@@ -162,6 +162,7 @@
 						if(empty($lname)) {echo 'error4';} //lastname empty
 						else if(empty($fname)) {echo 'error5';} //firstname empty
 						else if(empty($bday)) {echo 'error6';} //date empty
+						else if(!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$bday)) { echo 'error21';}
 						else if(empty($cell)) {echo 'error7';} //cell empty
 						else if(empty($address)) {echo 'error8';} //address empty
 						else if(empty($btcwallet)) {echo 'error13';} //btc empty
