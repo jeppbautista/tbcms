@@ -240,7 +240,7 @@
 	        <td width="20%">ACTIONS</td>
 	      </tr>
 				<?php
-				$query="select * from xtbl_admin_eudodona WHERE Status='WAITING' Order by Datetime DESC";
+				$query="select * from xtbl_admin_eudodona Order by Datetime DESC";
 				$rs=mysql_query($query);
 				while($row=mysql_fetch_assoc($rs)) {
 					$query2="select * from xtbl_personal where Main_Ctr='".$row['Main_Ctr']."'";
@@ -254,10 +254,13 @@
 					<td width="40%"><?php echo $row2['Fname'].' '.$row2['Lname'].'<br>'.$row['Transaction'];?></td>
 					<td width="10%"><?php echo $row['Remarks'];?></td>
 					<td width="20%">
-						<a class="btn btn-success" href="javascript:void(0)"
-							<?php echo 'onclick="btnaccept('.$row['Ctr'].')"';?> >ACCEPT</a>
-						<a class="btn btn-danger" href="javascript:void(0)"
-							<?php echo 'onclick="btndenied('.$row['Ctr'].')"';?> >DENIED</a>
+						<?php if ($row['Status']=='WAITING') { ?>
+							<a class="btn btn-success" href="javascript:void(0)"
+								<?php echo 'onclick="btnaccept('.$row['Ctr'].')"';?> >ACCEPT</a>
+							<a class="btn btn-danger" href="javascript:void(0)"
+								<?php echo 'onclick="btndenied('.$row['Ctr'].')"';?> >DENIED</a>
+						<?php } else { echo '<img src="https://tbcmerchantservices.com/images/1482106046_tick_16.png" height="30px"> SUCCESS'; } ?>
+							
 					</td>
 				</tr>
 			<?php
