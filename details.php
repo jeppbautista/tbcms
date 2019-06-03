@@ -13,6 +13,54 @@
 
 	$ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
 
+	if(isset($_POST["profile_edit"])){
+		$lastname = $class->pre_process_form($_REQUEST["last_name"]);
+		$firstname = $class->pre_process_form($_REQUEST["first_name"]);
+		$middlename = $class->pre_process_form($_REQUEST["middle_name"]);
+		$bday = $class->pre_process_form($_REQUEST["birth_day"]);
+		$cell = $class->pre_process_form($_REQUEST["cell_phone"]);
+		$addr = $class->pre_process_form($_REQUEST["addr"]);
+
+		$query = "
+			UPDATE xtbl_personal SET Lname = '$lastname',
+				Fname = '$firstname',
+				Mname = '$middlename',
+				Birthday = '$bday',
+				Address = '$addr',
+				Cellphone = '$cell'
+			WHERE Main_Ctr = '$ctr'
+		";
+		@mysql_query($query);
+
+	}
+
+	else if (isset($_POST["merchantprofile_edit"])){
+		$business_name = $class->pre_process_form($_REQUEST["txtm_business_name"]);
+		$country = $class->pre_process_form($_REQUEST["txtm_country"]);
+		// $fullname = $class->pre_process_form($_REQUEST["txtm_fullname"]);
+		$birthday = $class->pre_process_form($_REQUEST["txtm_birthday"]);
+		$cellphone = $class->pre_process_form($_REQUEST["txtm_cellphone"]);
+		$address = $class->pre_process_form($_REQUEST["txtm_addr"]);
+		$business_description = $class->pre_process_form($_REQUEST["txtm_business_desc"]);
+
+
+		$query = "
+			UPDATE xtbl_main_info SET Business_Name = '$business_name',
+				Country = '$country',
+				Description = '$business_description'
+			WHERE Ctr = '$ctr'
+		";
+		@mysql_query($query);
+
+		$query2 = "
+			UPDATE xtbl_personal SET Birthday = '$birthday',
+				Cellphone = '$cellphone',
+				Address = '$address',
+			WHERE Main_Ctr = '$ctr'
+		";
+		@mysql_query($query2);
+	}
+
 	$query="select * from xtbl_adminaccount";
 	$rs=mysql_query($query);
 	$row=mysql_fetch_assoc($rs);
@@ -56,6 +104,8 @@
 	$address=$row['Address'];
 	$profile_image=$row['Profile_Image'];
 
+
+
 	if($email_status=='INACTIVE' && $account_status=='INACTIVE' && $card_status=='INACTIVE'){
 		header("location: https://tbcmerchantservices.com/home/");
 	}
@@ -70,8 +120,11 @@
 				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+				$class->script('https://tbcmerchantservices.com/js/jquery1.5.js');
 			$class->head_end();
 			$class->body_start('');
+
+
 			if($account_type=='MERCHANT') {
 				$class->page_home_header_start();
 					$class->page_home4_header_content();
@@ -108,6 +161,7 @@
 						}
 				}
 			?>
+
 
 				<div class="container">
 					<div class="col-md-4">
@@ -229,35 +283,8 @@
 
 					</div>
 
-					<div class="col-md-8 alert">
-						<h1><b style="color:#A52A2A"><?php echo $fullname;?></b><br><span style="font-size: 25px;"><?php echo $cellphone;?></span>
-						</h1>
-						<h3><b>PROFILE INFORMATION</b></span></h3><hr>
-						<div>
-							<div class="col-md-3">LastName:</div>
-							<div class="col-md-9"><h4><b><?php echo $lastname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">FirstName:</div>
-							<div class="col-md-9"><h4><b><?php echo $firstname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">MiddleName:</div>
-							<div class="col-md-9"><h4><b><?php echo $middlename;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Birthday:</div>
-							<div class="col-md-9"><h4><b><?php $class->dateformat($birthday);?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Contact:</div>
-							<div class="col-md-9"><h4><b><?php echo $cellphone;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Address:</div>
-							<div class="col-md-9"><h4><b><?php echo $address;?></b></h4></div>
-						</div>
-					</div>
+					<?php $class->show_user_details($fullname, $lastname, $firstname, $middlename, $cellphone, $birthday, $address); ?>
+
 				</div>
 			<?php
 			}
@@ -277,6 +304,7 @@
 				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+				$class->script('https://tbcmerchantservices.com/js/jquery1.5.js');
 			$class->head_end();
 			$class->body_start('');
 			if($account_type=='MERCHANT') {
@@ -333,52 +361,8 @@
 						<a href="javascript:void(0)" onclick="$('#upload_logo').click();" class="btn btn-primary btn-block btn-lg">UPLOAD IMAGE</a>
 
 					</div>
-					<div class="col-md-8 alert">
-						<div>
-							<img src="https://tbcmerchantservices.com/images/TBCMSTOS.png" width="100%">
-						</div>
+					<?php $class->show_merchant_details($ctr, $business_name, $business_category, $business_description, $business_country, $fullname, $birthday, $cellphone, $address); ?>
 
-						<h1><b style="color:#A52A2A"><?php echo $business_name;?></b><br><span style="font-size: 25px;"><?php echo $business_category;?></span>
-						</h1><hr>
-						<h4><?php echo $business_description;?></h4>
-
-						<hr><h3><b>TBC BUSINESS REGISTRATION</b></span></h3><hr>
-						<div>
-							<div class="col-md-3">Country:</div>
-							<div class="col-md-9"><h4><b><?php echo $business_country;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Registered by:</div>
-							<div class="col-md-9"><h4><b><?php echo $fullname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Birthday:</div>
-							<div class="col-md-9"><h4><b><?php $class->dateformat($birthday);?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Cellphone:</div>
-							<div class="col-md-9"><h4><b><?php echo $cellphone;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Address:</div>
-							<div class="col-md-9"><h4><b><?php echo $address;?></b></h4></div>
-						</div>
-
-						<h3><b>SUPPORTING DOCUMENTS</b></span></h3><hr>
-						<div>
-							<?php
-								$doc_query="select * from xtbl_requirements where Main_Ctr='$ctr' limit 3";
-								$doc_rs=mysql_query($doc_query);
-								$doc_counter=0;
-								while($doc_rows=mysql_fetch_assoc($doc_rs)){
-									echo '<div class="col-md-4">
-											<img src="https://tbcmerchantservices.com/'.$doc_rows['Image'].'" width="100%">
-										</div>';
-								}
-							?>
-						</div>
-
-					</div>
 				</div>
 			<?php
 			}
@@ -436,35 +420,7 @@
 
 					</div>
 
-					<div class="col-md-8 alert">
-						<h1><b style="color:#A52A2A"><?php echo $fullname;?></b><br><span style="font-size: 25px;"><?php echo $cellphone;?></span>
-						</h1>
-						<h3><b>PROFILE INFORMATION</b></span></h3><hr>
-						<div>
-							<div class="col-md-3">LastName:</div>
-							<div class="col-md-9"><h4><b><?php echo $lastname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">FirstName:</div>
-							<div class="col-md-9"><h4><b><?php echo $firstname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">MiddleName:</div>
-							<div class="col-md-9"><h4><b><?php echo $middlename;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Birthday:</div>
-							<div class="col-md-9"><h4><b><?php $class->dateformat($birthday);?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Contact:</div>
-							<div class="col-md-9"><h4><b><?php echo $cellphone;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Address:</div>
-							<div class="col-md-9"><h4><b><?php echo $address;?></b></h4></div>
-						</div>
-					</div>
+					<?php $class->show_user_details($fullname, $lastname, $firstname, $middlename, $cellphone, $birthday, $address); ?>
 				</div>
 			<?php
 			}
