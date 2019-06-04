@@ -37,6 +37,11 @@
 
 	if($type==""){$type='%%';}
 
+	$query="select * from xtbl_adminaccount";
+	$rs=mysql_query($query);
+	$row=mysql_fetch_assoc($rs);
+	$tbc_to_peso=$row['Tbc_to_Peso'];
+
 	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
 		$class->doc_type();
 		$class->html_start('');
@@ -55,45 +60,82 @@
 				$class->page_home_header_end();
 				$class->page_shopping_navbar_content1();
 ?>
+<style media="screen">
+.popover{
+	max-width: 100%;
+}
+.popover-content {
+overflow-y : scroll;
+width: 500px;
+}
+</style>
                                <div class="container" align="center">
                                        <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
                                        <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
                                </div>
 <?php
 
-				$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
-				$rs=mysql_query($query);
-				$rows=mysql_num_rows($rs);
-				$p=ceil($rows/$limit);
-				$start=($page-1)*$limit;
-				$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
-				$rs=mysql_query($query);
-				if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h4></div>';}
-				else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
+					$rs=mysql_query($query);
+					$rows=mysql_num_rows($rs);
+					$p=ceil($rows/$limit);
+					$start=($page-1)*$limit;
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
+					$rs=mysql_query($query);
 
-				echo '<br><div class="container" align="center">';
-				while($row=mysql_fetch_assoc($rs)) {?>
-					<?php if(file_exists('products/'.$row['Image'])) { ?>
-						<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
-						<div style="height: 35px;">
-							<h4><b><?php echo $row['Product_Name'];?></b></h4>
+
+
+					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
+					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
+
+					echo '<br><div class="container" align="center">';
+					$i = 0;
+
+					while($row=mysql_fetch_assoc($rs)) {?>
+						<?php if(file_exists('products/'.$row['Image'])) {
+							$i++;
+							$mer_ctr = $row["Main_Ctr"];
+							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
+							$rs2=mysql_query($query2);
+							$row2=mysql_fetch_assoc($rs2);
+							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
+							$rs3=mysql_query($query3);
+							$row3=mysql_fetch_assoc($rs3);
+
+						?>
+
+
+						<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
+									data-content = '<h3 style="color:red">
+																	<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
+																	<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
+																</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
+																<h5>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h5>
+																<h5>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h5>
+																'
+
+										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
+										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+
+							<div style="height: 35px;">
+								<h4><b><?php echo $row['Product_Name'];?></b></h4>
+							</div>
+							<div style="height: 330px;">
+					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
+							</div>
+
+							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
+
+							<div style="height: 20px;">
+								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
+									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
+							</div>
+
 						</div>
-						<div style="height: 330px;">
-				    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
-						</div>
-
-						<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
-
-						<div style="height: 20px;">
-							<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-								style="font-size: 20px; border-radius: 0px">VIEW INFO</a>
-						</div>
-
-					</div>
-					<?php }
-				}
-				echo '</div><br><br>';
-				echo '<div class="container" align="center"><br><br>';
+						<?php }
+					}
+					echo '</div><br><br>';
+					echo '<div class="container" align="center"><br><br>';
 				if($page>1) {
 			?>
 				<form method="POST" hidden>
@@ -221,6 +263,15 @@
 
 					$class->page_shopping_navbar_content1();
 ?>
+<style media="screen">
+.popover{
+	max-width: 100%;
+}
+.popover-content {
+overflow-y : scroll;
+width: 500px;
+}
+</style>
                                <div class="container" align="center">
                                        <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
                                        <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
@@ -234,13 +285,43 @@
 					$start=($page-1)*$limit;
 					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
 					$rs=mysql_query($query);
+
+
+
 					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
 					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
 
 					echo '<br><div class="container" align="center">';
+					$i = 0;
+
 					while($row=mysql_fetch_assoc($rs)) {?>
-						<?php if(file_exists('products/'.$row['Image'])) { ?>
-							<div class="col-md-3" style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+						<?php if(file_exists('products/'.$row['Image'])) {
+							$i++;
+							$mer_ctr = $row["Main_Ctr"];
+							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
+							$rs2=mysql_query($query2);
+							$row2=mysql_fetch_assoc($rs2);
+							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
+							$rs3=mysql_query($query3);
+							$row3=mysql_fetch_assoc($rs3);
+
+						?>
+
+
+							<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
+										data-content = '<h3 style="color:red">
+																		<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
+																		<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
+																	</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
+																	<h5>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h5>
+																	<h5>Email: <b><?php echo $row2["Email"];?></b></h5>
+																	<h5>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h5>
+																	<h5>Cell #: <b><?php echo $row3["Cellphone"];?></b></h5><br>
+																	'
+
+										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
+										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+
 							<div style="height: 35px;">
 								<h4><b><?php echo $row['Product_Name'];?></b></h4>
 							</div>
@@ -252,7 +333,7 @@
 
 							<div style="height: 20px;">
 								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-									style="font-size: 20px; border-radius: 0px">VIEW INFO</a>
+									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
 							</div>
 
 						</div>

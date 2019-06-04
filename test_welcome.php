@@ -7,428 +7,372 @@
 	date_default_timezone_set('Asia/Manila');
 	$sessiondate=date('mdY');
 
-	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-		header("location: https://tbcmerchantservices.com/welcome/");
+	$limit=12;
+	$page=$_SESSION['session_ppage'];
+	$type=$_SESSION['session_ptype'];
+
+	if(isset($_POST['pageno'])) {
+		$page=str_replace("'", '', $_REQUEST['pageno']);
+		$page=str_replace('"', '', $page);
+		$page=str_replace("<", '', $page);
+		$page=str_replace('>', '', $page);
+
+		$_SESSION['session_ppage']=$page;
+		$page=$_SESSION['session_ppage'];
+		echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
 	}
 
-	$ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
+	if($page==""){$page=1;}
 
-	if(isset($_POST["profile_edit"])){
-		$lastname = $class->pre_process_form($_REQUEST["last_name"]);
-		$firstname = $class->pre_process_form($_REQUEST["first_name"]);
-		$middlename = $class->pre_process_form($_REQUEST["middle_name"]);
-		$bday = $class->pre_process_form($_REQUEST["birth_day"]);
-		$cell = $class->pre_process_form($_REQUEST["cell_phone"]);
-		$addr = $class->pre_process_form($_REQUEST["addr"]);
-
-		$query = "
-			UPDATE xtbl_personal SET Lname = '$lastname',
-				Fname = '$firstname',
-				Mname = '$middlename',
-				Birthday = '$bday',
-				Address = '$addr',
-				Cellphone = '$cell'
-			WHERE Main_Ctr = '$ctr'
-		";
-		@mysql_query($query);
-
+	if(isset($_POST['shoptype'])) {
+		$type=str_replace("'", '', $_REQUEST['shoptype']);
+		$type=str_replace('"', '', $type);
+		$type=str_replace("<", '', $type);
+		$type=str_replace('>', '', $type);
+		$_SESSION['session_ppage']=1;
+		$_SESSION['session_ptype']=$type;
+		$type=$_SESSION['session_ptype'];
+		echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
 	}
 
-	else if (isset($_POST["merchantprofile_edit"])){
-		$business_name = $class->pre_process_form($_REQUEST["txtm_business_name"]);
-		$country = $class->pre_process_form($_REQUEST["txtm_country"]);
-		// $fullname = $class->pre_process_form($_REQUEST["txtm_fullname"]);
-		$birthday = $class->pre_process_form($_REQUEST["txtm_birthday"]);
-		$cellphone = $class->pre_process_form($_REQUEST["txtm_cellphone"]);
-		$address = $class->pre_process_form($_REQUEST["txtm_addr"]);
-		$business_description = $class->pre_process_form($_REQUEST["txtm_business_desc"]);
-
-
-		$query = "
-			UPDATE xtbl_main_info SET Business_Name = '$business_name',
-				Country = '$country',
-				Description = '$business_description'
-			WHERE Ctr = '$ctr'
-		";
-		@mysql_query($query);
-
-		$query2 = "
-			UPDATE xtbl_personal SET Birthday = '$birthday',
-				Cellphone = '$cellphone',
-				Address = '$address',
-			WHERE Main_Ctr = '$ctr'
-		";
-		@mysql_query($query2);
-	}
+	if($type==""){$type='%%';}
 
 	$query="select * from xtbl_adminaccount";
 	$rs=mysql_query($query);
 	$row=mysql_fetch_assoc($rs);
-	$our_btc=$row['BTC'];
-	$our_coinsph=$row['CoinPH'];
-	$our_paypal=$row['Paypal'];
 	$tbc_to_peso=$row['Tbc_to_Peso'];
 
-	$query="select * from xtbl_account_info WHERE Main_Ctr='$ctr'";
-	$rs=mysql_query($query);
-	$row=mysql_fetch_assoc($rs);
-	$email_status=$row['Email_Status'];
-	$account_type=$row['Account_Type'];
-	$account_status=$row['Account_Status'];
-	$card_status=$row['Card_Status'];
-	$username=$row['Username'];
-	$activation_amount=0;
-	if($account_type=='MERCHANT') {$activation_amount=2500;}
-	else {$activation_amount=1500;}
-	$activition_tbc_amount=$activation_amount/$tbc_to_peso;
-
-	$query="select * from xtbl_main_info WHERE Ctr='$ctr'";
-	$rs=mysql_query($query);
-	$row=mysql_fetch_assoc($rs);
-	$current_email=$row['Email'];
-	$business_logo=$row['Business_Logo'];
-	$business_name=$row['Business_Name'];
-	$business_category=$row['Business_Category'];
-	$business_description=$row['Description'];
-	$business_country=$row['Country'];
-
-	$query="select * from xtbl_personal WHERE Main_Ctr='$ctr'";
-	$rs=mysql_query($query);
-	$row=mysql_fetch_assoc($rs);
-	$fullname=$row['Fname'].' '.$row['Lname'];
-	$lastname=$row['Lname'];
-	$firstname=$row['Fname'];
-	$middlename=$row['Mname'];
-	$birthday=$row['Birthday'];
-	$cellphone=$row['Cellphone'];
-	$address=$row['Address'];
-	$profile_image=$row['Profile_Image'];
-
-
-
-	if($email_status=='INACTIVE' && $account_status=='INACTIVE' && $card_status=='INACTIVE'){
-		header("location: https://tbcmerchantservices.com/home/");
-	}
-	else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=='INACTIVE')
-	{
-
+	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
 		$class->doc_type();
 		$class->html_start('');
 			$class->head_start();
-				echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-				$class->title_page('TBCMS-'.$username);
+			echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+			$class->title_page('TBCMS');
 				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-				$class->script('https://tbcmerchantservices.com/js/jquery1.5.js');
+				$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
 			$class->head_end();
+
 			$class->body_start('');
-
-
-			if($account_type=='MERCHANT') {
 				$class->page_home_header_start();
-					$class->page_home4_header_content();
+					$class->page_shopping_header_content1();
 				$class->page_home_header_end();
-				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
+				$class->page_shopping_navbar_content1();
+?>
+<style media="screen">
+.popover{
+	max-width: 100%;
+}
+.popover-content {
+overflow-y : scroll;
+width: 500px;
+}
+</style>
+                               <div class="container" align="center">
+                                       <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
+                                       <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
+                               </div>
+<?php
 
-				if(isset($_POST['submit'])){
-						if(count($_FILES['upload_logo']['name']) > 0){
-										$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
+					$rs=mysql_query($query);
+					$rows=mysql_num_rows($rs);
+					$p=ceil($rows/$limit);
+					$start=($page-1)*$limit;
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
+					$rs=mysql_query($query);
 
-										if($tmpFilePath != ""){
-											$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
-												$shortname = $_FILES['upload_logo']['name'];
 
-												if(file_exists('business/'.$business_logo)) {
-													unlink('business/'.$business_logo);
-												}
 
-												$business_logo = $ctr.md5(date('dmYHis')).$endfilename;
+					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
+					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
 
-												$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
-												if($check !== false) {
-													if(move_uploaded_file($tmpFilePath, 'business/'.$business_logo)) {
-															$files[] = $shortname;
-															$upload_query="update xtbl_main_info SET
-															Business_Logo='$business_logo'
-															WHERE Ctr='$ctr'";
-															$upload_rs=@mysql_query($upload_query);
-													}
-												}
+					echo '<br><div class="container" align="center">';
+					$i = 0;
 
-										}
+					while($row=mysql_fetch_assoc($rs)) {?>
+						<?php if(file_exists('products/'.$row['Image'])) {
+							$i++;
+							$mer_ctr = $row["Main_Ctr"];
+							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
+							$rs2=mysql_query($query2);
+							$row2=mysql_fetch_assoc($rs2);
+							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
+							$rs3=mysql_query($query3);
+							$row3=mysql_fetch_assoc($rs3);
 
-						}
-				}
+						?>
+
+
+							<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
+										data-content = '<h3 style="color:red">
+																		<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
+																		<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
+																	</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
+																	<h4>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h4>
+																	<h4>Email: <b><?php echo $row2["Email"];?></b></h4>
+																	<h4>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h4>
+																	<h4>Cell #: <b><?php echo $row3["Cellphone"];?></b></h4><br>
+																	'
+
+										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
+										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+
+							<div style="height: 35px;">
+								<h4><b><?php echo $row['Product_Name'];?></b></h4>
+							</div>
+							<div style="height: 330px;">
+					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
+							</div>
+
+							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
+
+							<div style="height: 20px;">
+								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
+									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
+							</div>
+
+						</div>
+						<?php }
+					}
+					echo '</div><br><br>';
+					echo '<div class="container" align="center"><br><br>';
+				if($page>1) {
 			?>
-
-
-				<div class="container">
-					<div class="col-md-4">
-					<?php
-						if(!file_exists('business/'.$business_logo)) {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/00000.png">';
-						}
-						else {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'">';
-						}
-					?>
-						<form hidden action="" enctype="multipart/form-data" method="post">
-							<input id='upload_logo' hidden name="upload_logo" onchange="$('#txtsubmit_upload_logo').click();" type="file"/><br>
-							<input id="txtsubmit_upload_logo" type="submit" hidden name="submit" value="Submit" />
-						</form>
-						<a href="javascript:void(0)" onclick="$('#upload_logo').click();" class="btn btn-primary btn-block btn-lg">UPLOAD IMAGE</a>
-
-					</div>
-					<div class="col-md-8 alert">
-						<div>
-							<img src="https://tbcmerchantservices.com/images/TBCMSTOS.png" width="100%">
-						</div>
-
-						<h1><b style="color:#A52A2A"><?php echo $business_name;?></b><br><span style="font-size: 25px;"><?php echo $business_category;?></span>
-						</h1><hr>
-						<h4><?php echo $business_description;?></h4>
-
-						<hr><h3><b>TBC BUSINESS REGISTRATION</b></span></h3><hr>
-						<div>
-							<div class="col-md-3">Country:</div>
-							<div class="col-md-9"><h4><b><?php echo $business_country;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Registered by:</div>
-							<div class="col-md-9"><h4><b><?php echo $fullname;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Birthday:</div>
-							<div class="col-md-9"><h4><b><?php $class->dateformat($birthday);?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Cellphone:</div>
-							<div class="col-md-9"><h4><b><?php echo $cellphone;?></b></h4></div>
-						</div>
-						<div>
-							<div class="col-md-3">Address:</div>
-							<div class="col-md-9"><h4><b><?php echo $address;?></b></h4></div>
-						</div>
-
-						<h3><b>SUPPORTING DOCUMENTS</b></span></h3><hr>
-						<div>
-							<?php
-								$doc_query="select * from xtbl_requirements where Main_Ctr='$ctr' limit 3";
-								$doc_rs=mysql_query($doc_query);
-								$doc_counter=0;
-								while($doc_rows=mysql_fetch_assoc($doc_rs)){
-									echo '<div class="col-md-4">
-											<img src="https://tbcmerchantservices.com/'.$doc_rows['Image'].'" width="100%">
-										</div>';
-								}
-							?>
-						</div>
-
-					</div>
-				</div>
+				<form method="POST" hidden>
+					<input name="pageno" <?php echo 'value="'.($page-1).'"';?> />
+					<input id="prev_page" type="submit" />
+				</form>
+				<a href="javascript:void(0)" onclick="$('#prev_page').click();" class="btn btn-danger "
+					style="font-size: 20px; border-radius: 0px">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					PREVIOUS PAGE</a>
 			<?php
-			}
-			else { //if buyer
-				$class->page_home_header_start();
-					$class->page_home4_header_content();
-				$class->page_home_header_end();
-				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-
-				if(isset($_POST['submit'])){
-						if(count($_FILES['upload_logo']['name']) > 0){
-										$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
-										if($tmpFilePath != ""){
-											$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
-												$shortname = $_FILES['upload_logo']['name'];
-
-												if(file_exists('profile/'.$profile_image)) {
-													unlink('profile/'.$profile_image);
-												}
-
-												$profile_image = $ctr.md5(date('dmYHis')).$endfilename;
-
-												$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
-												if($check !== false) {
-													if(move_uploaded_file($tmpFilePath, 'profile/'.$profile_image)) {
-															$files[] = $shortname;
-															$upload_query="update xtbl_personal SET
-															Profile_Image='$profile_image'
-															WHERE Main_Ctr='$ctr'";
-															$upload_rs=@mysql_query($upload_query);
-													}
-												}
-
-										}
-
-						}
 				}
+				if($page<$p) {
 			?>
-				<div class="container">
-					<div class="col-md-4">
-					<?php
-						if(!file_exists('profile/'.$profile_image)) {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/00000.jpg">';
-						}
-						else {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'">';
-						}
-					?>
-						<form hidden action="" enctype="multipart/form-data" method="post">
-							<input id='upload_logo' hidden name="upload_logo" onchange="$('#txtsubmit_upload_logo').click();" type="file"/><br>
-							<input id="txtsubmit_upload_logo" type="submit" hidden name="submit" value="Submit" />
-						</form>
-						<a href="javascript:void(0)" onclick="$('#upload_logo').click();" class="btn btn-primary btn-block btn-lg">UPLOAD IMAGE</a>
-
-					</div>
-
-					<?php $class->show_user_details($fullname, $lastname, $firstname, $middlename, $cellphone, $birthday, $address); ?>
-
-				</div>
+				<form method="POST" hidden>
+					<input name="pageno" <?php echo 'value="'.($page+1).'"';?> />
+					<input id="next_page" type="submit" />
+				</form>
+				<a href="javascript:void(0)" onclick="$('#next_page').click();" class="btn btn-danger "
+					style="font-size: 20px; border-radius: 0px">NEXT PAGE
+					<span class="glyphicon glyphicon-chevron-right"></span></a>
 			<?php
-			}
-
-
+				}
+				echo '</div><br><br><br>';
 			$class->page_welcome_header_content_start_footer();
+                        $class->chatscript();
 			$class->body_end();
 		$class->html_end();
+
 
 	}
-	else {
-		$class->doc_type();
-		$class->html_start('');
-			$class->head_start();
-				echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-				$class->title_page('TBCMS-'.$username);
-				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
-				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
-				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-				$class->script('https://tbcmerchantservices.com/js/jquery1.5.js');
-			$class->head_end();
-			$class->body_start('');
-			if($account_type=='MERCHANT') {
-				$class->page_home_header_start();
-					$class->page_home2_header_content();
-				$class->page_home_header_end();
-				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
+	else{
+		$ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
 
-				if(isset($_POST['submit'])){
-				    if(count($_FILES['upload_logo']['name']) > 0){
-				            $tmpFilePath = $_FILES['upload_logo']['tmp_name'];
+		$query="select * from xtbl_account_info WHERE Main_Ctr='$ctr'";
+		$rs=mysql_query($query);
+		$row=mysql_fetch_assoc($rs);
+		$email_status=$row['Email_Status'];
+		$account_type=$row['Account_Type'];
+		$account_status=$row['Account_Status'];
+		$card_status=$row['Card_Status'];
+		$username=$row['Username'];
+		$account_addressyou=$row['Crypt_Id'];
+		$activation_amount=0;
 
-				            if($tmpFilePath != ""){
-				            	$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
-				                $shortname = $_FILES['upload_logo']['name'];
+		$query="select * from xtbl_main_info WHERE Ctr='$ctr'";
+		$rs=mysql_query($query);
+		$row=mysql_fetch_assoc($rs);
+		$current_email=$row['Email'];
 
-				                if(file_exists('business/'.$business_logo)) {
-				                	unlink('business/'.$business_logo);
-				                }
-
-				                $business_logo = $ctr.md5(date('dmYHis')).$endfilename;
-
-				                $check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
-				                if($check !== false) {
-				                	if(move_uploaded_file($tmpFilePath, 'business/'.$business_logo)) {
-					                    $files[] = $shortname;
-					                    $upload_query="update xtbl_main_info SET
-					                    Business_Logo='$business_logo'
-					                    WHERE Ctr='$ctr'";
-					                    $upload_rs=@mysql_query($upload_query);
-					                }
-				                }
-
-				          	}
-
-				    }
+		if($email_status=='INACTIVE' || $account_status=='INACTIVE' || $card_status=='INACTIVE'){
+			header("location: https://tbcmerchantservices.com/home/");
+		}
+		else {
+			$class->doc_type();
+			$class->html_start('');
+				$class->head_start();
+					echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+					$class->title_page('TBCMS-'.$username);
+					$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+					$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
+					$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+					$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
+				$class->head_end();
+				$class->body_start('');
+				if($account_type=='MERCHANT') {
+					$class->page_home_header_start();
+						$class->page_home2_header_content();
+					$class->page_home_header_end();
 				}
-			?>
-
-				<div class="container">
-					<div class="col-md-4">
+				else { //if buyer
+					$class->page_home_header_start();
+						$class->page_home3_header_content();
+					$class->page_home_header_end();
+				}
+				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
+				$query="select * from xtbl_product_request where From_Ctr='$ctr' order by Ctr DESC LIMIT 20";
+				$rs=mysql_query($query);
+				?>
+					<div class="container" >
+						<h2>Latest Orders</h2>
+						<table class="table table-bordered">
+							<tr>
+								<td>Date</td>
+								<td>Merchant/Product</td>
+								<td>Quantity/Amount</td>
+								<td>Transact ID</td>
+								<td>Status</td>
+							</tr>
 					<?php
-						if(!file_exists('business/'.$business_logo)) {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/00000.png">';
-						}
-						else {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'">';
+						while($row=mysql_fetch_assoc($rs)) {
+					?>
+							<tr>
+								<td><?php echo '<b>'.$row['Datetime'].'</b>';?></td>
+								<td>
+								<?php
+
+									$mer_query="select * from xtbl_main_info Where Ctr='".$row['To_Ctr']."'";
+									$mer_rd=mysql_query($mer_query);
+									$mer_row=mysql_fetch_assoc($mer_rd);
+									echo '<b>'.$mer_row['Business_Name'].'</b><br>';
+
+									$prod_query="select * from xtbl_product Where Ctr='".$row['Product_Ctr']."'";
+									$prod_rd=mysql_query($prod_query);
+									$prod_row=mysql_fetch_assoc($prod_rd);
+									echo $prod_row['Product_Name'];
+								?>
+								</td>
+								<td>
+								<?php
+									echo '<b>Qnty: '.$row['Quantity'].'</b><br>';
+									echo 'PHP '.number_format($row['Amount'],2);
+								?>
+								</td>
+
+								<td><?php echo '<b>'.$row['Transact_Id'].'</b>';?></td>
+								<td><?php echo '<b>'.$row['Status'].'</b>';?></td>
+							</tr>
+					<?php
 						}
 					?>
-						<form hidden action="" enctype="multipart/form-data" method="post">
-							<input id='upload_logo' hidden name="upload_logo" onchange="$('#txtsubmit_upload_logo').click();" type="file"/><br>
-							<input id="txtsubmit_upload_logo" type="submit" hidden name="submit" value="Submit" />
-						</form>
-						<a href="javascript:void(0)" onclick="$('#upload_logo').click();" class="btn btn-primary btn-block btn-lg">UPLOAD IMAGE</a>
-
+						</table>
 					</div>
-					<?php $class->show_merchant_details($ctr, $business_name, $business_category, $business_description, $business_country, $fullname, $birthday, $cellphone, $address); ?>
+				<?php
 
-				</div>
-			<?php
-			}
-			else { //if buyer
-				$class->page_home_header_start();
-					$class->page_home3_header_content();
-				$class->page_home_header_end();
-				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
+					$class->page_shopping_navbar_content1();
+?>
+<style media="screen">
+.popover{
+	max-width: 100%;
+}
+.popover-content {
+overflow-y : scroll;
+width: 500px;
+}
+</style>
+                               <div class="container" align="center">
+                                       <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
+                                       <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
+                               </div>
+<?php
 
-				if(isset($_POST['submit'])){
-				    if(count($_FILES['upload_logo']['name']) > 0){
-				            $tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
-				            if($tmpFilePath != ""){
-				            	$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
-				                $shortname = $_FILES['upload_logo']['name'];
-
-				                if(file_exists('profile/'.$profile_image)) {
-				                	unlink('profile/'.$profile_image);
-				                }
-
-				                $profile_image = $ctr.md5(date('dmYHis')).$endfilename;
-
-				                $check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
-				                if($check !== false) {
-				                	if(move_uploaded_file($tmpFilePath, 'profile/'.$profile_image)) {
-					                    $files[] = $shortname;
-					                    $upload_query="update xtbl_personal SET
-					                    Profile_Image='$profile_image'
-					                    WHERE Main_Ctr='$ctr'";
-					                    $upload_rs=@mysql_query($upload_query);
-					                }
-				                }
-
-				          	}
-
-				    }
-				}
-			?>
-				<div class="container">
-					<div class="col-md-4">
-					<?php
-						if(!file_exists('profile/'.$profile_image)) {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/00000.jpg">';
-						}
-						else {
-							echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'">';
-						}
-					?>
-						<form hidden action="" enctype="multipart/form-data" method="post">
-							<input id='upload_logo' hidden name="upload_logo" onchange="$('#txtsubmit_upload_logo').click();" type="file"/><br>
-							<input id="txtsubmit_upload_logo" type="submit" hidden name="submit" value="Submit" />
-						</form>
-						<a href="javascript:void(0)" onclick="$('#upload_logo').click();" class="btn btn-primary btn-block btn-lg">UPLOAD IMAGE</a>
-
-					</div>
-
-					<?php $class->show_user_details($fullname, $lastname, $firstname, $middlename, $cellphone, $birthday, $address); ?>
-				</div>
-			<?php
-			}
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
+					$rs=mysql_query($query);
+					$rows=mysql_num_rows($rs);
+					$p=ceil($rows/$limit);
+					$start=($page-1)*$limit;
+					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
+					$rs=mysql_query($query);
 
 
-			$class->page_welcome_header_content_start_footer();
-			$class->body_end();
-		$class->html_end();
+
+					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
+					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
+
+					echo '<br><div class="container" align="center">';
+					$i = 0;
+
+					while($row=mysql_fetch_assoc($rs)) {?>
+						<?php if(file_exists('products/'.$row['Image'])) {
+							$i++;
+							$mer_ctr = $row["Main_Ctr"];
+							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
+							$rs2=mysql_query($query2);
+							$row2=mysql_fetch_assoc($rs2);
+							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
+							$rs3=mysql_query($query3);
+							$row3=mysql_fetch_assoc($rs3);
+
+						?>
+
+
+							<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
+										data-content = '<h3 style="color:red">
+																		<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
+																		<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
+																	</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
+																	<h4>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h4>
+																	<h4>Email: <b><?php echo $row2["Email"];?></b></h4>
+																	<h4>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h4>
+																	<h4>Cell #: <b><?php echo $row3["Cellphone"];?></b></h4><br>
+																	'
+
+										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
+										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+
+							<div style="height: 35px;">
+								<h4><b><?php echo $row['Product_Name'];?></b></h4>
+							</div>
+							<div style="height: 330px;">
+					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
+							</div>
+
+							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
+
+							<div style="height: 20px;">
+								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
+									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
+							</div>
+
+						</div>
+						<?php }
+					}
+					echo '</div><br><br>';
+					echo '<div class="container" align="center"><br><br>';
+					if($page>1) {
+				?>
+					<form method="POST" hidden>
+						<input name="pageno" <?php echo 'value="'.($page-1).'"';?> />
+						<input id="prev_page" type="submit" />
+					</form>
+					<a href="javascript:void(0)" onclick="$('#prev_page').click();" class="btn btn-danger "
+						style="font-size: 20px; border-radius: 0px">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+						PREVIOUS PAGE</a>
+				<?php
+					}
+					if($page<$p) {
+				?>
+					<form method="POST" hidden>
+						<input name="pageno" <?php echo 'value="'.($page+1).'"';?> />
+						<input id="next_page" type="submit" />
+					</form>
+					<a href="javascript:void(0)" onclick="$('#next_page').click();" class="btn btn-danger "
+						style="font-size: 20px; border-radius: 0px">NEXT PAGE
+						<span class="glyphicon glyphicon-chevron-right"></span></a>
+				<?php
+					}
+					echo '</div><br><br><br>';
+
+					$class->page_welcome_header_content_start_footer();
+                                        $class->chatscript();
+				$class->body_end();
+			$class->html_end();
+		}
 	}
 
 ?>

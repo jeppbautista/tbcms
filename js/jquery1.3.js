@@ -5,14 +5,14 @@ $( document ).ready(function() {
 
 	$("[name=btc_amount]").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
             (e.keyCode >= 35 && e.keyCode <= 40)) {
                  return;
         }
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
             e.preventDefault();
         }
-        
+
     });
 
     $("[name=btc_amount]").keyup(function (e) {
@@ -29,9 +29,9 @@ $( document ).ready(function() {
     $("[name=txtpesoamount_onadd]").keydown(function (e) {
         var chatr=$("[name=txtpesoamount_onadd]").val();
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
             (e.keyCode >= 35 && e.keyCode <= 40)) {
-            return; 
+            return;
         }
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)  ) {
             e.preventDefault();
@@ -49,9 +49,9 @@ $( document ).ready(function() {
     //shopping
     $("#txtitem_quantity").keydown(function (e) {
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
-            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
             (e.keyCode >= 35 && e.keyCode <= 40)) {
-            return; 
+            return;
         }
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)  ) {
             e.preventDefault();
@@ -69,5 +69,28 @@ $( document ).ready(function() {
     $('#txtitem_clickrequest').click(function(){
         $('#modal_save_newitem').modal('show');
     });
+
+
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    });
+
+    // $(".product-holder").popover({
+    //   html: true,
+    //   content : function(){
+    //     return $("#popover_content_wrapper").html();
+    //   }
+    // });
+
+    $('[data-toggle="popover-hover"]').popover({
+      html: true,
+      trigger: 'hover',
+      content : function(){
+        return $("#popover_content_wrapper").html();
+      }
+    });
+
+
+
 
 });

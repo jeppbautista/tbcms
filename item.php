@@ -19,7 +19,7 @@
 			$product=str_replace("'", '', $_REQUEST['product']);
 			$product=str_replace('"', '', $product);
 			$product=str_replace("<", '', $product);
-			$product=str_replace('>', '', $product);	
+			$product=str_replace('>', '', $product);
 		}
 
 	}
@@ -87,9 +87,9 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 						</h3><br>
 						<h4><?php echo nl2br($row['Product_Description']);?></h4><br><br>
 						<h4>Merchant Name: <b><?php echo $row2['Business_Name'];?></b></h4>
-						
+
 						<h4>Seller Name: <b><?php echo $row3['Fname'].' '.$row3['Lname'];?></b></h4>
-						
+
 					</div>
 
 				</div><br><br><br>
@@ -100,7 +100,7 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 		<?php
 
 			$class->page_welcome_header_content_start_footer();
-			$class->body_end();	
+			$class->body_end();
 		$class->html_end();
 
 
@@ -132,19 +132,19 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 		if(isset($_POST['txtitem_quantity']) && isset($_POST['txtitem_quantityandamounta']) &&
 			isset($_POST['txtitem_quantityandamountc']) && isset($_POST['txtitem_totalprice']) &&
 			isset($_POST['txtitem_name']) && isset($_POST['txtitem_addressn']) && isset($_POST['txtitem_number']) &&
-			isset($_POST['txtitem_idena']) && isset($_POST['txtitem_idenc']) && 
+			isset($_POST['txtitem_idena']) && isset($_POST['txtitem_idenc']) &&
 			isset($_POST['txtitem_persida']) && isset($_POST['txtitem_persidc']) ) {
 
 			$txtitem_quantity=str_replace("'", '', $_POST['txtitem_quantity']);
 			$txtitem_quantity=str_replace('"', '', $txtitem_quantity);
 			$txtitem_quantity=str_replace("<", '', $txtitem_quantity);
 			$txtitem_quantity=str_replace('>', '', $txtitem_quantity);
-			$txtitem_quantity=str_replace('.', '', $txtitem_quantity);	
+			$txtitem_quantity=str_replace('.', '', $txtitem_quantity);
 
 			$txtitem_quantityandamounta=str_replace("'", '', $_POST['txtitem_quantityandamounta']);
 			$txtitem_quantityandamounta=str_replace('"', '', $txtitem_quantityandamounta);
 			$txtitem_quantityandamounta=str_replace("<", '', $txtitem_quantityandamounta);
-			$txtitem_quantityandamounta=str_replace('>', '', $txtitem_quantityandamounta);	
+			$txtitem_quantityandamounta=str_replace('>', '', $txtitem_quantityandamounta);
 
 			$txtitem_totalprice=str_replace("'", '', $_POST['txtitem_totalprice']);
 			$txtitem_totalprice=str_replace('"', '', $txtitem_totalprice);
@@ -184,7 +184,7 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 			$txtitem_persidc=str_replace("'", '', $_POST['txtitem_persidc']);
 			$txtitem_persidc=str_replace('"', '', $txtitem_persidc);
 			$txtitem_persidc=str_replace("<", '', $txtitem_persidc);
-			$txtitem_persidc=str_replace('>', '', $txtitem_persidc);	
+			$txtitem_persidc=str_replace('>', '', $txtitem_persidc);
 
 			if(!is_numeric($txtitem_quantity) ) {
 				$error="<span style='color:red'>Quantity not Valid</span>";
@@ -236,29 +236,29 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 						'$txtitem_persida',
 						'$txtitem_idena',
 						'$txtitem_totalprice',
-						'$txtitem_totaltbc', 
-						'Submitted', 
+						'$txtitem_totaltbc',
+						'Submitted',
 						'$txtitem_quantity', '$txtitem_address', '$txtitem_name',
 						 '$trans_id', '".date('Y-m-d H:i:s')."', '$txtitem_number');";
 					$rs=@mysql_query($query);
 
-					$query="insert into xtbl_mytransaction".$ctr." (Amount, Status, Transact_Id, Type, Date) 
+					$query="insert into xtbl_mytransaction".$ctr." (Amount, Status, Transact_Id, Type, Date)
 						values(
 						'-$txtitem_totaltbc',
 						'ACTIVE',
 						'$trans_id',
-						'SEND', 
+						'SEND',
 						'".date('Y-m-d H:i:s')."'
 						)";
 
 					$rs=@mysql_query($query);
 
-					$query="insert into xtbl_mytransaction".$txtitem_persida." (Amount, Status, Transact_Id, Type, Date) 
+					$query="insert into xtbl_mytransaction".$txtitem_persida." (Amount, Status, Transact_Id, Type, Date)
 						values(
 						'$txtitem_totaltbc',
 						'ACTIVE',
 						'$trans_id',
-						'RECEIVE', 
+						'RECEIVE',
 						'".date('Y-m-d H:i:s')."'
 						)";
 					$rs=@mysql_query($query);
@@ -362,12 +362,12 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 								<?php echo 'value="'.$row['Main_Ctr'].'"';?> />
 							<input name="txtitem_persidc" hidden
 								<?php echo 'value="'.md5(md5($row['Main_Ctr'])).'"';?> />
-							
+
 							<label>NAME</label>
 							<input name="txtitem_name" class="form-control" style="width:250px;"
 								<?php echo 'value="'.$txtitem_name.'"';?> />
 							<label>ADDRESS <span style="color:blue">(Make Sure the Address is located within the Philippines)</span></label>
-							<textarea name="txtitem_addressn" class="form-control" rows="2" 
+							<textarea name="txtitem_addressn" class="form-control" rows="2"
 								style="width:300px;resize: none;"></textarea>
 							<label>CONTACT Number</label>
 							<input name="txtitem_number" class="form-control" style="width:250px;"/>
@@ -394,7 +394,7 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 								</b>
 							</div>
 							<div class="modal-footer" style="padding:5px">
-								<a href="javascript:void(0)" onclick="$('[name=txtitem_submitrequest]').click();" 
+								<a href="javascript:void(0)" onclick="$('[name=txtitem_submitrequest]').click();"
 									class="btn btn-primary btn-lg btn-block" style="border-radius: 0px">&nbsp YES &nbsp</a>
 							</div>
 						</div>
@@ -407,7 +407,7 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 				</div>
 		<?php
 			$class->page_welcome_header_content_start_footer();
-				$class->body_end();	
+				$class->body_end();
 			$class->html_end();
 		}
 	}
