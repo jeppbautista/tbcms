@@ -199,6 +199,39 @@
 
 		}
 
+		if(isset($_POST["admin_submit"])){
+			$query = "
+				INSERT INTO xtbl_admin_eudodona(Tbc_amount, Peso_amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
+				VALUES(0,0,'-','EDUDONA ADMIN', '1', 'SUCCESS', NOW(), '-', 'ADMIN ENTRY')
+			";
+			mysql_query($query);
+
+			$query2 = "
+				UPDATE xtbl_eudodona SET paid = 1 WHERE paid = 0 ORDER BY rank ASC LIMIT 1
+			";
+			mysql_query($query2);
+
+			if($model->checkAllPaid(1) == 1){
+					$model->update_edudona_cycle();
+					$model->update_wallet(1);
+					$model->update_ranks(1);
+					$model->update_main_payment();
+					$model->update_table();
+
+
+					$email = "tbcmsapp@gmail.com";
+					$from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
+					$subject = "Edudona Exit";
+					$message = "<html><body>Main Table exit occured</body></html>";
+					$headers = "From:" . $from. "\r\n";
+					$headers .= "Reply-To: ". $from. "\r\n";
+					$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+					@mail($email,$subject,$message, $headers);
+					echo "<script>alert('Table exit occured!')</script>";
+			}
+
+		}
+
 	  $query="select * from xtbl_adminaccount";
 	  $rs=mysql_query($query);
 	  $row=mysql_fetch_assoc($rs);
@@ -227,9 +260,35 @@
 			$class->body_start('');
 
 			$class->admin_page_header();
+			$query2 = "select * from xtbl_edudona_trans";
+			$rs2 = mysql_query($query2);
+			$cycles = mysql_num_rows($rs2);
+
+			$query3 = "select count(1) as members from xtbl_eudodona";
+			$rs3 = mysql_query($query3);
+			$members = mysql_fetch_assoc($rs3)["members"];
+
+			$query4 = "select count(1) as admin_entry from xtbl_admin_eudodona WHERE Remarks = 'ADMIN ENTRY'";
+			$rs4 = mysql_query($query4);
+			$admin_entry = mysql_fetch_assoc($rs4)["admin_entry"];
+
+			$total_earning = $members * 1000;
+			$total_referral = 0;
+			$total_rewards = $cycles * 2500;
+			$admin_entry = $admin_entry * 1000;
+
+			$company_balance = $total_earning - ($total_referral + $total_rewards + $admin_entry);
+
 	  ?>
 
+
 	  <div class="container">
+			<h3>Current balance: <small>PHP</small> <b><?php echo number_format($company_balance,2); ?></b></h3>
+			<form method="post">
+				<center><input type="submit" class="btn btn-primary" name="admin_submit" value="Admin Entry"></center>
+			</form>
+
+
 	    <table class="table table-bordered">
 	      <tr>
 	        <td width="10%">Date</td>
@@ -260,7 +319,7 @@
 							<a class="btn btn-danger" href="javascript:void(0)"
 								<?php echo 'onclick="btndenied('.$row['Ctr'].')"';?> >DENIED</a>
 						<?php } else { echo '<img src="https://tbcmerchantservices.com/images/1482106046_tick_16.png" height="30px"> SUCCESS'; } ?>
-							
+
 					</td>
 				</tr>
 			<?php

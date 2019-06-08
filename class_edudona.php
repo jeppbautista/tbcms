@@ -112,6 +112,161 @@ class mydesign {
         <?php
     }
 
+    public function page_home_header_start() {
+    ?>
+      <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px;
+      background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
+    <?php
+    }
+
+    public function page_home_header_end() {
+      echo '</div>';
+    }
+
+    public function page_home2_header_content() {
+    ?>
+      <div class="container">
+        <div class="col-md-4" style="padding-bottom: 5px;">
+          <a href="https://tbcmerchantservices.com/home/">
+          <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+        </div>
+
+        <div class="col-md-8" style="padding-bottom: 5px; text-align: center;">
+          <div class="col-md-2 dropdown" style="padding-top: 10px; font-size: 12px;">
+
+             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_account.png">
+             </a>
+             <ul class="dropdown-menu">
+
+              <li><a href="https://tbcmerchantservices.com/details/"><img width="30px" src="https://tbcmerchantservices.com/images/settimng.png">&nbsp DETAILS</a></li>
+              <li><a href="https://tbcmerchantservices.com/xdestroy/"><img width="30px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
+              &nbsp SIGNOUT</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_wallet.png">
+            </a>
+             <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/transaction/"><img width="30px" src="https://tbcmerchantservices.com/images/1484054944_wallet.png">&nbsp TRANSACTION</a></li>
+              <li><a href="https://tbcmerchantservices.com/request/"><img width="30px" src="https://tbcmerchantservices.com/images/1484055386_sent.png">&nbsp REQUEST COIN</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_store.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/my_store/"><img width="30px" src="https://tbcmerchantservices.com/images/Store_Promotion.png">&nbsp MY STORE</a></li>
+              <li><a href="https://tbcmerchantservices.com/shopping/"><img width="30px" src="https://tbcmerchantservices.com/images/shopping-cart.png">&nbsp SHOPPING</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_points.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/my_points/"><img width="30px" src="https://tbcmerchantservices.com/images/148405598ant_32.png">&nbsp MY POINTS</a></li>
+              <li><a href="https://tbcmerchantservices.com/share/"><img width="30px" src="https://tbcmerchantservices.com/images/1488353208_Gift.png">&nbsp SHARE</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/tbc_exchange.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a target="_blank" href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
+            </ul>
+            <!-- <a href="https://tbcmerchantservices.com/exchange/"> -->
+            </a>
+          </div>
+        </div>
+
+      </div>
+    <?php
+    }
+
+    public function page_home3_header_content() {
+    ?>
+      <div class="container">
+        <div class="col-md-4" style="padding-bottom: 5px;">
+          <a href="https://tbcmerchantservices.com/home/">
+          <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png">
+        </div>
+
+        <div class="col-md-8" style="padding-bottom: 5px; text-align: center;">
+
+          <div class="col-md-2 dropdown" style="padding-top: 10px; font-size: 12px;">
+               <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_account.png">
+             </a>
+             <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/details/"><img width="30px" src="https://tbcmerchantservices.com/images/settimng.png">&nbsp DETAILS</a></li>
+              <li><a href="https://tbcmerchantservices.com/xdestroy/"><img width="30px" src="https://tbcmerchantservices.com/images/1484042800_exit.png">
+              &nbsp SIGNOUT</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_wallet.png">
+            </a>
+             <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/transaction/"><img width="30px" src="https://tbcmerchantservices.com/images/1484054944_wallet.png">&nbsp TRANSACTION</a></li>
+              <li><a href="https://tbcmerchantservices.com/request/"><img width="30px" src="https://tbcmerchantservices.com/images/1484055386_sent.png">&nbsp REQUEST COIN</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_store.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/shopping/"><img width="30px" src="https://tbcmerchantservices.com/images/shopping-cart.png">&nbsp SHOPPING</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/my_points.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="https://tbcmerchantservices.com/my_points/"><img width="30px" src="https://tbcmerchantservices.com/images/148405598ant_32.png">&nbsp MY POINTS</a></li>
+              <li><a href="https://tbcmerchantservices.com/share/"><img width="30px" src="https://tbcmerchantservices.com/images/1488353208_Gift.png">&nbsp SHARE</a></li>
+             </ul>
+          </div>
+
+          <div class="col-md-2" style="padding-top: 10px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <img width="120px" src="https://tbcmerchantservices.com/images/tbc_exchange.png">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a target="_blank" href="https://tbcmerchantservices.com/edudona/"><img width="30px" src="https://tbcmerchantservices.com/images/edudona_.png">&nbsp EDUDONA</a></li>
+            </ul>
+            <!-- <a href="https://tbcmerchantservices.com/exchange/"> -->
+            </a>
+          </div>
+
+        </div>
+      </div>
+    <?php
+    }
+
     public function show_payforms(){
       ?>
       <div class="container" style="margin-bottom:25px">

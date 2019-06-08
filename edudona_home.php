@@ -1,7 +1,7 @@
 <?php
   session_start();
   date_default_timezone_set('Asia/Manila');
-	$sessiondate=date('mdY');
+  $sessiondate=date('mdY');
   include 'class_edudona.php';
   $class=new mydesign;
   $class->database_connect();
@@ -15,12 +15,12 @@
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
     $Mainctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
     $query="select * from xtbl_adminaccount";
-  	$rs=mysql_query($query);
-  	$row=mysql_fetch_assoc($rs);
-  	$our_btc='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
-  	$our_coinsph='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
-  	$our_paypal=$row['Paypal'];
-  	$tbc_to_peso=$row['Tbc_to_Peso'];
+    $rs=mysql_query($query);
+    $row=mysql_fetch_assoc($rs);
+    $our_btc='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
+    $our_coinsph='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
+    $our_paypal=$row['Paypal'];
+    $tbc_to_peso=$row['Tbc_to_Peso'];
     $query="select * from xtbl_account_info WHERE Main_Ctr='$Mainctr'";
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
@@ -43,12 +43,15 @@
     $business_description=$row['Description'];
     $business_country=$row['Country'];
     $refcode  = $row['Sponsor_Id'];
+
     $query="select * from xtbl_personal WHERE Main_Ctr='$Mainctr'";
-  	$rs=mysql_query($query);
-  	$row=mysql_fetch_assoc($rs);
-  	$mybtc_account=$row['Btc_Account'];
-  	$mycoinsph_account=$row['Coinsph_Account'];
-  	$mypaypal_email=$row['Paypal_Email'];
+    $rs=mysql_query($query);
+    $row=mysql_fetch_assoc($rs);
+    $mybtc_account=$row['Btc_Account'];
+    $mycoinsph_account=$row['Coinsph_Account'];
+    $mypaypal_email=$row['Paypal_Email'];
+    $profile_image = $row["Profile_Image"];
+
     $query="select * from xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr'";
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
@@ -56,21 +59,32 @@
     $admin_transaction_status=$row['Status'];
     $admin_transaction_type=$row['Type'];
     $trans_count=mysql_num_rows($rs);
+
     $query="select * FROM xtbl_eudodona_wallet WHERE Ctr='$Mainctr'";
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
     $total_balance = $row['Balance'];
+
     $query="select * from xtbl_eudodona_wallet WHERE MainCtr='$Mainctr'";
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
     $total_reward = $row['Balance'];
+
     $query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
     $rs=mysql_query($query);
     $row=mysql_fetch_assoc($rs);
     $table_id = $row['table_id'];
     $refcode = $row['refcode'];
     $is_paid = $row['paid'];
+    $current_rank = $row['rank'];
     $rows=mysql_num_rows($rs);
+
+    $query22="select * from xtbl_eudodona WHERE paid = 1";
+    $rs22=mysql_query($query22);
+    $paid_count = mysql_num_rows($rs22);
+    echo "<script>console.log('$paid_count')</script>";
+
+
     if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
       # withdrawal
       $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);
@@ -97,16 +111,16 @@
       else {
         $class->show_alert('Payment transaction successful! Please wait for 2-3 working days.');
         $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
-  				values('$amount', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
-  				'$mobile')";
-  			$rs=mysql_query($query);
+          values('$amount', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
+          '$mobile')";
+        $rs=mysql_query($query);
         $new_balance = $total_reward - $amount;
         $query2 = "update xtbl_eudodona_wallet SET Balance = '$new_balance' WHERE MainCtr = '$Mainctr'";
         mysql_query($query2);
-  			echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
+        echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
       }
     }
-    if(isset($_POST['txtphpeud_trans_id']))
+	    if(isset($_POST['txtphpeud_trans_id']))
     {
       # payment 1 PHP
       $txtphpeud_trans=str_replace("'", '', $_POST['txtphpeud_trans_id']);
@@ -195,6 +209,7 @@
         $eud_rs=@mysql_query($phpeud_query);
         echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona_home/";</script>';
     }
+
     ?>
 
   <?php
@@ -213,211 +228,667 @@
           $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
           $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
           $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+          $class->link('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
           $class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
           $class->script('https://tbcmerchantservices.com/js/jquery1.1.js');
         $class->head_end();
         $class->body_start('');
-        $query = "select * from xtbl_eudodona WHERE table_id=1 ORDER BY rank";
+        $query = "
+        SELECT e.username, e.paid, p.Profile_Image, m.Business_Logo, a.Account_Type FROM xtbl_eudodona e
+          LEFT JOIN xtbl_personal p
+          ON e.MainCtr = p.Main_Ctr
+          LEFT JOIN xtbl_main_info m
+          ON e.MainCtr = m.Ctr
+          LEFT JOIN xtbl_account_info a
+          ON e.MainCtr = a.Ctr
+        WHERE table_id=1
+        ORDER BY rank
+        ";
         $rs=mysql_query($query);
         $row=mysql_fetch_array($rs);
+
+        $query2 = "select * from xtbl_edudona_trans";
+        $rs2 = mysql_query($query2);
+        $cycles = mysql_num_rows($rs2);
+
+        $query3 = "select count(1) as members from xtbl_eudodona";
+        $rs3 = mysql_query($query3);
+        $members = mysql_fetch_assoc($rs3)["members"];
+
+        $total_earning = $members * 1000;
+        $total_referral = $members * 100;
+        $total_rewards = $cycles * 2500;
+
+        $company_balance = $total_earning - ($total_referral + $total_rewards);
+        if($account_type=='MERCHANT') {
+					$class->page_home_header_start();
+					$class->page_home2_header_content();
+					$class->page_home_header_end();
+        }
+        else{
+          $class->page_home_header_start();
+          $class->page_home3_header_content();
+          $class->page_home_header_end();
+        }
       ?>
 
-      <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
-          <div class="container">
-            <div class="col-md-10" style="padding-bottom: 5px;">
-              <a href="https://tbcmerchantservices.com/home/">
-              <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"></a>
-            </div>
-            <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
+      <style media="screen">
+        .shadow{
+          box-shadow: 0 0.46875rem 2.1875rem rgba(63, 106, 216, 0.03), 0 0.9375rem 1.40625rem rgba(63, 106, 216, 0.03), 0 0.25rem 0.53125rem rgba(63, 106, 216, 0.05), 0 0.125rem 0.1875rem rgba(63, 106, 216, 0.03);
+          border-radius: 1%;
+          padding: 20px;
+          background-color: white;
+        }
+
+        body {
+          background-color: #F1F4F6;
+          font-family: 'Open Sans', sans-serif;
+        }
+
+        .body {
+          display: table;
+          border-collapse: separate;
+          border-spacing: 5px;
+          }
+
+          .left-side {
+              float: none;
+              display: table-cell;
+              border: 0;
+              vertical-align: top;
+          }
+
+          .left-side > .row > div > .shadow {
+            margin-left: -20px;
+          }
+
+          .right-side {
+              float: none;
+              display: table-cell;
+              border: 0;
+              margin-left: 15px;
+              vertical-align: top;
+          }
+
+          @media screen and (max-width: 700px) {
+            .left-side{
+              display: block;
+            }
+
+            .right-side{
+              display: block;
+            }
+
+            .left-side > .row > div > .shadow {
+              margin-left: 0px;
+            }
+          }
+
+
+      </style>
+
+
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xl" style="padding:10px; background-color:#F8F9FA">
+              <div class="text-center">
+                <div class="">
+                  <?php
+                  if($account_type == "MERCHANT"){
+                    if(!file_exists('business/'.$business_logo)) {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/00000.jpg" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                    else {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                  }
+                  else {
+                    if(!file_exists('profile/'.$profile_image)) {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/00000.jpg" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                    else {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                  }
+
+                   ?>
+
+
+                </div>
+                <div>
+                  <h3 style="">Welcome back to your Edudona Dashboard, <span style="color:#5E6D76"><?php echo $username ?><span> </h3>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+    <br>
+          <div class="row body" style=" margin:auto" id="myrow">
+            <div class="col-xs-12 col-md-4  left-side">
+
+              <div class="row" style="margin-top: -10px">
+                <div class="col-xs-12 col-md-12">
+                  <div class="shadow">
+                    <p>Edudona Wallet Balance</p>
+                    <h2> <small>PHP</small> <?php echo number_format($total_balance,2) ?> </h2>
+                    <hr>
+                    <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');">
+                        Withdraw from Wallet using Gcash
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <div class="shadow" style="background-color: #DAA520;color: white;">
+                    <p>Total Edudona Members</p>
+                    <h3 style="text-align: left"> <?php echo $members; ?> </h3>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                  <div class="shadow" style="background-color: #4B2B85;color: white;">
+                    <p>Total Number of Cycles</p>
+                    <h3  style="text-align: left"> <?php echo $cycles; ?> </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <div class="shadow" style="background-color: #196889;color: white;">
+                    <p>Current table rank</p>
+                    <h3 style="text-align: left"><?php echo "#".$table_id; ?></h3>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                  <div class="shadow" style="background-color: #DA2520;color: white;">
+                    <p>Current rank (before exit)</p>
+                    <h3 style="text-align: left"> <?php echo "#".$current_rank; ?> </h3>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" style="margin-bottom: -10px;">
+                <div class="col-xs-12 col-md-12">
+                  <div class="shadow">
+                    <h3 style="text-align: left"> <?php echo $paid_count; ?>/7 donations completed</h3>
+                    <div class="progress">
+                     <div class="progress-bar" role="progressbar" aria-valuenow='<?php echo $paid_count ?>'
+                     aria-valuemin="0" aria-valuemax="7" style='<?php echo "width:".($paid_count/7)*100 ."%"?>; background-color: #004E00'>
+                      <?php echo $paid_count;?>/7
+                     </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-xs-12 col-md-8 right-side shadow" style="margin: 5px 0">
+                  <br>
+                  <h3><b>EDUDONA Table</b></h3>
+                  <hr style="border-color: #DAA520">
+                  <?php if($table_id != 1){echo "<h3>You are currently in the WAITING table. This is the current status of the exit table.</h3>";} ?>
+                  <table id="tbl_edu" class="table borderless" style="table-layout:fixed">
+                    <thead>
+                      <tr >
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col" style="width:100%" >
+
+                          <?php
+                          mysql_data_seek($rs, 0);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                        <th scope="col"> </th>
+                      </tr>
+                      <tr style="height : 100px">
+                        <th scope="col" class="c">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 1);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col" class="c">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 2);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col" class="c">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 3);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col"> </th>
+                        <th scope="col" class="c">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 4);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col" class="c">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 5);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                        <th scope="col" class="c" style="margin-bottom:100px">
+
+                          <br>
+                          <?php
+                          mysql_data_seek($rs, 6);
+                          $sq = mysql_fetch_array($rs);
+                          $profile_image = $sq["Profile_Image"];
+                          $business_logo = $sq["Business_Logo"];
+                          $account_type = $sq["Account_Type"];
+                          if($account_type == "MERCHANT"){
+                            if(!file_exists('business/'.$business_logo)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/business/'.$business_logo.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                          else {
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                          }
+                           ?>
+
+                          <br>
+                          <?php
+
+                            $user = $sq['username'];
+                            $paid = $sq['paid'];
+                            if ($user == null) {
+                              echo "VACANT";
+                            } else {
+                              echo $user;
+                              echo "<br>";
+                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                            }
+                          ?>
+                        </th>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+          </div>
 
 
-      <div class="container"><h3>Welcome back to your EDUDONA dashboard,  <b><?php echo $current_email ?></b></h3></div>'
-      <br>
+          <?php
+            $latest_query = "
+              SELECT * FROM xtbl_edudona_trans ORDER BY ctr DESC
+            ";
+            $rs = mysql_query($latest_query);
+            $exits = mysql_fetch_assoc($rs);
 
-      <div class="container">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <div class="alert alert-success" align="center" style="background-color:#DAA520; border-radius: 20px; color: white">
-            Total Edudona balance<br>
-             <h1><?php echo '<small>PHP</small> '.number_format($total_balance,2); ?></h1>
-             Thank you for trusting TBCMS<br>
-          </div><br>
-          <div align="center">
-            <span style="color:red; font-size: 25px"><?php echo $error;?></span>
-            <!-- <h4>P300 will be deducted to your reward for the TBCMS GCash Card</h4> -->
-            <h4>Note: Minimum withdrawal is P2,500</h4>
+            $latest_query2 = "
+            SELECT m.Datetime, a.Username FROM `xtbl_admin_eudodona` m
+              LEFT JOIN xtbl_account_info a
+              ON m.Main_Ctr = a.Main_Ctr
+            ORDER BY m.Ctr DESC
+            ";
+            $rs2 = mysql_query($latest_query2);
+            $donations = mysql_fetch_assoc($rs2);
+          ?>
 
-            <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');" class="btn btn-info">
-                WITHDRAW TO EDUODONA GCASH CARD
-            </a>
-            <h4>Withdrawal might take 1-2 working days to transfer on GCASH</h4>
-            <br><br>
+          <div class="container">
             <hr>
           </div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-6">
+                <div class="shadow">
+                  <h4>Latest exits</h4>
+                  <hr>
+                  <table id="tbl_exit" class="table table-striped table2">
+                    <thead>
+                      <tr>
+                        <th scope="col"><b>#</b></th>
+                        <th scope="col"><b>Member</b></th>
+                        <th scope="col"><b>Exit date</b></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs, 0);
+                          $exits = mysql_fetch_array($rs);
+                        ?>
+                        <th scope="row">1</th>
+                        <td> <?php echo $exits["username"] ?> </td>
+                        <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs, 1);
+                          $exits = mysql_fetch_array($rs);
+                        ?>
+                        <th scope="row">2</th>
+                        <td> <?php echo $exits["username"] ?> </td>
+                       <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs, 2);
+                          $exits = mysql_fetch_array($rs);
+                        ?>
+                        <th scope="row">3</th>
+                        <td> <?php echo $exits["username"] ?> </td>
+                       <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs, 3);
+                          $exits = mysql_fetch_array($rs);
+                        ?>
+                        <th scope="row">4</th>
+                        <td> <?php echo $exits["username"] ?> </td>
+                       <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-6">
+                <div class="shadow">
+                  <h4>Latest donations</h4>
+                  <hr>
+                  <table class="table table-striped table2">
+                    <thead>
+                      <tr>
+                        <th scope="col"><b>#</b></th>
+                        <th scope="col"><b>Member</b></th>
+                        <th scope="col"><b>Entry date</b></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs2, 0);
+                          $donations = mysql_fetch_array($rs2);
+                        ?>
+                        <th scope="row">1</th>
+                        <td> <?php echo $donations["Username"] ?> </td>
+                        <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs2, 1);
+                          $donations = mysql_fetch_array($rs2);
+                        ?>
+                        <th scope="row">2</th>
+                        <td> <?php echo $donations["Username"] ?> </td>
+                        <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs2, 2);
+                          $donations = mysql_fetch_array($rs2);
+                        ?>
+                        <th scope="row">3</th>
+                        <td> <?php echo $donations["Username"] ?> </td>
+                        <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                      </tr>
+                      <tr>
+                        <?php
+                          mysql_data_seek($rs2, 3);
+                          $donations = mysql_fetch_array($rs2);
+                        ?>
+                        <th scope="row">4</th>
+                        <td> <?php echo $donations["Username"] ?> </td>
+                        <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
         </div>
-        <div class="col-md-3"></div>
-      </div>
-
-      <div class="container">
-        <br>
-        <h3><b>EDUDONA Table</b></h3>
-        <?php if($table_id != 1){echo "<h3>You are currently in the WAITING table. This is the current status of the exit table.</h3>";} ?>
-        <table class="table borderless" style="table-layout:fixed">
-          <thead>
-            <tr >
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col" style="width:100%" >
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 0);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-              <th scope="col"> </th>
-            </tr>
-            <tr style="height : 100px">
-              <th scope="col" class="c">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 1);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col" class="c">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 2);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col" class="c">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 3);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col"> </th>
-              <th scope="col" class="c">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 4);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col" class="c">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 5);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-              <th scope="col" class="c" style="margin-bottom:100px">
-                <img src="https://tbcmerchantservices.com/images/network.png">
-                <br>
-                <?php
-                  mysql_data_seek($rs, 6);
-                  $sq = mysql_fetch_array($rs);
-                  $user = $sq['username'];
-                  $paid = $sq['paid'];
-                  if ($user == null) {
-                    echo "VACANT";
-                  } else {
-                    echo $user;
-                    echo "<br>";
-                    if($paid == 1){echo "(PAID)";}else{echo "(NOT PAID)";}
-                  }
-                ?>
-              </th>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
 
       <br><br>
 
       <style>
-        td, th { border: none !important; vertical-align: center; text-align: center;}
-        tr {
+        td, th { border: none !important; vertical-align: center; text-align: center; font-weight: unset}
+        #tbl_edu > tr {
           height: 100px;
         }
 
@@ -432,9 +903,11 @@
           width: 60px;
         }
         .table-div{
-          display: table;
-          margin: auto;
+
         }
+
+
+
         @media screen and (max-width: 700px) {
           tr{
             height: 100px;
@@ -449,9 +922,9 @@
           #padd {
             width: 32%;
           }
-          .table {
-            height: 300px;
-            margin-bottom: 630px;
+          #tbl_edu {
+            height: 400px;
+            margin-bottom: 830px;
           }
         }
       </style>
@@ -462,25 +935,9 @@
       $row=mysql_fetch_assoc($rs);
       $waiting = mysql_num_rows($rs);
 
-      $query2 = "select * from xtbl_edudona_trans";
-      $rs2 = mysql_query($query2);
-      $cycles = mysql_num_rows($rs2);
 
-      $query3 = "select count(1) as members from xtbl_eudodona";
-      $rs3 = mysql_query($query3);
-      $members = mysql_fetch_assoc($rs3)["members"];
 
       ?>
-
-      <div class="container">
-        <div class="row">
-          <h4> Number of Edudona Cycles : <b><?php echo $cycles; ?></b> </h4>
-        </div>
-        <div class="row">
-          <h4>Total Edudona members : <b> <?php echo $members; ?> </b> </h4>
-        </div>
-      </div>
-      <br>
 
       <?php
 
@@ -577,75 +1034,3 @@
     $class->page_welcome_header_content_start_footer2();
   }
   ?>
-
-
-
-
-
-    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <h1>You are not yet register click here</h1>
-    <div id="paypal-button-container"></div>
-    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
-    <script>
-    paypal.Button.render({
-    env: 'sandbox', // sandbox | production
-    style: {
-                label: 'paypal',
-                size:  'medium',    // small | medium | large | responsive
-                shape: 'rect',     // pill | rect
-                color: 'blue',     // gold | blue | silver | black
-                tagline: false
-            },
-    funding: {
-      allowed: [
-        paypal.FUNDING.CARD,
-        // paypal.FUNDING.CREDIT
-      ],
-      disallowed: []
-    },
-    // Enable Pay Now checkout flow (optional)
-    commit: true,
-    // PayPal Client IDs - replace with your own
-    // Create a PayPal app: https://developer.paypal.com/developer/applications/create
-    client: {
-      sandbox: 'AcbAorOUrYTMMGKbTf1FTXRqOb2CwIbw86NU7SjmLcyW671Cf3Bax52MeHVD09Vf4y7y0akNx19Wed5r',
-      //production: 'AeVUKSad_DseckErsDT3xuxwi3o4PkxKfWqI_a0siIn94A8zsPw1kfv1Ic1JSK9c-A8OCWh57V0DSJdt'
-    },
-    payment: function (data, actions) {
-      return actions.payment.create({
-        payment: {
-          transactions: [
-            {
-              amount: {
-                total: '0.1',
-                currency: 'USD'
-              }
-            }
-          ]
-        }
-      });
-    },
-    onAuthorize: function (data, actions) {
-      return actions.payment.execute()
-        .then(function () {
-            window.alert('Payment Complete!');
-            // var xhttp = new XMLHttpRequest();
-            // xhttp.open('GET', 'https://tbcmerchantservices.com/insert.php', false);
-            // xhttp.send();
-            $.ajax({
-              type:'POST',
-              url : 'insert.php',
-              success : function(data){
-                console.log(data);
-                // if(data == 1){
-                //   window.location.href = 'index.php';
-                // }
-                // else{
-                //   window.location.href = "test_welcome.php";
-                // }
-              }
-          });
-        });
-    }
-    }, '#paypal-button-container');
-    </script> -->

@@ -1,378 +1,845 @@
-<?php
-	session_start();
-	include 'class3.php';
-	$class=new mydesign;
-	$class->database_connect();
+  <?php
+    session_start();
+    date_default_timezone_set('Asia/Manila');
+  	$sessiondate=date('mdY');
+    include 'class_edudona.php';
+    $class=new mydesign;
+    $class->database_connect();
+    if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+      $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+      $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
+      $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+      $class->display_nologin();
+    }
+    else {
+      $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+      $Mainctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
+      $query="select * from xtbl_adminaccount";
+    	$rs=mysql_query($query);
+    	$row=mysql_fetch_assoc($rs);
+    	$our_btc='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
+    	$our_coinsph='3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL';
+    	$our_paypal=$row['Paypal'];
+    	$tbc_to_peso=$row['Tbc_to_Peso'];
+      $query="select * from xtbl_account_info WHERE Main_Ctr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $email_status=$row['Email_Status'];
+      $account_type=$row['Account_Type'];
+      $account_status=$row['Account_Status'];
+      $card_status=$row['Card_Status'];
+      $username=$row['Username'];
+      $passwordlink=$row['Password'];
+      $currentcryptid=$row['Crypt_Id'];
+      $activation_amount=1000;
+      $activation_tbc_amount=$activation_amount/$tbc_to_peso;
+      $query="select * from xtbl_main_info WHERE Ctr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $current_email=$row['Email'];
+      $business_logo=$row['Business_Logo'];
+      $business_name=$row['Business_Name'];
+      $business_category=$row['Business_Category'];
+      $business_description=$row['Description'];
+      $business_country=$row['Country'];
+      $refcode  = $row['Sponsor_Id'];
 
-	date_default_timezone_set('Asia/Manila');
-	$sessiondate=date('mdY');
+      $query="select * from xtbl_personal WHERE Main_Ctr='$Mainctr'";
+    	$rs=mysql_query($query);
+    	$row=mysql_fetch_assoc($rs);
+    	$mybtc_account=$row['Btc_Account'];
+    	$mycoinsph_account=$row['Coinsph_Account'];
+    	$mypaypal_email=$row['Paypal_Email'];
+      $profile_image = $row["Profile_Image"];
 
-	$limit=12;
-	$page=$_SESSION['session_ppage'];
-	$type=$_SESSION['session_ptype'];
+      $query="select * from xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $admin_transaction_id=$row['Transaction'];
+      $admin_transaction_status=$row['Status'];
+      $admin_transaction_type=$row['Type'];
+      $trans_count=mysql_num_rows($rs);
 
-	if(isset($_POST['pageno'])) {
-		$page=str_replace("'", '', $_REQUEST['pageno']);
-		$page=str_replace('"', '', $page);
-		$page=str_replace("<", '', $page);
-		$page=str_replace('>', '', $page);
+      $query="select * FROM xtbl_eudodona_wallet WHERE Ctr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $total_balance = $row['Balance'];
 
-		$_SESSION['session_ppage']=$page;
-		$page=$_SESSION['session_ppage'];
-		echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
-	}
+      $query="select * from xtbl_eudodona_wallet WHERE MainCtr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $total_reward = $row['Balance'];
 
-	if($page==""){$page=1;}
+      $query="select * from xtbl_eudodona WHERE MainCtr='$Mainctr'";
+      $rs=mysql_query($query);
+      $row=mysql_fetch_assoc($rs);
+      $table_id = $row['table_id'];
+      $refcode = $row['refcode'];
+      $is_paid = $row['paid'];
+      $current_rank = $row['rank'];
+      $rows=mysql_num_rows($rs);
 
-	if(isset($_POST['shoptype'])) {
-		$type=str_replace("'", '', $_REQUEST['shoptype']);
-		$type=str_replace('"', '', $type);
-		$type=str_replace("<", '', $type);
-		$type=str_replace('>', '', $type);
-		$_SESSION['session_ppage']=1;
-		$_SESSION['session_ptype']=$type;
-		$type=$_SESSION['session_ptype'];
-		echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
-	}
-
-	if($type==""){$type='%%';}
-
-	$query="select * from xtbl_adminaccount";
-	$rs=mysql_query($query);
-	$row=mysql_fetch_assoc($rs);
-	$tbc_to_peso=$row['Tbc_to_Peso'];
-
-	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-		$class->doc_type();
-		$class->html_start('');
-			$class->head_start();
-			echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-			$class->title_page('TBCMS');
-				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
-				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
-				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-				$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
-			$class->head_end();
-
-			$class->body_start('');
-				$class->page_home_header_start();
-					$class->page_shopping_header_content1();
-				$class->page_home_header_end();
-				$class->page_shopping_navbar_content1();
-?>
-<style media="screen">
-.popover{
-	max-width: 100%;
-}
-.popover-content {
-overflow-y : scroll;
-width: 500px;
-}
-</style>
-                               <div class="container" align="center">
-                                       <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
-                                       <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
-                               </div>
-<?php
-
-					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
-					$rs=mysql_query($query);
-					$rows=mysql_num_rows($rs);
-					$p=ceil($rows/$limit);
-					$start=($page-1)*$limit;
-					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
-					$rs=mysql_query($query);
-
-
-
-					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
-					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
-
-					echo '<br><div class="container" align="center">';
-					$i = 0;
-
-					while($row=mysql_fetch_assoc($rs)) {?>
-						<?php if(file_exists('products/'.$row['Image'])) {
-							$i++;
-							$mer_ctr = $row["Main_Ctr"];
-							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
-							$rs2=mysql_query($query2);
-							$row2=mysql_fetch_assoc($rs2);
-							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
-							$rs3=mysql_query($query3);
-							$row3=mysql_fetch_assoc($rs3);
-
-						?>
-
-
-							<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
-										data-content = '<h3 style="color:red">
-																		<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
-																		<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
-																	</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
-																	<h4>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h4>
-																	<h4>Email: <b><?php echo $row2["Email"];?></b></h4>
-																	<h4>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h4>
-																	<h4>Cell #: <b><?php echo $row3["Cellphone"];?></b></h4><br>
-																	'
-
-										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
-										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
-
-							<div style="height: 35px;">
-								<h4><b><?php echo $row['Product_Name'];?></b></h4>
-							</div>
-							<div style="height: 330px;">
-					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
-							</div>
-
-							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
-
-							<div style="height: 20px;">
-								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
-							</div>
-
-						</div>
-						<?php }
-					}
-					echo '</div><br><br>';
-					echo '<div class="container" align="center"><br><br>';
-				if($page>1) {
-			?>
-				<form method="POST" hidden>
-					<input name="pageno" <?php echo 'value="'.($page-1).'"';?> />
-					<input id="prev_page" type="submit" />
-				</form>
-				<a href="javascript:void(0)" onclick="$('#prev_page').click();" class="btn btn-danger "
-					style="font-size: 20px; border-radius: 0px">
-					<span class="glyphicon glyphicon-chevron-left"></span>
-					PREVIOUS PAGE</a>
-			<?php
-				}
-				if($page<$p) {
-			?>
-				<form method="POST" hidden>
-					<input name="pageno" <?php echo 'value="'.($page+1).'"';?> />
-					<input id="next_page" type="submit" />
-				</form>
-				<a href="javascript:void(0)" onclick="$('#next_page').click();" class="btn btn-danger "
-					style="font-size: 20px; border-radius: 0px">NEXT PAGE
-					<span class="glyphicon glyphicon-chevron-right"></span></a>
-			<?php
-				}
-				echo '</div><br><br><br>';
-			$class->page_welcome_header_content_start_footer();
-                        $class->chatscript();
-			$class->body_end();
-		$class->html_end();
-
-
-	}
-	else{
-		$ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
-
-		$query="select * from xtbl_account_info WHERE Main_Ctr='$ctr'";
-		$rs=mysql_query($query);
-		$row=mysql_fetch_assoc($rs);
-		$email_status=$row['Email_Status'];
-		$account_type=$row['Account_Type'];
-		$account_status=$row['Account_Status'];
-		$card_status=$row['Card_Status'];
-		$username=$row['Username'];
-		$account_addressyou=$row['Crypt_Id'];
-		$activation_amount=0;
-
-		$query="select * from xtbl_main_info WHERE Ctr='$ctr'";
-		$rs=mysql_query($query);
-		$row=mysql_fetch_assoc($rs);
-		$current_email=$row['Email'];
-
-		if($email_status=='INACTIVE' || $account_status=='INACTIVE' || $card_status=='INACTIVE'){
-			header("location: https://tbcmerchantservices.com/home/");
-		}
-		else {
-			$class->doc_type();
-			$class->html_start('');
-				$class->head_start();
-					echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
-					$class->title_page('TBCMS-'.$username);
-					$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
-					$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
-					$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-					$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
-				$class->head_end();
-				$class->body_start('');
-				if($account_type=='MERCHANT') {
-					$class->page_home_header_start();
-						$class->page_home2_header_content();
-					$class->page_home_header_end();
-				}
-				else { //if buyer
-					$class->page_home_header_start();
-						$class->page_home3_header_content();
-					$class->page_home_header_end();
-				}
-				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-				$query="select * from xtbl_product_request where From_Ctr='$ctr' order by Ctr DESC LIMIT 20";
-				$rs=mysql_query($query);
-				?>
-					<div class="container" >
-						<h2>Latest Orders</h2>
-						<table class="table table-bordered">
-							<tr>
-								<td>Date</td>
-								<td>Merchant/Product</td>
-								<td>Quantity/Amount</td>
-								<td>Transact ID</td>
-								<td>Status</td>
-							</tr>
-					<?php
-						while($row=mysql_fetch_assoc($rs)) {
-					?>
-							<tr>
-								<td><?php echo '<b>'.$row['Datetime'].'</b>';?></td>
-								<td>
-								<?php
-
-									$mer_query="select * from xtbl_main_info Where Ctr='".$row['To_Ctr']."'";
-									$mer_rd=mysql_query($mer_query);
-									$mer_row=mysql_fetch_assoc($mer_rd);
-									echo '<b>'.$mer_row['Business_Name'].'</b><br>';
-
-									$prod_query="select * from xtbl_product Where Ctr='".$row['Product_Ctr']."'";
-									$prod_rd=mysql_query($prod_query);
-									$prod_row=mysql_fetch_assoc($prod_rd);
-									echo $prod_row['Product_Name'];
-								?>
-								</td>
-								<td>
-								<?php
-									echo '<b>Qnty: '.$row['Quantity'].'</b><br>';
-									echo 'PHP '.number_format($row['Amount'],2);
-								?>
-								</td>
-
-								<td><?php echo '<b>'.$row['Transact_Id'].'</b>';?></td>
-								<td><?php echo '<b>'.$row['Status'].'</b>';?></td>
-							</tr>
-					<?php
-						}
-					?>
-						</table>
-					</div>
-				<?php
-
-					$class->page_shopping_navbar_content1();
-?>
-<style media="screen">
-.popover{
-	max-width: 100%;
-}
-.popover-content {
-overflow-y : scroll;
-width: 500px;
-}
-</style>
-                               <div class="container" align="center">
-                                       <h4><b>FOR YOUR INFORMATION ( FYI )</b></h4>
-                                       <h4>TBCMS (TBC Merchant Services) is an online advertising, online store and an online exchange for all verified and paid TBC holders. Thus, the products in the shopping center are not owned by TBCMS. They are owned by the verified and qualified TBCMS Merchants. Contact them if you have any question pertaining to their products and services.</h4>
-                               </div>
-<?php
-
-					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg'";
-					$rs=mysql_query($query);
-					$rows=mysql_num_rows($rs);
-					$p=ceil($rows/$limit);
-					$start=($page-1)*$limit;
-					$query="select * from xtbl_product where Type like '$type' AND Image <> '00000.jpg' order by Ctr DESC LIMIT ".$limit."  OFFSET ".$start."";
-					$rs=mysql_query($query);
+      $query22="select * from xtbl_eudodona WHERE paid = 1";
+      $rs22=mysql_query($query22);
+      $paid_count = mysql_num_rows($rs22);
+      echo "<script>console.log('$paid_count')</script>";
 
 
 
-					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
-					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
+      if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
+        # withdrawal
+        $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);
+        $mobile=str_replace('"', '', $mobile);
+        $mobile=str_replace("<", '', $mobile);
+        $mobile=str_replace('>', '', $mobile);
+        $amount=str_replace("'", '', $_REQUEST['gcashwithdraw']);
+        $amount=str_replace('"', '', $amount);
+        $amount=str_replace("<", '', $amount);
+        $amount=str_replace('>', '', $amount);
+        $amount=(int)$amount;
+        if($total_reward<2500){
+          $class->show_alert('Minimum withdraw amoutn is 2,500 PHP!');
+        }
+        else if ($amount == 0){
+          $class->show_alert('Amount could not be blank!');
+        }
+        else if ($total_reward<$amount){
+          $class->show_alert('Insufficient balance');
+        }
+        else if(strlen($mobile)<10) {
+          $class->show_alert('Mobile GCASH number invalid');
+        }
+        else {
+          $class->show_alert('Payment transaction successful! Please wait for 2-3 working days.');
+          $query="Insert into xtbl_reward(Amount, Main_Ctr, Datetime, Remarks, Mobile)
+    				values('$amount', '$Mainctr', '".date('Y-m-d H:i:s')."', 'Withdraw via EDUDONA GCASH Card',
+    				'$mobile')";
+    			$rs=mysql_query($query);
+          $new_balance = $total_reward - $amount;
+          $query2 = "update xtbl_eudodona_wallet SET Balance = '$new_balance' WHERE MainCtr = '$Mainctr'";
+          mysql_query($query2);
+    			echo '<script>window.location.assign("https://tbcmerchantservices.com/edudona/");</script>';
+        }
+      }
 
-					echo '<br><div class="container" align="center">';
-					$i = 0;
+      ?>
 
-					while($row=mysql_fetch_assoc($rs)) {?>
-						<?php if(file_exists('products/'.$row['Image'])) {
-							$i++;
-							$mer_ctr = $row["Main_Ctr"];
-							$query2="select * from xtbl_main_info WHERE Ctr='$mer_ctr'";
-							$rs2=mysql_query($query2);
-							$row2=mysql_fetch_assoc($rs2);
-							$query3="select * from xtbl_personal WHERE Main_Ctr='$mer_ctr'";
-							$rs3=mysql_query($query3);
-							$row3=mysql_fetch_assoc($rs3);
+    <?php
+      if ($card_status == "INACTIVE" || $email_status=='INACTIVE' || $account_status=='INACTIVE'){
+        echo "<script>alert('You are not qualified to access edudona. Please activate your account first.')</script>";
+        echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
+      }
+      if($rows == 1)
+      {
+        # if exists in edudona table
+        $class->doc_type();
+        $class->html_start('');
+          $class->head_start();
+            echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+            $class->title_page('TBCMS: EDUDONA');
+            $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+            $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
+            $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+            $class->link('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+            $class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
+            $class->script('https://tbcmerchantservices.com/js/jquery1.1.js');
+          $class->head_end();
+          $class->body_start('');
+          $query = "
+          SELECT e.username, e.paid, p.Profile_Image FROM xtbl_eudodona e
+            LEFT JOIN xtbl_personal p
+            ON e.MainCtr = p.Main_Ctr
+          WHERE table_id=1
+          ORDER BY rank
+          ";
+          $rs=mysql_query($query);
+          $row=mysql_fetch_array($rs);
 
-						?>
+  				$query2 = "select * from xtbl_edudona_trans";
+  				$rs2 = mysql_query($query2);
+  				$cycles = mysql_num_rows($rs2);
+
+  				$query3 = "select count(1) as members from xtbl_eudodona";
+  				$rs3 = mysql_query($query3);
+  				$members = mysql_fetch_assoc($rs3)["members"];
+
+  				$total_earning = $members * 1000;
+  				$total_referral = $members * 100;
+  				$total_rewards = $cycles * 2500;
+
+  				$company_balance = $total_earning - ($total_referral + $total_rewards);
+
+        ?>
+
+  			<style media="screen">
+  				.shadow{
+  					box-shadow: 0 0.46875rem 2.1875rem rgba(63, 106, 216, 0.03), 0 0.9375rem 1.40625rem rgba(63, 106, 216, 0.03), 0 0.25rem 0.53125rem rgba(63, 106, 216, 0.05), 0 0.125rem 0.1875rem rgba(63, 106, 216, 0.03);
+  					border-radius: 1%;
+  					padding: 20px;
+  					background-color: white;
+  				}
+
+  				body {
+  					background-color: #F1F4F6;
+            font-family: 'Open Sans', sans-serif;
+  				}
+
+  				.body {
+  			    display: table;
+  					border-collapse: separate;
+  					border-spacing: 5px;
+  					}
+
+  					.left-side {
+  					    float: none;
+  					    display: table-cell;
+  					    border: 0;
+  							vertical-align: top;
+  					}
+
+            .left-side > .row > div > .shadow {
+              margin-left: -20px;
+            }
+
+  					.right-side {
+  					    float: none;
+  					    display: table-cell;
+  					    border: 0;
+  							margin-left: 15px;
+  							vertical-align: top;
+  					}
+
+  					@media screen and (max-width: 700px) {
+  						.left-side{
+  							display: block;
+  						}
+
+  						.right-side{
+  							display: block;
+  						}
+  					}
 
 
-							<div class="col-md-3 product-holder" data-toggle="popover-hover" title='<?php echo $row['Product_Name']; ?>'
-										data-content = '<h3 style="color:red">
-																		<b><?php echo '&#8369;'.number_format($row["Product_Price"],2);?></b><br>
-																		<small>(<?php echo number_format($row["Product_Price"]/$tbc_to_peso,8);?> TBC)</small>
-																	</h3><br><?php echo substr($row["Product_Description"], 0, 400) . "..."; ?><br> <hr>
-																	<h4>Merchant Name: <b><?php echo $row2["Business_Name"];?></b></h4>
-																	<h4>Email: <b><?php echo $row2["Email"];?></b></h4>
-																	<h4>Seller Name: <b><?php echo $row3["Fname"].' '.$row3["Lname"];?></b></h4>
-																	<h4>Cell #: <b><?php echo $row3["Cellphone"];?></b></h4><br>
-																	'
+  			</style>
 
-										data-placement= '<?php if($i % 4 == 0 || ($i+1) % 4 == 0) { echo "left"; }else { echo "right";}?>'
-										style="height: 450px;padding-bottom: 10px; border-right: 1px solid #f2f2f2;border-bottom: 1px solid #f2f2f2">
+        <div style="background-color: rgb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
+            <div class="container">
+              <div class="col-md-10" style="padding-bottom: 5px;">
+                <a href="https://tbcmerchantservices.com/home/">
+                <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"></a>
+              </div>
+              <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
+              </div>
+            </div>
+          </div>
 
-							<div style="height: 35px;">
-								<h4><b><?php echo $row['Product_Name'];?></b></h4>
-							</div>
-							<div style="height: 330px;">
-					    	<img width="250" <?php echo 'src="https://tbcmerchantservices.com/products/'.$row['Image'].'"';?> >
-							</div>
+  				<div class="container-fluid">
+  		      <div class="row">
+  		        <div class="col-xl" style="padding:10px; background-color:#F8F9FA">
+  		          <div class="text-center">
+  		            <div class="">
+                    <?php
+                    if(!file_exists('profile/'.$profile_image)) {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/00000.jpg" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                    else {
+                      echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 50px; width: 50px; border-radius:50%">';
+                    }
+                     ?>
 
-							<div style="height: 20px;"><h4 style="color: red;"><b><?php echo '&#8369;'.number_format($row['Product_Price'],2);?></b></h4></div>
 
-							<div style="height: 20px;">
-								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
-							</div>
+  		            </div>
+  		            <div>
+  		              <h3 style="">Welcome back to your Edudona Dashboard, <small><?php echo $username ?></small> </h3>
+                  </div>
+  		          </div>
+  		        </div>
+  		      </div>
+  		<br>
+  		      <div class="row body" style=" margin:auto" id="myrow">
+  		        <div class="col-xs-12 col-md-4  left-side">
 
-						</div>
-						<?php }
-					}
-					echo '</div><br><br>';
-					echo '<div class="container" align="center"><br><br>';
-					if($page>1) {
-				?>
-					<form method="POST" hidden>
-						<input name="pageno" <?php echo 'value="'.($page-1).'"';?> />
-						<input id="prev_page" type="submit" />
-					</form>
-					<a href="javascript:void(0)" onclick="$('#prev_page').click();" class="btn btn-danger "
-						style="font-size: 20px; border-radius: 0px">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-						PREVIOUS PAGE</a>
-				<?php
-					}
-					if($page<$p) {
-				?>
-					<form method="POST" hidden>
-						<input name="pageno" <?php echo 'value="'.($page+1).'"';?> />
-						<input id="next_page" type="submit" />
-					</form>
-					<a href="javascript:void(0)" onclick="$('#next_page').click();" class="btn btn-danger "
-						style="font-size: 20px; border-radius: 0px">NEXT PAGE
-						<span class="glyphicon glyphicon-chevron-right"></span></a>
-				<?php
-					}
-					echo '</div><br><br><br>';
+  		          <div class="row" style="margin-top: -10px">
+  		            <div class="col-xs-12 col-md-12">
+  		              <div class="shadow">
+  		                <p>Edudona Wallet Balance</p>
+  		                <h2> <small>PHP</small> <?php echo number_format($total_balance,2) ?> </h2>
+  		                <hr>
+                      <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');">
+                          Withdraw from Wallet using Gcash
+                      </a>
+  		              </div>
+  		            </div>
+  		          </div>
 
-					$class->page_welcome_header_content_start_footer();
-                                        $class->chatscript();
-				$class->body_end();
-			$class->html_end();
-		}
-	}
+  		          <div class="row">
+  		            <div class="col-xs-6 col-md-6">
+  		              <div class="shadow" style="background-color: #DAA520;color: white;">
+  		                <p>Total Edudona Members</p>
+  		                <h3 style="text-align: left"> <?php echo $members; ?> </h3>
+  		              </div>
+  		            </div>
+  		            <div class="col-xs-6 col-md-6">
+  		              <div class="shadow" style="background-color: #4B2B85;color: white;">
+  		                <p>Total Number of Cycles</p>
+  		                <h3  style="text-align: left"> <?php echo $cycles; ?> </h3>
+  		              </div>
+  		            </div>
+  		          </div>
 
-?>
+  		          <div class="row">
+  		            <div class="col-xs-6 col-md-6">
+  		              <div class="shadow" style="background-color: #196889;color: white;">
+  		                <p>Current table rank</p>
+  		                <h3 style="text-align: left"><?php echo "#".$table_id; ?></h3>
+  		              </div>
+  		            </div>
+  		            <div class="col-xs-6 col-md-6">
+  		              <div class="shadow" style="background-color: #DA2520;color: white;">
+  		                <p>Current rank (before exit)</p>
+  		                <h3 style="text-align: left"> <?php echo "#".$current_rank; ?> </h3>
+  		              </div>
+  		            </div>
+  		          </div>
+
+  		          <div class="row" style="margin-bottom: -10px;">
+  		            <div class="col-xs-12 col-md-12">
+  		              <div class="shadow">
+  		                <h3 style="text-align: left"> <?php echo $paid_count; ?>/7 donations completed</h3>
+                      <div class="progress">
+                       <div class="progress-bar" role="progressbar" aria-valuenow='<?php echo $paid_count ?>'
+                       aria-valuemin="0" aria-valuemax="7" style='<?php echo "width:".($paid_count/7)*100 ."%"?>; background-color: #004E00'>
+                        <?php echo $paid_count;?>/7
+                       </div>
+                      </div>
+  		              </div>
+  		            </div>
+
+  		          </div>
+
+  		        </div>
+  		        <div class="col-xs-12 col-md-8 right-side shadow" style="margin: 5px 0">
+  					        <br>
+  					        <h3><b>EDUDONA Table</b></h3>
+                    <hr style="border-color: #DAA520">
+  					        <?php if($table_id != 1){echo "<h3>You are currently in the WAITING table. This is the current status of the exit table.</h3>";} ?>
+  					        <table id="tbl_edu" class="table borderless" style="table-layout:fixed">
+  					          <thead>
+  					            <tr >
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					              <th scope="col"></th>
+  					            </tr>
+  					          </thead>
+  					          <tbody>
+  					            <tr>
+  					              <th scope="col"> </th>
+  					              <th scope="col"> </th>
+  					              <th scope="col"> </th>
+  					              <th scope="col" style="width:100%" >
+
+                            <?php
+                            mysql_data_seek($rs, 0);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+  					                <br>
+  					                <?php
+
+  					                  $user = $sq['username'];
+  					                  $paid = $sq['paid'];
+  					                  if ($user == null) {
+  					                    echo "VACANT";
+  					                  } else {
+  					                    echo $user;
+  					                    echo "<br>";
+  					                    if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+  					                  }
+  					                ?>
+  					              </th>
+  					              <th scope="col"> </th>
+  					              <th scope="col"> </th>
+  					              <th scope="col"> </th>
+  					            </tr>
+  					            <tr style="height : 100px">
+  					              <th scope="col" class="c">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 1);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+  					                <br>
+  					                <?php
+
+  					                  $user = $sq['username'];
+  					                  $paid = $sq['paid'];
+  					                  if ($user == null) {
+  					                    echo "VACANT";
+  					                  } else {
+  					                    echo $user;
+  					                    echo "<br>";
+  					                    if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+  					                  }
+  					                ?>
+  					              </th>
+  					              <th scope="col" class="c">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 2);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+  					                <br>
+  					                <?php
+
+  					                  $user = $sq['username'];
+  					                  $paid = $sq['paid'];
+  					                  if ($user == null) {
+  					                    echo "VACANT";
+  					                  } else {
+  					                    echo $user;
+  					                    echo "<br>";
+  					                    if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+  					                  }
+  					                ?>
+  					              </th>
+  					              <th scope="col" class="c">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 3);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+                            <br>
+                            <?php
+
+                              $user = $sq['username'];
+                              $paid = $sq['paid'];
+                              if ($user == null) {
+                                echo "VACANT";
+                              } else {
+                                echo $user;
+                                echo "<br>";
+                                if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              }
+                            ?>
+  					              </th>
+  					              <th scope="col"> </th>
+  					              <th scope="col" class="c">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 4);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+                            <br>
+                            <?php
+
+                              $user = $sq['username'];
+                              $paid = $sq['paid'];
+                              if ($user == null) {
+                                echo "VACANT";
+                              } else {
+                                echo $user;
+                                echo "<br>";
+                                if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              }
+                            ?>
+  					              </th>
+  					              <th scope="col" class="c">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 5);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+  					                <br>
+  					                <?php
+
+  					                  $user = $sq['username'];
+  					                  $paid = $sq['paid'];
+  					                  if ($user == null) {
+  					                    echo "VACANT";
+  					                  } else {
+  					                    echo $user;
+  					                    echo "<br>";
+  					                    if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+  					                  }
+  					                ?>
+  					              </th>
+  					              <th scope="col" class="c" style="margin-bottom:100px">
+
+  					                <br>
+                            <?php
+                            mysql_data_seek($rs, 6);
+                            $sq = mysql_fetch_array($rs);
+                            $profile_image = $sq["Profile_Image"];
+                            if(!file_exists('profile/'.$profile_image)) {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/network2.png" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                            else {
+                              echo '<img class="img-thumbnail" width="100%" src="https://tbcmerchantservices.com/profile/'.$profile_image.'" style="height: 70px; width: 70px; border-radius:50%">';
+                            }
+                             ?>
+
+  					                <br>
+  					                <?php
+
+  					                  $user = $sq['username'];
+  					                  $paid = $sq['paid'];
+  					                  if ($user == null) {
+  					                    echo "VACANT";
+  					                  } else {
+  					                    echo $user;
+  					                    echo "<br>";
+  					                    if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+  					                  }
+  					                ?>
+  					              </th>
+  					            </tr>
+
+  					          </tbody>
+  					        </table>
+  					      </div>
+
+  		      </div>
+
+
+            <?php
+              $latest_query = "
+                SELECT * FROM xtbl_edudona_trans ORDER BY ctr DESC
+              ";
+              $rs = mysql_query($latest_query);
+              $exits = mysql_fetch_assoc($rs);
+
+              $latest_query2 = "
+              SELECT m.Datetime, a.Username FROM `xtbl_admin_eudodona` m
+                LEFT JOIN xtbl_account_info a
+                ON m.Main_Ctr = a.Main_Ctr
+              ORDER BY m.Ctr DESC
+              ";
+              $rs2 = mysql_query($latest_query2);
+              $donations = mysql_fetch_assoc($rs2);
+            ?>
+
+  		      <div class="container">
+  		        <hr>
+  		      </div>
+  		      <div class="container-fluid">
+  		        <div class="row">
+  		          <div class="col-xs-12 col-md-6">
+  		            <div class="shadow">
+  		              <p>Latest exits</p>
+                    <hr>
+  		              <table id="tbl_exit" class="table table-striped table2">
+  		                <thead>
+  		                  <tr>
+  		                    <th scope="col"><b>#</b></th>
+  		                    <th scope="col"><b>Member</b></th>
+  		                    <th scope="col"><b>Exit date</b></th>
+  		                  </tr>
+  		                </thead>
+  		                <tbody>
+  		                  <tr>
+                          <?php
+                            mysql_data_seek($rs, 0);
+                            $exits = mysql_fetch_array($rs);
+                          ?>
+  		                    <th scope="row">1</th>
+  		                    <td> <?php echo $exits["username"] ?> </td>
+  		                    <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+  		                  </tr>
+  		                  <tr>
+                          <?php
+                            mysql_data_seek($rs, 1);
+                            $exits = mysql_fetch_array($rs);
+                          ?>
+  		                    <th scope="row">2</th>
+                          <td> <?php echo $exits["username"] ?> </td>
+                         <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+  		                  </tr>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs, 2);
+                            $exits = mysql_fetch_array($rs);
+                          ?>
+                          <th scope="row">3</th>
+                          <td> <?php echo $exits["username"] ?> </td>
+                         <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+                        </tr>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs, 3);
+                            $exits = mysql_fetch_array($rs);
+                          ?>
+  		                    <th scope="row">4</th>
+                          <td> <?php echo $exits["username"] ?> </td>
+                         <td><?php echo date('Y-m-d', strtotime($exits["datetime"])); ?></td>
+  		                  </tr>
+  		                </tbody>
+  		              </table>
+  		            </div>
+  		          </div>
+
+  		          <div class="col-xs-12 col-md-6">
+  		            <div class="shadow">
+  		              <p>Latest donations</p>
+                    <hr>
+  		              <table class="table table-striped table2">
+  		                <thead>
+  		                  <tr>
+                          <th scope="col"><b>#</b></th>
+  		                    <th scope="col"><b>Member</b></th>
+  		                    <th scope="col"><b>Entry date</b></th>
+  		                  </tr>
+  		                </thead>
+  		                <tbody>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs2, 0);
+                            $donations = mysql_fetch_array($rs2);
+                          ?>
+                          <th scope="row">1</th>
+                          <td> <?php echo $donations["Username"] ?> </td>
+                          <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                        </tr>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs2, 1);
+                            $donations = mysql_fetch_array($rs2);
+                          ?>
+                          <th scope="row">2</th>
+                          <td> <?php echo $donations["Username"] ?> </td>
+                          <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                        </tr>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs2, 2);
+                            $donations = mysql_fetch_array($rs2);
+                          ?>
+                          <th scope="row">3</th>
+                          <td> <?php echo $donations["Username"] ?> </td>
+                          <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                        </tr>
+                        <tr>
+                          <?php
+                            mysql_data_seek($rs2, 3);
+                            $donations = mysql_fetch_array($rs2);
+                          ?>
+                          <th scope="row">4</th>
+                          <td> <?php echo $donations["Username"] ?> </td>
+                          <td><?php echo date('Y-m-d', strtotime($donations["Datetime"])); ?></td>
+                        </tr>
+  		                </tbody>
+  		              </table>
+  		            </div>
+  		          </div>
+
+  		        </div>
+  		      </div>
+
+
+  		    </div>
+
+        <br><br>
+
+        <style>
+          td, th { border: none !important; vertical-align: center; text-align: center; font-weight: unset}
+          #tbl_edu > tr {
+            height: 100px;
+          }
+
+          .dot {
+            border-radius: 50%;
+            color: white;
+            display: table-cell;
+            font-size: 14px;
+            height: 60px;
+            margin: auto;
+            vertical-align: middle;
+            width: 60px;
+          }
+          .table-div{
+
+          }
+
+
+
+          @media screen and (max-width: 700px) {
+            tr{
+              height: 100px;
+              display: block;
+            }
+            td {
+              word-break:break-all;
+            }
+            .c{
+              display: block;
+            }
+            #padd {
+              width: 32%;
+            }
+            #tbl_edu {
+              height: 400px;
+              margin-bottom: 630px;
+            }
+          }
+        </style>
+
+        <?php
+        $query = "select * FROM  xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr' AND STATUS = 'WAITING'";
+        $rs=mysql_query($query);
+        $row=mysql_fetch_assoc($rs);
+        $waiting = mysql_num_rows($rs);
+
+
+
+        ?>
+
+        <?php
+
+        if($waiting == 1)
+        {
+          ?>
+          <div class="container">
+            <hr>
+            <h4>Payment submitted please wait for approval.</h4>
+            <br>
+          </div>
+          <?php
+        }
+        if ($is_paid == 0 && $waiting==0){
+          // $class->show_payforms2();
+        }
+        ?>
+        <br>
+        <!-- ---------------------- MODAL  -->
+
+        <div id="modal_eudodona" class="modal fade">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header" style="background-color: #191970; text-align: center; color: white">
+                <span class="modal-title" style="font-size: 20px">CONFIRMATION</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color: white">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form method="POST">
+                  <input name="sendnew" hidden value="us56udg668h28hcb7w7eg6" />
+                  <input name="submitnew2" hidden type="submit" />
+                  <label>How much would you like to withdraw?</label>
+                  <input type="number" class="form-control" name="gcashwithdraw" />
+                  <label>TBCMS GCash Mobile Number</label>
+                  <input class="form-control" name="gcashmobile2" />
+                </form>
+                <!-- <b>ARE YOU SURE YOU WANT TO WITHDRAW ALL?</b> -->
+              </div>
+              <div class="modal-footer">
+                <a href="javascript:void(0)" onclick="$('[name=submitnew2]').click();" class="btn btn-primary" data-dismiss="modal" style="border-radius: 0px">&nbsp YES &nbsp</a>
+                <a href="javascript:void(0)" class="btn btn-danger" data-dismiss="modal" style="border-radius: 0px">&nbsp NO &nbsp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <?php
+      }
+      else
+      {
+        # if not existing in edudona table
+        $class->doc_type();
+        $class->html_start('');
+          $class->head_start();
+            echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+            $class->title_page('TBCMS: EDUDONA');
+            $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+            $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
+            $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+            $class->script('https://tbcmerchantservices.com/js/jquery1.1.js');
+          $class->head_end();
+          $class->body_start('');
+        ?>
+
+        <div style="background-color: r gb(255,255,255,0.5); height: auto; padding-top: 10px; background-image: url('https://tbcmerchantservices.com/images/Picture3.jpg'); background-size: 100% auto">
+            <div class="container">
+              <div class="col-md-10" style="padding-bottom: 5px;">
+                <a href="https://tbcmerchantservices.com/home/">
+                <img width="230px" src="https://tbcmerchantservices.com/images/tbsheader.png"></a>
+              </div>
+              <div class="col-md-2" style="padding-bottom: 5px; text-align: center;">
+              </div>
+            </div>
+          </div>
+
+
+        <div class="container"><h3>Welcome back,  <b><?php echo $current_email ?></b></h3></div>'
+        <br><br><br>
+
+
+        <center>
+          <h3>Be part of TBCMS' Edudona network.</h3><br>
+          <!-- <img src="https://tbcmerchantservices.com/images/Red-Gift-Bow-PNG.png" width="200px"> -->
+          <h4>You can now register P1,000 ($20) only as your donation!</h4>
+        </center>
+
+
+
+        <?php
+          $class->show_payforms();
+      }
+      $class->page_welcome_header_content_start_footer2();
+    }
+    ?>
