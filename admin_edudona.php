@@ -86,8 +86,7 @@
 				$count=mysql_num_rows($rs);
 				$sponsor_id = $row['refcode'];
 
-				if($count == 0){
-					# if not yet in edudona table
+				if(0 == 0){
 					$query="insert into xtbl_eudodona(MainCtr, username, refcode, table_id, rank, paid) values('$Mainctr','$username', '$refcode', '$table_id', '$rank', '$paid')";
 					mysql_query($query);
 

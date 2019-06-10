@@ -269,7 +269,7 @@ class mydesign {
 
     public function show_payforms(){
       ?>
-      <div class="container" style="margin-bottom:25px">
+      <div class="container" style="margin-bottom:25px" id="payforms">
       <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
 
 
@@ -321,7 +321,8 @@ class mydesign {
     public function show_payforms2(){
       ?>
 
-      <div class="container" style="margin-bottom:25px">
+      <div class="container" style="margin-bottom:25px" id = "payforms">
+      <h3>Want to make another donation?</h3>
       <h4><img src="https://tbcmerchantservices.com/images/coinph.png" width="80px"> </h4>
 
 

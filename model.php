@@ -114,23 +114,23 @@ class eudodona_model
 
           mysql_data_seek($unpaid_rs, $x);
           $unpaid_sq = mysql_fetch_array($unpaid_rs);
-          $unpaid_ctr = $unpaid_sq['MainCtr'];
+          $unpaid_ctr = $unpaid_sq['ctr'];
 
           mysql_data_seek($paid_rs, $y);
           $paid_sq  = mysql_fetch_array($paid_rs);
-          $paid_ctr = $paid_sq['MainCtr'];
+          $paid_ctr = $paid_sq['ctr'];
 
           $q1 = "
             UPDATE xtbl_eudodona
             SET paid = 1
-            WHERE MainCtr = '$unpaid_ctr'
+            WHERE ctr = '$unpaid_ctr'
           ";
           mysql_query($q1);
 
           $q2 = "
             UPDATE xtbl_eudodona
             SET paid = 0
-            WHERE MainCtr = '$paid_ctr'
+            WHERE ctr = '$paid_ctr'
           ";
           mysql_query($q2);
 

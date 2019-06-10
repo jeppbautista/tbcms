@@ -217,7 +217,7 @@
       echo "<script>alert('You are not qualified to access edudona. Please activate your account first.')</script>";
       echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
     }
-    if($rows == 1)
+    if($rows >= 1)
     {
       # if exists in edudona table
       $class->doc_type();
@@ -374,6 +374,10 @@
                     <a href="javascript:void(0)" onclick="$('#modal_eudodona').modal('show');">
                         Withdraw from Wallet using Gcash
                     </a>
+                    <br><br>
+                    <a href="#payforms">
+                        Donate again
+                    </a>
                   </div>
                 </div>
               </div>
@@ -418,6 +422,8 @@
                       <?php echo $paid_count;?>/7
                      </div>
                     </div>
+                    <h4>Keep on inviting to gain great rewards.</h4>
+
                   </div>
                 </div>
 
@@ -756,9 +762,11 @@
             $exits = mysql_fetch_assoc($rs);
 
             $latest_query2 = "
-            SELECT m.Datetime, a.Username FROM `xtbl_admin_eudodona` m
+            SELECT m.Datetime, a.Username, m.Remarks FROM `xtbl_admin_eudodona` m
               LEFT JOIN xtbl_account_info a
               ON m.Main_Ctr = a.Main_Ctr
+            WHERE m.Remarks = 'EDUDONA ENTRY'
+            OR m.Remarks = 'EDUDONA RE-ENTRY'
             ORDER BY m.Ctr DESC
             ";
             $rs2 = mysql_query($latest_query2);
@@ -930,6 +938,7 @@
       </style>
 
       <?php
+
       $query = "select * FROM  xtbl_admin_eudodona WHERE Main_Ctr='$Mainctr' AND STATUS = 'WAITING'";
       $rs=mysql_query($query);
       $row=mysql_fetch_assoc($rs);
@@ -951,8 +960,8 @@
         </div>
         <?php
       }
-      if ($is_paid == 0 && $waiting==0){
-        // $class->show_payforms2();
+      else{
+        $class->show_payforms2();
       }
       ?>
       <br>
