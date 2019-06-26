@@ -1,0 +1,42 @@
+.btn-checkout{
+  background-color: #C4A101;
+  color: black;
+  padding: 12px;
+  width: 100%;
+}
+
+.btn-add-to-cart{
+  border: 1px black solid;
+  background-color: white;
+  color: black;
+  padding: 12px;
+  width: 100%;
+}
+
+.div-shop{
+  width: 70%;
+}
+
+.div-shop .btn {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.product-details *{
+  text-align: left;
+}
+
+.product-image-outer{
+  height: 60%;
+  height: 60vh;
+}
+
+.product-image {
+  height: 100%;
+}
+
+.product-image img {
+  height: 100%;
+  display: block;
+  margin: auto;
+}

@@ -84,7 +84,7 @@
     $paid_count = mysql_num_rows($rs22);
     echo "<script>console.log('$paid_count')</script>";
 
-
+  
     if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
       # withdrawal
       $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);
@@ -96,8 +96,8 @@
       $amount=str_replace("<", '', $amount);
       $amount=str_replace('>', '', $amount);
       $amount=(int)$amount;
-      if($total_reward<2500){
-        $class->show_alert('Minimum withdraw amoutn is 2,500 PHP!');
+      if($amount<2500){
+        $class->show_alert('Minimum withdraw amount is 2,500 PHP!');
       }
       else if ($amount == 0){
         $class->show_alert('Amount could not be blank!');
@@ -173,26 +173,31 @@
       $txtbtceud_trans=str_replace('"', '', $txtbtceud_trans);
       $txtbtceud_trans=str_replace("<", '', $txtbtceud_trans);
       $txtbtceud_trans=str_replace('>', '', $txtbtceud_trans);
-      $query78="select * from xtbl_admin_eudodona WHERE Transaction='$txtbtceud_trans'";
-      $rs78=mysql_query($query78);
-      $row78=mysql_fetch_assoc($rs78);
-      if(mysql_num_rows($rs78)==0){
-        if($trans_count==1) { echo '<script>alert("Request already sent")</script>';}
+      if($txtbtceud_trans=='' || strlen($txtbtceud_trans)<9){echo '<script>alert("Invalid Transaction ID")</script>';}
+      else{
+        $query78="select * from xtbl_admin_eudodona WHERE Transaction='$txtbtceud_trans'";
+        $rs78=mysql_query($query78);
+        $row78=mysql_fetch_assoc($rs78);
+        if(mysql_num_rows($rs78)==0){
+          if($trans_count==1) { echo '<script>alert("Request already sent")</script>';}
+          else{
+            $btceud_query="insert into xtbl_admin_eudodona
+            (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
+            values('$activation_tbc_amount', '$activation_amount',
+            '$mycoinsph_account', 'EDUDONA BTC', '$Mainctr', 'WAITING', NOW(),
+            '$txtbtceud_trans', 'EDUDONA ENTRY')";
+            $eud_rs=@mysql_query($btceud_query);
+            $class->show_alert('Request sent Successfully, please wait 2-3 working days for approval');
+            echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
+          }
+        }
         else{
-          $btceud_query="insert into xtbl_admin_eudodona
-          (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
-          values('$activation_tbc_amount', '$activation_amount',
-          '$mycoinsph_account', 'EDUDONA BTC', '$Mainctr', 'WAITING', NOW(),
-          '$txtbtceud_trans', 'EDUDONA ENTRY')";
-          $eud_rs=@mysql_query($btceud_query);
-          $class->show_alert('Request sent Successfully, please wait 2-3 working days for approval');
-          echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona/";</script>';
+          $class->show_alert('Transaction ID already in use');
+          $error2='Transaction ID already used';
         }
       }
-      else{
-        $class->show_alert('Transaction ID already in use');
-        $error2='Transaction ID already used';
-      }
+
+
     }
     if(isset($_POST['txtbtceud_trans_id2']))
     {
@@ -201,6 +206,8 @@
       $txtbtceud_trans=str_replace('"', '', $txtbtceud_trans);
       $txtbtceud_trans=str_replace("<", '', $txtbtceud_trans);
       $txtbtceud_trans=str_replace('>', '', $txtbtceud_trans);
+      if($txtbtceud_trans=='' || strlen($txtbtceud_trans)<9){echo '<script>alert("Invalid Transaction ID")</script>';}
+      else{
         $phpeud_query="insert into xtbl_admin_eudodona
         (Tbc_Amount, Peso_Amount, Sender_Address, Type, Main_Ctr, Status, Datetime, Transaction, Remarks)
         values('$activation_tbc_amount', '$activation_amount',
@@ -208,7 +215,15 @@
         '$txtbtceud_trans', 'EDUDONA RE-ENTRY')";
         $eud_rs=@mysql_query($phpeud_query);
         echo '<script>window.location.href = "https://tbcmerchantservices.com/edudona_home/";</script>';
+      }
     }
+
+
+
+
+
+
+
 
     ?>
 
@@ -310,7 +325,7 @@
               vertical-align: top;
           }
 
-          @media screen and (max-width: 700px) {
+          @media screen and (max-width: 991px) {
             .left-side{
               display: block;
             }
@@ -489,7 +504,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -535,7 +550,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -576,7 +591,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -617,7 +632,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -659,7 +674,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -700,7 +715,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -741,7 +756,7 @@
                             } else {
                               echo $user;
                               echo "<br>";
-                              if($paid == 1){echo "<p style='color: #004E00'>(PAID)</p>";}else{echo "<p style='color:black'>(NOT PAID)</p>";}
+                              if($paid == 1){echo "<p style='color: #004E00'>(WAITING FOR EXIT)</p>";}else{echo "<p style='color:black'>(WAITING FOR DONATION)</p>";}
                             }
                           ?>
                         </th>
@@ -914,8 +929,14 @@
 
         }
 
-
-
+        @media screen and (max-width 991px) {
+          .left-side {
+            float: left;
+          }
+          .right-side {
+            float: left;
+          }
+        }
         @media screen and (max-width: 700px) {
           tr{
             height: 100px;

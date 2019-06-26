@@ -42,7 +42,8 @@
 	$row=mysql_fetch_assoc($rs);
 	$tbc_to_peso=$row['Tbc_to_Peso'];
 
-	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+	if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate]))
+	{
 		$class->doc_type();
 		$class->html_start('');
 			$class->head_start();
@@ -84,14 +85,13 @@ width: 500px;
 					$rs=mysql_query($query);
 
 
-
 					if($type=="%%"){echo '<br><div class="container"><h2>All Categories</h2></div>';}
 					else{echo '<br><div class="container"><h2>All '.$type.'</h4></div>';}
 
 					echo '<br><div class="container" align="center">';
 					$i = 0;
 
-					while($row=mysql_fetch_assoc($rs)) {?>
+					while($row=mysql_fetch_assoc($rs)) { ?>
 						<?php if(file_exists('products/'.$row['Image'])) {
 							$i++;
 							$mer_ctr = $row["Main_Ctr"];

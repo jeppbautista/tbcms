@@ -65,6 +65,7 @@ echo '<meta property="og:description" content="'.$row['Product_Description'].'" 
 		?>		<br>
 				<div class="container">
 					<div class="col-md-4">
+
 						<?php
 							if(file_exists('products/'.$row['Image'])) {
 			            ?>
