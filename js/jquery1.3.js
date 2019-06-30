@@ -90,7 +90,13 @@ $( document ).ready(function() {
       }
     });
 
+    $('.add-to-cart-form').on('submit', function(){
+      var id = $('#product').val();
+      var quantity = $('#quantity').val();
 
+      window.location.href = "https://tbcmerchantservices.com/add_to_cart.php?id=" + id + "&quantity=" + quantity;
+      return false;
+    });
 
 
 });

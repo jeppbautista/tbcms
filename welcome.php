@@ -235,6 +235,7 @@ else {
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
     $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
     $class->link('https://www.w3schools.com/w3css/4/w3.css');
+    $class->link('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
 ?>
    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
