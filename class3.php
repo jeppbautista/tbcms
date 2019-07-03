@@ -3,7 +3,10 @@
   	class mydesign {
 
 		public function database_connect() {
+			// PRODUCTION MYSQL
 	      	$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
+	      	// For localhost Connection
+  	 	 	// $conn = @mysql_connect('localhost', 'root', 'telusdb');
 	      	if (!$conn) { die('Could not connect: ' . mysql_error());  }
 	      	mysql_select_db('xdb_tbcmerchantservices', $conn);
 	    }
@@ -499,6 +502,12 @@
                   </div>';
               }
             ?>
+            <form action="" enctype="multipart/form-data" method="post">
+				<input id='upload' name="upload[]" type="file" multiple="multiple" accept="image/*"/><br>
+				<input id="txtsubmit_upload" type="submit" hidden name="submit" value="Submit" />
+				<a href="javascript:void(0)" onclick="$('#txtsubmit_upload').click();" id="btn_upload_requirements" class="btn btn-primary btn-lg">
+						SEND IMAGES</a>
+			</form><br>
           </div>
 
         </div>

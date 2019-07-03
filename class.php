@@ -8,6 +8,7 @@ class mydesign
     {
         if ($this->isLocalhost()== true)
         {
+
             $conn = @mysql_connect('localhost', 'root', '');
         }
         else{
