@@ -3,16 +3,12 @@ session_start();
 include 'class3.php';
 $class=new mydesign;
 $class->database_connect();
-
 date_default_timezone_set('Asia/Manila');
 $sessiondate=date('mdY');
-
 if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
 	header("location: https://tbcmerchantservices.com/welcome/");
 }
-
 $ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
-
 if(isset($_POST["profile_edit"])){
 	$lastname = $class->pre_process_form($_REQUEST["last_name"]);
 	$firstname = $class->pre_process_form($_REQUEST["first_name"]);
@@ -20,7 +16,6 @@ if(isset($_POST["profile_edit"])){
 	$bday = $class->pre_process_form($_REQUEST["birth_day"]);
 	$cell = $class->pre_process_form($_REQUEST["cell_phone"]);
 	$addr = $class->pre_process_form($_REQUEST["addr"]);
-
 	$query = "
 	UPDATE xtbl_personal SET Lname = '$lastname',
 	Fname = '$firstname',
@@ -31,10 +26,9 @@ if(isset($_POST["profile_edit"])){
 	WHERE Main_Ctr = '$ctr'
 	";
 	@mysql_query($query);
-
 }
-
 else if (isset($_POST["merchantprofile_edit"])){
+
 	$business_name = $class->pre_process_form($_REQUEST["txtm_business_name"]);
 	$country = $class->pre_process_form($_REQUEST["txtm_country"]);
 		// $fullname = $class->pre_process_form($_REQUEST["txtm_fullname"]);
@@ -44,6 +38,7 @@ else if (isset($_POST["merchantprofile_edit"])){
 	$business_description = $class->pre_process_form($_REQUEST["txtm_business_desc"]);
 
 
+
 	$query = "
 	UPDATE xtbl_main_info SET Business_Name = '$business_name',
 	Country = '$country',
@@ -51,16 +46,15 @@ else if (isset($_POST["merchantprofile_edit"])){
 	WHERE Ctr = '$ctr'
 	";
 	@mysql_query($query);
-
 	$query2 = "
 	UPDATE xtbl_personal SET Birthday = '$birthday',
 	Cellphone = '$cellphone',
-	Address = '$address',
+	Address = '$address'
 	WHERE Main_Ctr = '$ctr'
 	";
 	@mysql_query($query2);
-}
 
+}
 $query="select * from xtbl_adminaccount";
 $rs=mysql_query($query);
 $row=mysql_fetch_assoc($rs);
@@ -68,7 +62,6 @@ $our_btc=$row['BTC'];
 $our_coinsph=$row['CoinPH'];
 $our_paypal=$row['Paypal'];
 $tbc_to_peso=$row['Tbc_to_Peso'];
-
 $query="select * from xtbl_account_info WHERE Main_Ctr='$ctr'";
 $rs=mysql_query($query);
 $row=mysql_fetch_assoc($rs);
@@ -81,7 +74,6 @@ $activation_amount=0;
 if($account_type=='MERCHANT') {$activation_amount=2500;}
 else {$activation_amount=1500;}
 $activition_tbc_amount=$activation_amount/$tbc_to_peso;
-
 $query="select * from xtbl_main_info WHERE Ctr='$ctr'";
 $rs=mysql_query($query);
 $row=mysql_fetch_assoc($rs);
@@ -91,7 +83,6 @@ $business_name=$row['Business_Name'];
 $business_category=$row['Business_Category'];
 $business_description=$row['Description'];
 $business_country=$row['Country'];
-
 $query="select * from xtbl_personal WHERE Main_Ctr='$ctr'";
 $rs=mysql_query($query);
 $row=mysql_fetch_assoc($rs);
@@ -103,21 +94,17 @@ $birthday=$row['Birthday'];
 $cellphone=$row['Cellphone'];
 $address=$row['Address'];
 $profile_image=$row['Profile_Image'];
-
 	// Requirements
 $query="select * from xtbl_requirements WHERE Main_Ctr='$ctr'";
 $rs=mysql_query($query);
 $row=mysql_fetch_assoc($rs);
 $requirements_ctr=$row['Ctr'];
 $filePath=$row['Image'];
-
-
 if($email_status=='INACTIVE' && $account_status=='INACTIVE' && $card_status=='INACTIVE'){
 	header("location: https://tbcmerchantservices.com/home/");
 }
 else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=='INACTIVE')
 {
-
 	$class->doc_type();
 	$class->html_start('');
 	$class->head_start();
@@ -129,28 +116,21 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 	$class->script('https://tbcmerchantservices.com/js/jquery1.5.js');
 	$class->head_end();
 	$class->body_start('');
-
-
 	if($account_type=='MERCHANT') {
 		$class->page_home_header_start();
 		$class->page_home4_header_content();
 		$class->page_home_header_end();
 		echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-
 		if(isset($_POST['submit'])){
 			if(count($_FILES['upload_logo']['name']) > 0){
 				$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
 				if($tmpFilePath != ""){
 					$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
 					$shortname = $_FILES['upload_logo']['name'];
-
 					if(file_exists('business/'.$business_logo)) {
 						unlink('business/'.$business_logo);
 					}
-
 					$business_logo = $ctr.md5(date('dmYHis')).$endfilename;
-
 					$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
 					if($check !== false) {
 						if(move_uploaded_file($tmpFilePath, 'business/'.$business_logo)) {
@@ -161,9 +141,7 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 							$upload_rs=@mysql_query($upload_query);
 						}
 					}
-
 				}
-
 			}
 		}
 		?>
@@ -248,21 +226,16 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 				$class->page_home4_header_content();
 				$class->page_home_header_end();
 				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-
 				if(isset($_POST['submit'])){
 					if(count($_FILES['upload_logo']['name']) > 0){
 						$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
 						if($tmpFilePath != ""){
 							$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
 							$shortname = $_FILES['upload_logo']['name'];
-
 							if(file_exists('profile/'.$profile_image)) {
 								unlink('profile/'.$profile_image);
 							}
-
 							$profile_image = $ctr.md5(date('dmYHis')).$endfilename;
-
 							$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
 							if($check !== false) {
 								if(move_uploaded_file($tmpFilePath, 'profile/'.$profile_image)) {
@@ -273,12 +246,9 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 									$upload_rs=@mysql_query($upload_query);
 								}
 							}
-
 						}
-
 					}
 				}
-
 				?>
 				<div class="container">
 					<div class="col-md-4">
@@ -303,12 +273,9 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 				</div>
 				<?php
 			}
-
-
 			$class->page_welcome_header_content_start_footer();
 			$class->body_end();
 			$class->html_end();
-
 		}
 		else {
 			$class->doc_type();
@@ -327,23 +294,18 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 				$class->page_home2_header_content();
 				$class->page_home_header_end();
 				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-
 				if(isset($_POST['submit'])){
 					$upload_logo_value = (isset($_FILES['upload_logo']['name']) ? $_FILES['upload_logo']['name'] :null);
-					
+
 					if(count($upload_logo_value) > 0){
 						$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
 						if($tmpFilePath != ""){
 							$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
 							$shortname = $_FILES['upload_logo']['name'];
-
 							if(file_exists('business/'.$business_logo)) {
 								unlink('business/'.$business_logo);
 							}
-
 							$business_logo = $ctr.md5(date('dmYHis')).$endfilename;
-
 							$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
 							if($check !== false) {
 								if(move_uploaded_file($tmpFilePath, 'business/'.$business_logo)) {
@@ -354,17 +316,14 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 									$upload_rs=@mysql_query($upload_query);
 								}
 							}
-
 						}
-
 					}
 				}
 				// Reupload the Supporting Documents Function
 				if(isset($_POST['submit'])){
-					
+
 					$upload[] = (isset($_FILES['upload']['name']) ? $_FILES['upload']['name'] : null);
 					if(count($upload[0]) > 0){
-
 						for($i=0; $i<count($_FILES['upload']['name']); $i++) {
 							if($i>3){}
 								else{
@@ -372,23 +331,19 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 									if($tmpFilePath != ""){
 										$endfilename=str_replace(" ", '', $_FILES["upload"]["name"][$i]);
 										$shortname = $_FILES['upload']['name'][$i];
-
 										if(file_exists('requirements/'.$filePath)) {
 											unlink('requirements/'.$filePath);
 										}
 										$filePath = "requirements/".$ctr.md5(date('dmYHis')).$i.$endfilename;
-
 										$check = getimagesize($_FILES["upload"]["tmp_name"][$i]);
 										if($check !== false) {
 											if(move_uploaded_file($tmpFilePath, $filePath)) {
-
 												$query_req="select * from xtbl_requirements where Image='$filePath'";
 												$rs_req=mysql_query($query_req);
 												$rows_req=mysql_num_rows($rs_req);
 												if($rows_req == 0){
 													$files[] = $shortname;
 													$update_query = "update xtbl_requirements SET Image='$filePath' WHERE Ctr='$requirements_ctr'";
-
 													$upload_rs=@mysql_query($update_query);
 												}
 												// Reserved for Local
@@ -402,7 +357,6 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 						}
 					}
 					// END - Reupload the Supporting Documents Function
-
 					?>
 
 					<div class="container">
@@ -432,21 +386,16 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 				$class->page_home3_header_content();
 				$class->page_home_header_end();
 				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
-
 				if(isset($_POST['submit'])){
 					if(count($_FILES['upload_logo']['name']) > 0){
 						$tmpFilePath = $_FILES['upload_logo']['tmp_name'];
-
 						if($tmpFilePath != ""){
 							$endfilename=str_replace(" ", '', $_FILES["upload_logo"]["name"]);
 							$shortname = $_FILES['upload_logo']['name'];
-
 							if(file_exists('profile/'.$profile_image)) {
 								unlink('profile/'.$profile_image);
 							}
-
 							$profile_image = $ctr.md5(date('dmYHis')).$endfilename;
-
 							$check = getimagesize($_FILES["upload_logo"]["tmp_name"]);
 							if($check !== false) {
 								if(move_uploaded_file($tmpFilePath, 'profile/'.$profile_image)) {
@@ -457,9 +406,7 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 									$upload_rs=@mysql_query($upload_query);
 								}
 							}
-
 						}
-
 					}
 				}
 				?>
@@ -485,11 +432,8 @@ else if ($email_status=='ACTIVE' && $account_status=='INACTIVE' && $card_status=
 				</div>
 				<?php
 			}
-
-
 			$class->page_welcome_header_content_start_footer();
 			$class->body_end();
 			$class->html_end();
 		}
-
 		?>
