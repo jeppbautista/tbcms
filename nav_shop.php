@@ -13,18 +13,20 @@ if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
            <span class="icon-bar"></span>
            <span class="icon-bar"></span>
            </button>
-           <a class="navbar-brand" href="https://tbcmerchantservices.com/shopping">TBCMS Shop</a>
+           <a style="color:#008B8B" class="navbar-brand" href= <?php echo $page_title=="Cart" ? "https://tbcmerchantservices.com/cart" : "https://tbcmerchantservices.com/shopping" ?> >
+             <?php echo $page_title=="Cart" ? "Shopping Cart" : "TBCMS shop"; ?>
+           </a>
        </div>
 
        <div class="navbar-collapse collapse">
            <ul class="nav navbar-nav">
 
                <li <?php echo $page_title=="Cart" ? "" : "class='active'" ; ?>>
-                   <a href="https://tbcmerchantservices.com/shopping" class="dropdown-toggle">Shopping</a>
+                   <a href="https://tbcmerchantservices.com/shopping" style="color:#008B8B" class="dropdown-toggle">Shopping</a>
                </li>
 
                <li <?php echo $page_title=="Cart" ? "class='active'" : ""; ?> >
-                   <a href="https://tbcmerchantservices.com/cart">
+                   <a href="https://tbcmerchantservices.com/cart" style="color:#008B8B">
                        <?php
                        // count products in cart
                        $cart_count=count($_SESSION['cart']);

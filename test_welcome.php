@@ -96,8 +96,6 @@
         </h3>
         <br>
         <div class="div-shop">
-            <form class="" action="index.html" method="post">
-            </form>
             <a href="#" class="btn btn-md btn-add-to-cart">Add to Cart</a> <br>
             <a href="#" class="btn btn-md btn-checkout">Go to Checkout</a>
         </div>
@@ -325,6 +323,8 @@
     	}
     	include 'nav_shop.php';
 
+
+
     	echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
 
 
@@ -339,6 +339,18 @@
     ?>
 <br>
 <div class="container product-div-1">
+<?php
+if (isset($_GET['action'])){
+  if($_GET['action']=="added"){
+    ?>
+    <div class="alert alert-info" role="alert" style="text-align:center">
+      Item added in cart.
+    </div>
+    <?php
+
+  }
+}
+?>
 <div class="col-md-7 product-image-outer">
     <div class="product-image">
         <?php
@@ -394,7 +406,7 @@
             <div class="modal-header" style="background-color: #191970; text-align: center; color: white">
                 <span class="modal-title" style="font-size: 20px">CONFIRMATION</span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" style="color: white">&times;</span>
+                  <span aria-hidden="true" style="color: white">&times;</span>
                 </button>
             </div>
             <div class="modal-body">

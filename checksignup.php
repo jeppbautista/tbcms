@@ -220,6 +220,8 @@
 														Date datetime NOT NULL)
 													";
 
+													
+
 													if(mysql_query($newtable)) {
 														//TODO fix message
 														date_default_timezone_set('Asia/Manila');

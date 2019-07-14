@@ -1,5 +1,15 @@
+
+
 body {
   font-family: 'Noto Sans', sans-serif;
+}
+
+button h3{
+  color: #444;
+}
+
+h3 small{
+  font-size: 60%;
 }
 
 h5 {
@@ -58,7 +68,113 @@ p {
   max-height: 100%;
 }
 
+#cart > tbody > tr > td {
+  padding: 25px 0px;
+  display: table-cell;
+  vertical-align: middle;
+}
 
+#cart > tfoot > tr > td {
+  padding: 25px 0px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+table#cart tbody tr td {
+  border-top: none;
+}
+
+table#cart tbody td a {
+  color: inherit;
+}
+
+table#cart tbody td a:link {
+  color: inherit;
+  text-decoration: none;
+}
+
+table#cart tbody td a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+table#cart tbody td a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+table#cart tbody td a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+table#cart tbody tr td button{
+   background:transparent;
+}
+
+table#summary thead tr th {
+  background-color: #C4A101;
+}
+
+table#summary tbody tr td {
+  padding-left: 20px;
+  border-top: none;
+}
+
+table#summary tbody tr td h5{
+  text-align: left;
+}
+
+table#summary tbody tr td h4{
+  text-align: left;
+}
+
+#summary-total{
+  border-top: 1px #DDDDDD solid;
+}
+
+#summary-header{
+  text-align: center;
+}
+
+/* IDS */
+#discount {
+  background-color: #F8F8F8;
+  padding: 50px;
+}
+
+#discount-btn {
+  background-color: #C4A101;
+}
+
+#summary {
+  padding: 5px 20px;
+}
+
+/* Empty cart */
+.div-empty{
+  margin:  20px auto;
+  display: table;
+}
+
+.div-empty img{
+  max-height: 150px;
+}
+
+.div-go-back{
+  margin: 20px auto;
+  display: table;
+}
+
+/* Checkout */
+#check-proceed1{
+  background-color: #c19349;
+  width: 50%;
+}
+
+.collapse {
+  border-bottom: 1px solid #EAEAEA;
+}
 
 /* Floating action button */
 .float{
