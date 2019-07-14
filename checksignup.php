@@ -207,7 +207,8 @@
 											$rs=@mysql_query($query);
 
 											if($rs) {
-												$query="insert into xtbl_personal(Main_Ctr, Lname, Fname, Mname, Birthday, Address, Cellphone, Btc_Account, Coinsph_Account, Paypal_Email) values('$new_ctr','$lname','$fname', '$mname', '$bday', '$address', '$cell', '$btcwallet', '$coinphwallet', '$paypalwallet')";
+												$query="insert into xtbl_personal(Main_Ctr, Lname, Fname, Mname, Birthday, Address, Cellphone, Btc_Account, Coinsph_Account, Paypal_Email)
+												values('$new_ctr','$lname','$fname', '$mname', '$bday', '$address', '$cell', '$btcwallet', '$coinphwallet', '$paypalwallet')";
 												$rs=@mysql_query($query);
 												if($rs) {
 
@@ -220,7 +221,11 @@
 														Date datetime NOT NULL)
 													";
 
-													
+													$new_wallet="
+														INSERT INTO xtbl_eudodona_wallet(MainCtr, Balance)
+														VALUES('$new_ctr', 0)
+													";
+													@mysql_query($new_wallet);
 
 													if(mysql_query($newtable)) {
 														//TODO fix message
@@ -293,6 +298,13 @@
 														Type VARCHAR(100) NOT NULL,
 														Date datetime NOT NULL)
 													";
+
+													$new_wallet="
+														INSERT INTO xtbl_eudodona_wallet(MainCtr, Balance)
+														VALUES('$new_ctr', 0)
+													";
+													@mysql_query($new_wallet);
+
 
 													if(mysql_query($newtable)) {
 														//TODO fix message
