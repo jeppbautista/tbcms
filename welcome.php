@@ -230,6 +230,10 @@ else {
     $class->html_start('');
     $class->head_start();
     echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
+
+    /* START - Themify*/
+    $class->link('./assets/themify-icons/themify-icons.css');  
+    /* END - Themify*/
     $class->title_page('TBC Merchant Services');
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
