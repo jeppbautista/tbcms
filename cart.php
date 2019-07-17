@@ -9,15 +9,22 @@ date_default_timezone_set('Asia/Manila');
 $sessiondate=date('mdY');
 $GLOBALS['test'] = 0;
 
-if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-  	echo '<script>window.location.assign("https://tbcmerchantservices.com/welcome/");</script>';
+
+if (isset($_POST['btn-go-to-checkout'])){
+  if(count($_SESSION['cart'])>0){
+    foreach ($_SESSION['cart'] as $key => $value){
+      $_SESSION['cart'][$key]['quantity'] = $_POST['quantity-'.$key];
+    }
+    echo '<script>window.location.assign("https://tbcmerchantservices.com/checkout/");</script>';
+  }
+  echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
 }
-// else {
-// 	header("location: https://tbcmerchantservices.com/welcome/");
-// }
-// if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-// 	header("location: https://tbcmerchantservices.com/welcome/");
-// }
+
+if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+
+}else {
+}
+
 $ctr=$_SESSION['session_tbcmerchant_ctr'.$sessiondate];
 
 $class->doc_type();
@@ -29,7 +36,7 @@ $class->title_page($page_title);
 $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-$class->link('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
+$class->link('https://fonts.googleapis.com/css?family=Noto+Sans|Open+Sans&display=swap');
 $class->link('https://tbcmerchantservices.com/css/style-shop.css');
 $class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
 $class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -70,6 +77,7 @@ if(count($_SESSION['cart'])>0){
       <h2 style="text-align:left">Shopping Cart</h2>
     </div>
     <div class="col-12 col-md-8">
+      <form class="go-to-checkout-form" method="post">
 
       <br>
       <table id="cart" class="table table-hover table-condensed">
@@ -107,7 +115,9 @@ if(count($_SESSION['cart'])>0){
                   <span>&#8369;</span> <b><?php echo number_format($row['Product_Price'], 2); ?> </b>
                 </td>
                 <td data-th="Quantity">
-                  <input id='<?php echo "quantity-".$row["Ctr"] ?>' type="number" class="form-control text-center quantity-field" value="1" min="1">
+                  <input id='<?php echo "quantity-".$row["Ctr"] ?>' type="number"
+                  name='<?php echo "quantity-".$row["Ctr"] ?>' type="number"
+                  class="form-control text-center quantity-field" value='<?php echo $_SESSION['cart'][$row['Ctr']]['quantity'] ?>' min="1">
                 </td>
                 <td id='<?php echo "subtotal-".$row["Ctr"] ?>' data-th="Subtotal" class="text-center">
                   <span>&#8369;</span><b>  <?php echo number_format($sub_total, 2) ?>  </b>
@@ -130,10 +140,12 @@ if(count($_SESSION['cart'])>0){
         <td colspan="2" class="hidden-xs"></td>
         <td></td>
         <!-- <td class="hidden-xs text-center"><strong>Total <span>&#8369;</span> <?php echo number_format($total,2); ?> </strong></td> -->
-        <td><a href="#" class="btn btn-block btn-checkout">Checkout <i class="fa fa-angle-right"></i></a></td>
+        <td><button type="submit" id = "btn-go-to-checkout" name = "btn-go-to-checkout" class="btn btn-block btn-checkout">Checkout <i class="fa fa-angle-right"></i></button></td>
       </tr>
     </tfoot>
     </table>
+  </form>
+
 
     <hr>
 

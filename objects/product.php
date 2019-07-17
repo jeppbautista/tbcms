@@ -11,4 +11,14 @@ function readByID($ids){
 
   return $query;
 }
+
+function getProducts($product){
+  $query = "select * from xtbl_product WHERE Ctr='" . $product . "'";
+  $rs = mysql_query($query);
+  $row = mysql_fetch_assoc($rs);
+  return $row;
+}
+
+
+
 ?>
