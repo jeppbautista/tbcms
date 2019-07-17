@@ -290,7 +290,7 @@ public function page_welcome_header_content_start($error)
 
 		?>
 		<!-- START - NEW UI Change content -->
-		<div class="container-fluid" style="background: url(https://tbcmerchantservices.com/images/Picture3.jpg) center no-repeat; min-height: 93vh; background-size: cover; padding: 0;">
+		<div class="container-fluid" style="background: url(https://tbcmerchantservices.com/images/Picture3.jpg) center no-repeat; min-height: 93vh; background-size: cover; padding: 0; background-attachment: fixed;">
 <!-- 		<div class="container-fluid" style="background: url('./assets/images/btc-blockchain.jpg') center no-repeat; min-height: 90vh; background-size: cover; padding: 0;"> -->
 			<div style="position: absolute; background: rgba(0,0,0,0.5); height: 93%;width: 100%;">
 				<div class="container">
@@ -304,7 +304,81 @@ public function page_welcome_header_content_start($error)
 				</div>
 			</div>
 		</div>
+
+			<!-- START - NEWS Update -->
+			<div class="container" style="padding: 2rem;">
+				<div class="row" style="margin-bottom: 1rem;">
+					<div class="col-md-12 text-center" >
+						<h1 style="margin-bottom: 0;">NEWS UPDATE</h1>
+						<small>TBC to BTC Trading is Now Available</small>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
+							<div class="panel-body">
+								<span style="font-size: 3em;"><i class="ti-heart"></i></span>
+								<hr>
+								<h3 style="text-transform: uppercase;">Login and start trading</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<a href="https://tbcmerchantservices.com/edudona/" >
+							<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
+								<div class="panel-body">
+									<span style="font-size: 3em;"><i class="ti-heart"></i></span>
+									<hr>
+									<h3 style="text-transform: uppercase;">Donte and Earn using EDUDONA</h3>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+	<!-- 			<div class="row" style="text-align: center;">
+					<h2>Other Services</h2>
+					<div class="col-md-12"> </div>
+				</div> -->
+			</div>
+			<!-- END - NEWS Update -->
+			<!-- START - Intorduction -->
+			<div class="container-fluid" style="background-color: #041F5E;">
+				<div class="row">
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
+						<h1 style="text-align: left;">WHAT IS TBC AND EDUDONA?</h1>
+						<hr style="width: 18%;">
+						<p> A brief introduction</p>
+					</div>
+					
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
+						<div style="margin: 3rem;">
+							<iframe width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+						
+						<div style="margin: 3rem;">
+							<iframe width="100%" height="300" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						</div>
+						
+					</div> 
+				</div>
+			</div>
+			<!-- END - Intorduction -->
+
+			<div class="container-fluid" style="background: #fff;">
+				<div class="row">
+					<div class="col-sm-12 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
+						<span style="font-size: 3rem;"><i class="ti-money"></i></span>
+						<h1>THE CURRENT PRICE</h1>
+						<hr style="margin: 1rem 33%; width: 32%">
+						<p>The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
+					</div> 
+				</div>
+			</div>
 		<!-- END - NEW UI Change content -->
+
+
 		<!-- START - OLD VERSION -->
 		<div class="container" align="right" style="padding-bottom: 0px">
 			<div class="col-md-9" align="left">
