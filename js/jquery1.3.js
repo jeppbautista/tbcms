@@ -30,6 +30,18 @@
       $('#summ-total').children('h4').children('b').html(numberWithCommas(grand_total));
     }
 
+    function load_radiobuttons(){
+      $('form.radio-form').children('.custom-radio').each(function() {
+        $(this).css('border', '2px solid #EAEAEA').css('background', 'white');
+      });
+    }
+
+    function hide_order_divs(){
+      $('.div-pay').children('.order-div').each(function(){
+        $(this).css('display', 'none');
+      });
+    }
+
 
       var url=window.location.href;
       var res = url.split("#");
@@ -131,7 +143,6 @@
 
       $('.go-to-checkout-form').on('submit', function(){
         var id = $('#product').val();
-        console.log("fooo");
       });
 
 
@@ -157,6 +168,30 @@
         }else{
           $(this).children('h3').css('font-weight','bold');
         }
+      });
+
+      $('.custom-control-input').change(function(){
+        load_radiobuttons();
+        $('#' + this.id).parents('div.custom-control').css('border', '2px solid #214E11').css('background', '#F6F6EE');
+        hide_order_divs();
+        $('div.order-div[for='+this.id+']').show();
+      });
+
+      $('.coinsph-control-input').change(function(){
+        $('div.div-qrcoins').children('img').each(function(){
+          $(this).hide();
+        });
+
+        var id = $(this).attr("for");
+        $('img#'+id).show();
+
+      });
+
+      $('#btn-4').on('click', function(){
+        $('.div-steps').fadeOut(500,function(){});
+        $('#header_text').hide();
+        $('#checkout-finished').show();
+        $('.div-order-final').show();
       });
 
   });

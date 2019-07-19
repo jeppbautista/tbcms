@@ -4,14 +4,20 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
-
-
 h5 {
   line-height: 1.5;
 }
 
+input.form-control{
+    border-radius: 0%;
+}
+
 p {
   font-size: 15px;
+}
+
+.btn{
+  border-radius: 0%;
 }
 
 .btn-checkout{
@@ -27,6 +33,10 @@ p {
   color: black;
   padding: 12px;
   width: 100%;
+}
+
+.container-fluid{
+  width: 82%;
 }
 
 .div-shop{
@@ -271,8 +281,19 @@ p.subtitle {
 }
 
 .radio-form > div{
-  padding: 10px 0;
+  padding: 10px 20px;
 }
+
+.custom-radio{
+  border: 2px solid #EAEAEA;
+  border-bottom: 1px solid #EAEAEA
+}
+
+
+.custom-radio > label{
+  width: 94%;
+}
+
 
 .shadow{
   box-shadow: 0 0.46875rem 2.1875rem rgba(63, 106, 216, 0.03), 0 0.9375rem 1.40625rem rgba(63, 106, 216, 0.03), 0 0.25rem 0.53125rem rgba(63, 106, 216, 0.05), 0 0.125rem 0.1875rem rgba(63, 106, 216, 0.03);
@@ -288,6 +309,37 @@ p.subtitle {
 
 .fa.fa-times-circle{
   color: #C4A101;
+}
+
+
+/* Payment div */
+
+.div-pay{
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #214E11;
+    background: #F6F6EE;
+}
+
+.order-div{
+  display: none;
+}
+
+.txt-transaction{
+  width: 70%;
+  margin: auto;
+}
+
+@media screen and (max-width: 700px) {
+  .txt-transaction{
+    width: 85%;
+    margin: auto;
+  }
+}
+
+img.qrcode{
+  max-width: 120px;
+  min-width: 120px;
 }
 
 /* Floating action button */

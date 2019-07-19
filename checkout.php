@@ -20,9 +20,10 @@ $class->title_page($page_title);
 $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
-$class->link('https://fonts.googleapis.com/css?family=Noto+Sans|Open+Sans&display=swap');
+$class->link('https://fonts.googleapis.com/css?family=Poppins|Noto+Sans|Open+Sans&display=swap');
 $class->link('https://tbcmerchantservices.com/css/style-shop.css');
 $class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
+// $class->script('https://tbcmerchantservices.com/js/paypal.js');
 $class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 $class->head_end();
 $class->body_start('');
@@ -60,7 +61,6 @@ else{
 </style>
 
 <?php
-  include 'nav_shop.php';
   container_start();
   header_text("Checkout Page");
   checkout_steps_head();
@@ -84,7 +84,7 @@ else{
     product_row($product, $sub_total);
   }
 
-  cart_foot();
+  cart_foot($total);
 
 div_end();
 $class->page_welcome_header_content_start_footer();

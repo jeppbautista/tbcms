@@ -90,7 +90,7 @@ if (count($_SESSION['cart']) > 0) {
     div_end();
 }
 else {
-  empyt_cart();
+  empty_cart();
 }
 
 $class->page_welcome_header_content_start_footer();
