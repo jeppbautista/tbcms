@@ -153,21 +153,35 @@
               <div class="custom-control custom-radio" style="border: 2px solid #214E11; background: #F6F6EE;">
                 <input type="radio" class="custom-control-input"  id="pay-paypal" name="groupOfDefaultRadios" checked>
                 <label class="custom-control-label" for="pay-paypal">Paypal</label>
+                <span>
+                  <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg" border="0" alt="PayPal">
+                </span>
+
               </div>
 
               <div class="custom-control custom-radio" >
                 <input type="radio" class="custom-control-input" id="pay-coinsph" name="groupOfDefaultRadios" >
                 <label class="custom-control-label" for="pay-coinsph">Coins.PH</label>
+                <span>
+                  <img src="https://tbcmerchantservices.com/images/coinsph2.png" border="0" alt="Coins.PH">
+                </span>
+
               </div>
 
               <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="pay-gcash" name="groupOfDefaultRadios" >
                 <label class="custom-control-label" for="pay-gcash">GCash</label>
+                <span>
+                  <img src="https://tbcmerchantservices.com/images/gcash.png" border="0" alt="Gcash">
+                </span>
               </div>
 
               <div class="custom-control custom-radio">
                 <input type="radio" class="custom-control-input" id="pay-kringle" name="groupOfDefaultRadios">
                 <label class="custom-control-label" for="pay-kringle">Kringle Cash</label>
+                <span>
+                  <img src="https://tbcmerchantservices.com/images/kringle.png" border="0" alt="Kringle">
+                </span>
               </div>
             </form>
             <br>
@@ -247,7 +261,7 @@
                     <br>
                     <p>OR</p>
                     <p>Copy the wallet address below and send your payment</p>
-                    <b>3DPzNKXwUVTU8jtzY4FRMCQ6sANfzWUUFL</b>
+                    <b>3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG</b>
                   </div>
                   <br>
                   <form class="form-payment-coinsph">
@@ -291,7 +305,37 @@
                 <!-- GCash end -->
 
                 <div class="order-div" id="order-kringle" for="pay-kringle">
-                  Pay Kringle
+                  <b>  <p>Payment Instructions</p> </b>
+                  <ol>
+                    <li>Scan the QR code below OR use the KRINGLE Wallet Address.</li>
+                    <li>Proceed to KRINGLE payment.</li>
+                    <li>Copy the <b>Transaction number</b> and paste it in the field below.</li>
+                  </ol>
+                  <br>
+                  <br>
+                  <div class="div-qrcoins" style="text-align:center">
+                    Scan the QR code:
+                    <br>
+                    <img class="qrcode" id="qrcoins-btc" src="https://tbcmerchantservices.com/images/qr-coinsph-btc.png" alt="">
+                    <br>
+                    <p>OR</p>
+                    <p>Copy the wallet address below and send your payment</p>
+                    <b>NBGD3A-5BZ4B4-AUQ3XE-3I4B4Y-KX7C4I-OTAX5C-FZ36</b>
+                  </div>
+                  <br>
+                  <form class="form-payment-kringle">
+                    <div class="txt-transaction" id="trans-kringle">
+                      <div class="input-group" style="z-index:0">
+                        <input type="text" class="form-control" id="txt-trans-kringle" placeholder="Transaction number here">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="button">
+                            Submit
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </form>
+                  <br>
                 </div>
               </div>
               <br>
