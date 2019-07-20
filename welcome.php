@@ -231,9 +231,11 @@ else {
     $class->head_start();
     echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
 
-    /* START - Themify*/
-    $class->link('./assets/themify-icons/themify-icons.css');  
-    /* END - Themify*/
+    /* START - Themify and Materialized Font*/
+    $class->link('./assets/lib/themify-icons/themify-icons.css');
+    $class->link('./assets/lib/fontawesome-free-5.9.0-web/css/all.min.css');
+    $class->link('./assets/css/custom.css');
+    /* END - Themify and Materialized Font*/
     $class->title_page('TBC Merchant Services');
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
