@@ -313,11 +313,11 @@ public function page_welcome_header_content_start($error)
 						<small>TBC to BTC Trading is Now Available</small>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row news-update-panels">
 					<div class="col-md-6">
 						<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 							<div class="panel-body">
-								<span style="font-size: 3em;"><i class="ti-heart"></i></span>
+								<span style="font-size: 3em;"><i class="ti-user" style="color: #BC9F3B;"></i></span>
 								<hr>
 								<h3 style="text-transform: uppercase;">Login and start trading</h3>
 							</div>
@@ -325,12 +325,12 @@ public function page_welcome_header_content_start($error)
 					</div>
 
 					<div class="col-sm-12 col-md-6 col-lg-6">
-						<a href="https://tbcmerchantservices.com/edudona/" >
+						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none;">
 							<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 								<div class="panel-body">
-									<span style="font-size: 3em;"><i class="ti-heart"></i></span>
+									<span style="font-size: 3em;"><i class="ti-heart" style="color: #ff9eb5;"></i></span>
 									<hr>
-									<h3 style="text-transform: uppercase;">Donte and Earn using EDUDONA</h3>
+									<h3 style="text-transform: uppercase;">Donate and Earn using EDUDONA</h3>
 								</div>
 							</div>
 						</a>
@@ -344,14 +344,13 @@ public function page_welcome_header_content_start($error)
 			</div>
 			<!-- END - NEWS Update -->
 			<!-- START - Intorduction -->
-			<div class="container-fluid" style="background-color: #041F5E;">
+			<div class="container-fluid" style="background: url('assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
 						<h1 style="text-align: left;">WHAT IS TBC AND EDUDONA?</h1>
 						<hr style="width: 18%;">
 						<p> A brief introduction</p>
 					</div>
-					
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
 							<iframe width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -369,10 +368,12 @@ public function page_welcome_header_content_start($error)
 			<div class="container-fluid" style="background: #fff;">
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
-						<span style="font-size: 3rem;"><i class="ti-money"></i></span>
-						<h1>THE CURRENT PRICE</h1>
+						<div style="margin-bottom: 1rem;">
+							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
+						</div>
+						<h1 class="header-secondary">THE CURRENT PRICE</h1>
 						<hr style="margin: 1rem 33%; width: 32%">
-						<p>The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
+						<p class="light">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
 					</div> 
 				</div>
 			</div>
