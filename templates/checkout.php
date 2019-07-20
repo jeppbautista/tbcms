@@ -14,7 +14,7 @@
   function header_text($text){
     ?>
     <div class="row">
-      <h1 id="checkout-finished" style="display:none">Order Completed</h1>
+      <h1 class="table-header" id="checkout-finished" style="display:none">Order Completed</h1>
       <div class="col-12 col-md-8">
         <h2 id="header_text"><?php echo $text ?></h2>
       </div>
@@ -37,7 +37,7 @@
       <div class="card-header" id="headingOne">
         <h5 class="mb-0">
           <button class="btn btn-link btn-coll" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <h3 class="" style="font-weight: bold"> <small>Step 1:</small> Details <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+            <h3 class="table-label" style="font-weight: bold"> <small>Step 1:</small> Details <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
           <p class="subtitle">Enter your email address and/or contact number to receive updates regarding your order.</p>
@@ -58,12 +58,12 @@
               <label for="check-phone">Phone number</label>
               <input type="text" class="form-control" id="check-phone" placeholder="+639123456789">
             </div>
-            <button id="check-proceed1" type="submit" class="btn">Proceed</button>
+          </form>
+          <button id="check-proceed1"  class="btn check-proceed">Proceed</button>
             <span style="width:50%; text-align:right"> <small>All information submitted are secured.</small> </span>
             <div class="">
               <h4 style="text-align:left">Next steps</h4>
             </div>
-          </form>
         </div>
       </div>
     </div>
@@ -76,8 +76,8 @@
     <div class="card">
       <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
-          <button class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <h3><small>Step 2:</small> Shipping & delivery <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+          <button disabled class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <h3 class="table-label"><small>Step 2:</small> Shipping & delivery <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
           <p class="subtitle">Select how you would like to receive your order.</p>
@@ -113,12 +113,11 @@
               <label for="check-others">Other notes <small>(Landmarks, markers, etc.)</small> </label>
               <textarea class="form-control rounded-0" id="check-others" rows="2"></textarea>
             </div>
-
-            <button id="check-proceed1" type="submit" class="btn">Proceed</button>
+          </form>
+          <button id="check-proceed2" type="submit" class="btn check-proceed">Proceed</button>
             <div class="">
               <h4 style="text-align:left">Next steps</h4>
             </div>
-          </form>
         </div>
       </div>
     </div>
@@ -131,8 +130,8 @@
     <div class="card">
       <div class="card-header" id="headingThree">
         <h5 class="mb-0">
-          <button class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            <h3><small>Step 3:</small> Payment and Confirmation <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+          <button disabled class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <h3 class="table-label"><small>Step 3:</small> Payment and Confirmation <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
           <p class="subtitle">Choose a payment method and place your order.</p>
@@ -358,8 +357,8 @@
     <div class="card">
       <div class="card-header" id="headingFour">
         <h5 class="mb-0">
-          <button class="btn btn-link collapsed btn-coll" id="btn-4" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            <h3>Order Completed <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+          <button disabled class="btn btn-link collapsed btn-coll" id="btn-4" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <h3 class="table-label">Order Completed <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
 
           </button>
@@ -383,7 +382,7 @@
   function cart_head(){
     ?>
     <div class="col-12 col-md-4 div-check-cart">
-      <h4 class="table-header" style="font-weight">Your orders (<a href="https://tbcmerchantservices.com/cart/">edit</a>) </h4>
+      <h4 class="table-header" style="font-weight">YOUR ORDERS (<a href="https://tbcmerchantservices.com/cart/">edit</a>) </h4>
       <table id="check-cart" class="table table-hover table-condensed">
         <thead>
         </thead>
@@ -443,16 +442,17 @@
     </table>
   </div>
     <?php
+    final_form_footer();
   }
 
   function div_end(){
   ?>
-  </div>
     </div>
-    <?php
+      </div>
+  <?php
   }
 
-  function checkout_steps_head_hidden(){
+  function final_header_message(){
     ?>
     <div class="div-order-final" style="display:none">
       <hr>
@@ -468,15 +468,17 @@
         </p>
       </div>
       <hr>
-      <div class="div-order-final col-12 col-md-8" style="display:none">
-        <br>
-        <br>
-        <div class="col-12 col-md-6 div-final-details" id="customer">
+    <?php
+  }
+
+  function final_customer_details(){
+    ?>
+      <div class="col-12 col-md-6 div-final-details" id="customer">
           <table class="table table-borderless table-condensed" id="details">
             <thead>
               <tr>
                 <th colspan="2">
-                  <h4 class="table-header">Customer Details
+                  <h4 class="table-header">CUSTOMER DETAILS
                   </h4>
                 </th>
               </tr>
@@ -497,11 +499,11 @@
             </tbody>
           </table>
           <hr>
-          <table class="table table-borderless table-condensed">
+          <table class="table table-borderless table-condensed" id="shipping">
             <thead>
               <tr>
                 <th>
-                  <h4 class="table-header">Shipping to
+                  <h4 class="table-header">SHIPPING TO
                   </h4>
                 </th>
               </tr>
@@ -518,12 +520,17 @@
             </tbody>
           </table>
         </div>
-        <div class="col-12 col-md-6 div-final-details" id="order">
+    <?php
+  }
+
+  function final_order_details(){
+    ?>
+      <div class="col-12 col-md-6 div-final-details" id="order">
           <table class="table table-borderless table-condensed" id="order">
             <thead>
               <tr>
                 <th colspan="2">
-                  <h4 class="table-label">Order Details
+                  <h4 class="table-header">ORDER DETAILS
                   </h4>
                 </th>
               </tr>
@@ -556,10 +563,44 @@
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-
-
     <?php
+  }
+
+  function final_form_footer(){
+    ?>
+      <div class="row div-order-final" style="display:none">
+        <div class="col-12 col-md-12">
+          <div style="text-align:center">
+          <br>
+            <a class="btn" href="https://tbcmerchantservices.com/shopping/" style="font-size:18px; color:#C4A101; border: 1px solid #C4A101;">
+              &larr; Back to shopping
+            </a>
+          </div>
+        </div>
+      </div>
+      <br>
+    <?php
+  }
+
+  function final_div(){
+    ?>
+      <div class="row div-order-final col-12 col-md-8" style="display:none">
+        <br>
+        <?php 
+          final_customer_details(); 
+          final_order_details();
+          
+        ?>
+      </div>
+    <?php
+  }
+
+  function checkout_steps_head_hidden(){
+      final_header_message();
+      final_div();
+    ?>
+    </div>
+    <?php
+
   }
 ?>

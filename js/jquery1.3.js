@@ -187,13 +187,26 @@
 
       });
 
+      $('#check-proceed1').on('click', function(){
+        $('#headingTwo > * > button').prop('disabled', false);
+        $('#headingTwo > * > button').click();
+      });
+
+      $('#check-proceed2').on('click', function(){
+        $('#headingThree > * > button').prop('disabled', false);
+        $('#headingThree > * > button').click();
+      });
+
       $('#btn-4').on('click', function(){
         $('.div-steps').fadeOut(500,function(){});
         $('#header_text').hide();
+        $('.div-check-cart > .table-header').html('YOUR ORDERS');
         setTimeout(function(){
           $('#checkout-finished').fadeIn(250);
           $('.div-order-final').fadeIn(250);
-        },500)
+        },500);
       });
+
+
 
   });

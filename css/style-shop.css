@@ -217,6 +217,7 @@ button h3{
   margin-bottom: 20px;
 }
 
+
 .div-steps{
   font-family: 'Open Sans', sans-serif;
   background-color: white;
@@ -245,6 +246,7 @@ button h3{
   padding: 20px 10px;
 }
 
+
 p.subtitle {
   color: #777;
 }
@@ -271,14 +273,18 @@ p.subtitle {
   text-decoration: none;
 }
 
+.check-proceed{
+  background-color: #c19349;
+  width: 40%;
+  padding: 5px 0px;
+}
+
 #collapseThree{
   margin-bottom: 30px;
 }
 
 #check-proceed1{
-  background-color: #c19349;
-  width: 40%;
-  padding: 5px 0px;
+
 }
 
 .collapse {
@@ -392,8 +398,13 @@ img.qrcode{
   padding: 10px;
 }
 
+.div-final-details#customer > .table#shipping {
+  border-right: 2px solid #008B8B;
+}
+
 .order-complete{
   text-align: center;
+  padding: 10px;
 }
 
 .order-complete > img {
@@ -412,7 +423,6 @@ img.qrcode{
 
 .table-label{
   font-family: 'Poppins', sans-serif;
-  font-weight: bold;
 }
 
 .table-header{
