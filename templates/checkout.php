@@ -14,9 +14,9 @@
   function header_text($text){
     ?>
     <div class="row">
+      <h1 id="checkout-finished" style="display:none">Order Completed</h1>
       <div class="col-12 col-md-8">
         <h2 id="header_text"><?php echo $text ?></h2>
-        <h1 id="checkout-finished" style="display:none">Order Completed</h1>
       </div>
     </div>
     <?php
@@ -132,10 +132,10 @@
       <div class="card-header" id="headingThree">
         <h5 class="mb-0">
           <button class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            <h3><small>Step 3:</small> Payment details <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+            <h3><small>Step 3:</small> Payment and Confirmation <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
-          <p class="subtitle">Choose a payment method and enter your payment details.</p>
+          <p class="subtitle">Choose a payment method and place your order.</p>
         </h5>
         <br>
       </div>
@@ -359,11 +359,11 @@
       <div class="card-header" id="headingFour">
         <h5 class="mb-0">
           <button class="btn btn-link collapsed btn-coll" id="btn-4" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            <h3><small>Step 4:</small> Order confirmation <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+            <h3>Order Completed <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
 
           </button>
-          <p class="subtitle">Place your order and receive a confirmation email.</p>
+          <p class="subtitle">Your order details and receive a confirmation email.</p>
 
         </h5>
       </div>
@@ -383,7 +383,7 @@
   function cart_head(){
     ?>
     <div class="col-12 col-md-4 div-check-cart">
-      <h4 style="font-weight">Your orders (<a href="https://tbcmerchantservices.com/cart/">edit</a>) </h4>
+      <h4 class="table-header" style="font-weight">Your orders (<a href="https://tbcmerchantservices.com/cart/">edit</a>) </h4>
       <table id="check-cart" class="table table-hover table-condensed">
         <thead>
         </thead>
@@ -454,11 +454,111 @@
 
   function checkout_steps_head_hidden(){
     ?>
-    <div class="div-order-final col-12 col-md-8" style="display:none">
-      <div class="" >
-
+    <div class="div-order-final" style="display:none">
+      <hr>
+      <div class="row order-complete">
+        <img src="https://tbcmerchantservices.com/images/order-complete.png" alt="">
+        <br>
+        <br>
+        <p class="thankyou-message">THANK YOU FOR SHOPPING WITH US
+        </p>
+        <p class="message1">We have sent you an email/SMS about the confirmation of your order.
+        </p>
+        <p class="message1">We will send another email/SMS once we confirm your payment. Thank you for shopping with us.
+        </p>
+      </div>
+      <hr>
+      <div class="div-order-final col-12 col-md-8" style="display:none">
+        <br>
+        <br>
+        <div class="col-12 col-md-6 div-final-details" id="customer">
+          <table class="table table-borderless table-condensed" id="details">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <h4 class="table-header">Customer Details
+                  </h4>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-label" style="width: 25%">Email:
+                </td>
+                <td style="width: 75%" id="email">jeppbautista@gmail.com
+                </td>
+              </tr>
+              <tr>
+                <td class="table-label">Phone:
+                </td>
+                <td>+639982260493
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <table class="table table-borderless table-condensed">
+            <thead>
+              <tr>
+                <th>
+                  <h4 class="table-header">Shipping to
+                  </h4>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="name">John Jefferson C. Bautista
+                </td>
+              </tr>
+              <tr>
+                <td id="address">#21 Don Francisco St. Villa Beatriz Subd., Old Balara Quezon City, PH
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12 col-md-6 div-final-details" id="order">
+          <table class="table table-borderless table-condensed" id="order">
+            <thead>
+              <tr>
+                <th colspan="2">
+                  <h4 class="table-label">Order Details
+                  </h4>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="table-label" style="width: 40%">Order Number:
+                </td>
+                <td style="width: 60%" id="order-number">OR0000001
+                </td>
+              </tr>
+              <tr>
+                <td class="table-label">Type of payment:
+                </td>
+                <td id="payment-type">Gcash
+                </td>
+              </tr>
+              <tr>
+                <td class="table-label">Transaction Number:
+                </td>
+                <td id="payment-type">123123123123
+                </td>
+              </tr>
+              <tr>
+                <td class="table-label">Date of transaction:
+                </td>
+                <td id="dot">June 12, 2019
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+
 
     <?php
   }

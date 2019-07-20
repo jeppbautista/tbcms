@@ -177,7 +177,7 @@
         $('div.order-div[for='+this.id+']').show();
       });
 
-      $('.coinsph-control-input').change(function(){
+      $('.coinsph-control-input').  change(function(){
         $('div.div-qrcoins').children('img').each(function(){
           $(this).hide();
         });
@@ -190,8 +190,10 @@
       $('#btn-4').on('click', function(){
         $('.div-steps').fadeOut(500,function(){});
         $('#header_text').hide();
-        $('#checkout-finished').show();
-        $('.div-order-final').show();
+        setTimeout(function(){
+          $('#checkout-finished').fadeIn(250);
+          $('.div-order-final').fadeIn(250);
+        },500)
       });
 
   });

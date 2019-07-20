@@ -20,6 +20,11 @@ p {
   border-radius: 0%;
 }
 
+.table-borderless > tbody > tr > td,
+.table-borderless > thead > tr > th {
+    border: 0;
+}
+
 .btn-checkout{
   background-color: #C4A101;
   color: black;
@@ -308,6 +313,16 @@ p.subtitle {
   }
 }
 
+@media screen and (max-width: 500px){
+  .custom-radio > label{
+    width: 65%;
+  }
+  .custom-radio > span{
+    width: 20%;
+  }
+}
+
+
 .custom-radio > span > img {
   max-height: 30px;
 }
@@ -357,6 +372,56 @@ p.subtitle {
 img.qrcode{
   max-width: 120px;
   min-width: 120px;
+}
+
+/*Order Completed*/
+.div-final-details > .table > tbody > tr > td{
+  font-size: 14px;
+  color: #666;
+}
+
+.div-final-details#customer {
+  padding: 10px;
+}
+
+.div-final-details#customer > .table#details{
+  border-right: 2px solid #008B8B;
+}
+
+.div-final-details#order {
+  padding: 10px;
+}
+
+.order-complete{
+  text-align: center;
+}
+
+.order-complete > img {
+  max-height: 120px;
+}
+
+.thankyou-message{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.message1{
+  margin-top: -12px;
+  color:#666;
+}
+
+.table-label{
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+.table-header{
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
+#name {
+  font-weight: bold;
 }
 
 /* Floating action button */
