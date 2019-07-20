@@ -84,7 +84,7 @@
     $paid_count = mysql_num_rows($rs22);
     echo "<script>console.log('$paid_count')</script>";
 
-  
+
     if(isset($_POST['gcashmobile2']) && isset($_POST['gcashwithdraw'])) {
       # withdrawal
       $mobile=str_replace("'", '', $_REQUEST['gcashmobile2']);

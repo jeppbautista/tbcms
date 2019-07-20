@@ -1,5 +1,48 @@
   $( document ).ready(function() {
 
+    function numberWithCommas(number) {
+        var parts = number.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+    }
+
+    function update_summary(){
+      var tbody = $('table#cart tbody').children();
+
+      var summary_total = 0.0;
+
+      tbody.children('tr td[data-th="Subtotal"]').each(function(){
+        var temp = $(this).children('b').html();
+        temp = parseFloat(temp.replace(",", ""));
+        summary_total += temp;
+      });
+
+      $('#summ-subtotal').children('h5').children('b').html(numberWithCommas(summary_total.toFixed(2)));
+      var summ_tax = $('#summ-tax').children('h5').children('b').html();
+      var summ_shipping = $('#summ-shipping').children('h5').children('b').html();
+
+      summ_tax = parseFloat(summ_tax).toFixed(2);
+      summ_shipping = parseFloat(summ_shipping).toFixed(2);
+      summary_total = parseFloat(summary_total).toFixed(2);
+
+      var grand_total = parseFloat(summary_total + summ_tax + summ_shipping).toFixed(2);
+
+      $('#summ-total').children('h4').children('b').html(numberWithCommas(grand_total));
+    }
+
+    function load_radiobuttons(){
+      $('form.radio-form').children('.custom-radio').each(function() {
+        $(this).css('border', '2px solid #EAEAEA').css('background', 'white');
+      });
+    }
+
+    function hide_order_divs(){
+      $('.div-pay').children('.order-div').each(function(){
+        $(this).css('display', 'none');
+      });
+    }
+
+
       var url=window.location.href;
       var res = url.split("#");
 
@@ -98,35 +141,10 @@
         return false;
       });
 
-      function numberWithCommas(number) {
-          var parts = number.toString().split(".");
-          parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          return parts.join(".");
-      }
+      $('.go-to-checkout-form').on('submit', function(){
+        var id = $('#product').val();
+      });
 
-      function update_summary(){
-        var tbody = $('table#cart tbody').children();
-
-        var summary_total = 0.0;
-
-        tbody.children('tr td[data-th="Subtotal"]').each(function(){
-          var temp = $(this).children('b').html();
-          temp = parseFloat(temp.replace(",", ""));
-          summary_total += temp;
-        });
-
-        $('#summ-subtotal').children('h5').children('b').html(numberWithCommas(summary_total.toFixed(2)));
-        var summ_tax = $('#summ-tax').children('h5').children('b').html();
-        var summ_shipping = $('#summ-shipping').children('h5').children('b').html();
-
-        summ_tax = parseFloat(summ_tax).toFixed(2);
-        summ_shipping = parseFloat(summ_shipping).toFixed(2);
-        summary_total = parseFloat(summary_total).toFixed(2);
-
-        var grand_total = parseFloat(summary_total + summ_tax + summ_shipping).toFixed(2);
-
-        $('#summ-total').children('h4').children('b').html(numberWithCommas(grand_total));
-      }
 
       $('.quantity-field').on('input', function(){
         var q_id = this.id;
@@ -134,11 +152,46 @@
         var price = $('#price-' + id).children("b").html()
         price = price.replace(",", "");
         price = parseFloat(price).toFixed(2);
+
         var q_value = parseFloat(this.value).toFixed(2);
         var new_sub_total = parseFloat(price * q_value).toFixed(2);
+        $('#quantity-' + id).attr('value', q_value);
+
         $('#subtotal-' + id).children("b").html(numberWithCommas(new_sub_total));
         update_summary();
       });
-s
+
+      $('.btn-coll').on('click', function(){
+        var aria = $(this).attr('aria-expanded');
+        if(aria=="true"){
+          $(this).children('h3').css('font-weight','normal');
+        }else{
+          $(this).children('h3').css('font-weight','bold');
+        }
+      });
+
+      $('.custom-control-input').change(function(){
+        load_radiobuttons();
+        $('#' + this.id).parents('div.custom-control').css('border', '2px solid #214E11').css('background', '#F6F6EE');
+        hide_order_divs();
+        $('div.order-div[for='+this.id+']').show();
+      });
+
+      $('.coinsph-control-input').change(function(){
+        $('div.div-qrcoins').children('img').each(function(){
+          $(this).hide();
+        });
+
+        var id = $(this).attr("for");
+        $('img#'+id).show();
+
+      });
+
+      $('#btn-4').on('click', function(){
+        $('.div-steps').fadeOut(500,function(){});
+        $('#header_text').hide();
+        $('#checkout-finished').show();
+        $('.div-order-final').show();
+      });
 
   });
