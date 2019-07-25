@@ -9,15 +9,18 @@ class mydesign
 		if ($this->isLocalhost()== true)
 		{
 
-			$conn = @mysql_connect('localhost', 'root', '');
+			$conn = @mysql_connect('custsql-spro-ipg06.ipagemysql.com', 'user_dev', 'password');
+			@mysql_select_db('xdb_tbcmerchant8080', $conn);
+
 		}
 		else{
 			$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
+			@mysql_select_db('xdb_tbcmerchantservices', $conn);
+
 		}
 		if (!$conn) {
 			die('Could not connect: ' . mysql_error());
 		}
-		mysql_select_db('xdb_tbcmerchantservices', $conn);
 
 	}
 

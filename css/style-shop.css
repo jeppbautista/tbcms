@@ -291,13 +291,12 @@ p.subtitle {
   border-bottom: 1px solid #EAEAEA;
 }
 
-.radio-form > div{
-  padding: 10px 20px;
-}
 
 .custom-radio{
   border: 2px solid #EAEAEA;
-  border-bottom: 1px solid #EAEAEA
+  border-bottom: 1px solid #EAEAEA;
+  padding: 10px 20px;
+
 }
 
 

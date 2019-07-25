@@ -1,5 +1,10 @@
   $( document ).ready(function() {
 
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
     function numberWithCommas(number) {
         var parts = number.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -31,7 +36,7 @@
     }
 
     function load_radiobuttons(){
-      $('form.radio-form').children('.custom-radio').each(function() {
+      $('#collapseThree > .card-body').children('.custom-radio').each(function() {
         $(this).css('border', '2px solid #EAEAEA').css('background', 'white');
       });
     }
@@ -40,6 +45,43 @@
       $('.div-pay').children('.order-div').each(function(){
         $(this).css('display', 'none');
       });
+    }
+
+    function proc_details(){
+      var email = $('#check-email').val();
+      var phone = $('#check-phone').val();
+      var proceed = true;
+      if(!isEmail(email) || email==""){
+        proceed = false;
+        $('#check-email').css('border', '1px solid red');
+      }else{
+        $('#check-email').css('border', '1px solid #ccc');
+      }
+      if(phone==""){
+        proceed = false;
+        $('#check-phone').css('border', '1px solid red');
+      }else{
+        $('#check-phone').css('border', '1px solid #ccc');
+      }
+
+      if(proceed){
+        $('#headingTwo > * > button').prop('disabled', false);
+        $('#collapseOne').removeClass('in');
+        $('#collapseTwo').removeClass('collapse');
+        $('#headingOne > * > button > * > .fa.fa-times-circle').hide();
+        $('#headingOne > * > button > * > .fa.fa-check-circle-o').show();
+
+        $('#check-email').css('border', '1px solid #ccc');
+        $('#check-phone').css('border', '1px solid #ccc');
+      }else{
+        $('#headingOne > * > button > * > .fa.fa-times-circle').show();
+        $('#headingOne > * > button > * > .fa.fa-check-circle-o').hide();
+      }
+    }
+
+    function proc_shipping(){
+      $('#headingThree > * > button').prop('disabled', false);
+      $('#headingThree > * > button').click();
     }
 
 
@@ -133,6 +175,7 @@
         }
       });
 
+      // add to cart 
       $('.add-to-cart-form').on('submit', function(){
         var id = $('#product').val();
         var quantity = $('#quantity').val();
@@ -140,12 +183,9 @@
         window.location.href = "https://tbcmerchantservices.com/add_to_cart.php?id=" + id + "&quantity=" + quantity;
         return false;
       });
+      // add to cart END
 
-      $('.go-to-checkout-form').on('submit', function(){
-        var id = $('#product').val();
-      });
-
-
+      // Quantity input 
       $('.quantity-field').on('input', function(){
         var q_id = this.id;
         var id = q_id.split("-")[1];
@@ -160,53 +200,70 @@
         $('#subtotal-' + id).children("b").html(numberWithCommas(new_sub_total));
         update_summary();
       });
+      // Quantity input END
 
+      // Collapsible buttons on checkout steps
       $('.btn-coll').on('click', function(){
-        var aria = $(this).attr('aria-expanded');
-        if(aria=="true"){
-          $(this).children('h3').css('font-weight','normal');
-        }else{
+        var id = $(this).attr('data-target');
+        console.log(id);
+        var aria = $(id).attr('class');
+        if(aria=="collapse"){
           $(this).children('h3').css('font-weight','bold');
+        }else{
+          $(this).children('h3').css('font-weight','normal');
         }
       });
+      // Collapsible buttons on checkout steps END
 
+      // Radio buttons for payment type
       $('.custom-control-input').change(function(){
         load_radiobuttons();
         $('#' + this.id).parents('div.custom-control').css('border', '2px solid #214E11').css('background', '#F6F6EE');
         hide_order_divs();
         $('div.order-div[for='+this.id+']').show();
       });
+      // Radio buttons for payment type END
 
-      $('.coinsph-control-input').  change(function(){
-        $('div.div-qrcoins').children('img').each(function(){
-          $(this).hide();
-        });
 
-        var id = $(this).attr("for");
-        $('img#'+id).show();
+      // $('.coinsph-control-input').change(function(){
+      //   $('div.div-qrcoins').children('img').each(function(){
+      //     $(this).hide();
+      //   });
 
-      });
+      //   var id = $(this).attr("for");
+      //   $('img#'+id).show();
+
+      // });
+      // QR code changing for Coins.PH
 
       $('#check-proceed1').on('click', function(){
-        $('#headingTwo > * > button').prop('disabled', false);
-        $('#headingTwo > * > button').click();
+        proc_details();
       });
 
       $('#check-proceed2').on('click', function(){
-        $('#headingThree > * > button').prop('disabled', false);
-        $('#headingThree > * > button').click();
+        proc_shipping();
       });
 
-      $('#btn-4').on('click', function(){
-        $('.div-steps').fadeOut(500,function(){});
-        $('#header_text').hide();
-        $('.div-check-cart > .table-header').html('YOUR ORDERS');
-        setTimeout(function(){
-          $('#checkout-finished').fadeIn(250);
-          $('.div-order-final').fadeIn(250);
-        },500);
+      // Finalize checkout
+      // $('#btn-4').on('click', function(){
+      //   $('.div-steps').fadeOut(500,function(){});
+      //   $('#header_text').hide();
+      //   $('.div-check-cart > .table-header').html('YOUR ORDERS');
+      //   setTimeout(function(){
+      //     $('#checkout-finished').fadeIn(250);
+      //     $('.div-order-final').fadeIn(250);
+      //   },500);
+      // });
+      // Finalize checkout END
+
+      $('#btn-discount').on('click', function(){
+        alert('Invalid discount code');
       });
 
-
+      $('.btn-submit').on('click', function(){
+        var payment_type = this.id;
+        $('#txt-payment-type').val(payment_type);
+        $('#btn-submit-payment').click();
+      });
 
   });

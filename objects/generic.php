@@ -14,4 +14,14 @@ function getAllElements($table)
   $row = mysql_fetch_assoc($rs);
   return $row;
 }
+
+function getLatestCtr($table){
+  $query = "
+    SELECT Ctr FROM ".$table."
+    ORDER BY Ctr DESC
+    LIMIT 1
+  ";
+  $rs = @mysql_query($query);
+  return @mysql_fetch_assoc($rs)['Ctr'];
+}
 ?>

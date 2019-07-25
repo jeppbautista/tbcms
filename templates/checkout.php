@@ -1,6 +1,9 @@
 <?php
   function container_start(){
     ?>
+    <form method="post">
+      <input type="submit" name="btn-submit-payment" id="btn-submit-payment" hidden>
+      <input type="text" name="txt-payment-type" id="txt-payment-type" hidden>
     <div class="container-fluid" >
     <?php
   }
@@ -48,18 +51,16 @@
 
       <div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
-          <form>
-            <div class="form-group">
+            <div class="form-group col-12 col-md-12">
               <label for="check-email">Email address</label>
-              <input type="email" class="form-control" id="check-email" aria-describedby="emailHelp" placeholder="Enter email">
+              <input value="jeppbautista@gmail.com" type="email" class="form-control" name="check-email" id="check-email" aria-describedby="emailHelp" placeholder="Enter email">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-group">
+            <div class="form-group col-12 col-md-12">
               <label for="check-phone">Phone number</label>
-              <input type="text" class="form-control" id="check-phone" placeholder="+639123456789">
+              <input value="123" type="text" class="form-control" name="check-phone" id="check-phone" placeholder="+639123456789">
             </div>
-          </form>
-          <button id="check-proceed1"  class="btn check-proceed">Proceed</button>
+          <button id="check-proceed1"  class="btn check-proceed" type="button">Proceed</button>
             <span style="width:50%; text-align:right"> <small>All information submitted are secured.</small> </span>
             <div class="">
               <h4 style="text-align:left">Next steps</h4>
@@ -76,7 +77,7 @@
     <div class="card">
       <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
-          <button disabled class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <button class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             <h3 class="table-label"><small>Step 2:</small> Shipping & delivery <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
@@ -87,34 +88,36 @@
       </div>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body">
-          <form class="form-shipping">
-            <div class="form-group col-12 col-md-12">
-              <label for="check-fullname">Full name</label>
-              <input type="text" class="form-control" id="check-fullname" placeholder="Enter full name">
+            <div class="form-group col-12 col-md-6">
+              <label for="check-lastname">Last name</label>
+              <input value="fullasd" type="text" class="form-control" name="check-lastname" id="check-lastname" placeholder="Enter last name">
+            </div>
+            <div class="form-group col-12 col-md-6">
+              <label for="check-firstname">First name</label>
+              <input value="fullasxxd" type="text" class="form-control" name="check-firstname" id="check-firstname" placeholder="Enter first name">
             </div>
             <div class="form-group col-12 col-md-12">
-              <label for="check-address">Address <small>(House No., Street, Subdivision)</small> </label>
-              <input type="text" class="form-control" id="check-address" placeholder="Enter address">
+              <label for="check-address">Address <small>(House No., Street, Subdivision, Brgy., etc.)</small> </label>
+              <input value="addr1" type="text" class="form-control" name="check-address" id="check-address" placeholder="Enter address">
             </div>
             <div class="form-group col-12 col-md-12 ">
-              <label for="check-region">Region</label>
-              <input type="text" class="form-control" id="check-region" placeholder="Enter region">
+              <label for="check-country">Country</label>
+              <input value="Ph" type="text" class="form-control" name="check-country" id="check-country" placeholder="Enter country">
             </div>
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-md-12">
               <label for="check-city">City</label>
-              <input type="text" class="form-control" id="check-city" placeholder="Enter city">
+              <input value="QC" type="text" class="form-control" name="check-city" id="check-city" placeholder="Enter city">
             </div>
-            <div class="form-group col-12 col-md-6">
+            <!-- <div class="form-group col-12 col-md-6">
               <label for="check-brgy">Brgy.</label>
               <input type="text" class="form-control" id="check-brgy" placeholder="Enter brgy.">
-            </div>
+            </div> -->
 
             <div class="form-group col-12 col-md-12">
               <label for="check-others">Other notes <small>(Landmarks, markers, etc.)</small> </label>
-              <textarea class="form-control rounded-0" id="check-others" rows="2"></textarea>
+              <textarea class="form-control rounded-0" name="check-others" id="check-others" rows="2"></textarea>
             </div>
-          </form>
-          <button id="check-proceed2" type="submit" class="btn check-proceed">Proceed</button>
+          <button id="check-proceed2" class="btn check-proceed" type="button">Proceed</button>
             <div class="">
               <h4 style="text-align:left">Next steps</h4>
             </div>
@@ -130,7 +133,7 @@
     <div class="card">
       <div class="card-header" id="headingThree">
         <h5 class="mb-0">
-          <button disabled class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <button class="btn btn-link collapsed btn-coll" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             <h3 class="table-label"><small>Step 3:</small> Payment and Confirmation <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
           </button>
@@ -140,8 +143,6 @@
       </div>
       <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body">
-
-            <form class="radio-form">
 
 
               <!-- <div class="custom-control custom-radio">
@@ -182,7 +183,6 @@
                   <img src="https://tbcmerchantservices.com/images/kringle.png" border="0" alt="Kringle">
                 </span>
               </div>
-            </form>
             <br>
 
             <div class="">
@@ -217,18 +217,16 @@
                   </table>
                   <br>
 
-                  <form class="form-payment-paypal">
                     <div class="txt-transaction" id="trans-paypal">
                       <div class="input-group" style="z-index:0">
-                        <input type="text" class="form-control" id="txt-trans-paypal" placeholder="Transaction number here">
+                        <input type="text" class="form-control" name="txt-trans-paypal" id="txt-trans-paypal" placeholder="Transaction number here">
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button">
+                          <button class="btn btn-primary btn-submit" type="button" id="paypal">
                             Submit
                           </button>
                         </span>
                       </div>
                     </div>
-                  </form>
                   <br>
                 </div>
                 <!-- Paypal end -->
@@ -263,18 +261,16 @@
                     <b>3A9qBQkV9tu3zQ7cDosenG5ev3TyJ56CfG</b>
                   </div>
                   <br>
-                  <form class="form-payment-coinsph">
                     <div class="txt-transaction" id="trans-paypal">
                       <div class="input-group" style="z-index:0">
-                        <input type="text" class="form-control" id="txt-trans-coinsph" placeholder="Transaction number here">
+                        <input type="text" class="form-control" name="txt-trans-coinsph" id="txt-trans-coinsph" placeholder="Transaction number here">
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button">
+                          <button class="btn btn-primary btn-submit" type="button" id="coinsph">
                             Submit
                           </button>
                         </span>
                       </div>
                     </div>
-                  </form>
                   <br>
                 </div>
                 <!-- Coins.PH end -->
@@ -287,18 +283,16 @@
                     <li>Copy the <b>Transaction number</b> and paste it in the field below.</li>
                   </ol>
                   <br>
-                  <form class="form-payment-gcash">
                     <div class="txt-transaction" id="trans-gcash">
                       <div class="input-group" style="z-index:0">
-                        <input type="text" class="form-control" id="txt-trans-gcash" placeholder="Transaction number here">
+                        <input type="text" class="form-control" name="txt-trans-gcash" id="txt-trans-gcash" placeholder="Transaction number here">
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button">
+                          <button class="btn btn-primary btn-submit" type="button" id="gcash">
                             Submit
                           </button>
                         </span>
                       </div>
                     </div>
-                  </form>
                   <br>
                 </div>
                 <!-- GCash end -->
@@ -322,18 +316,16 @@
                     <b>NBGD3A-5BZ4B4-AUQ3XE-3I4B4Y-KX7C4I-OTAX5C-FZ36</b>
                   </div>
                   <br>
-                  <form class="form-payment-kringle">
                     <div class="txt-transaction" id="trans-kringle">
                       <div class="input-group" style="z-index:0">
-                        <input type="text" class="form-control" id="txt-trans-kringle" placeholder="Transaction number here">
+                        <input type="text" class="form-control" name="txt-trans-kringle" id="txt-trans-kringle" placeholder="Transaction number here">
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button">
+                          <button class="btn btn-primary btn-submit" type="button" id="kirngle">
                             Submit
                           </button>
                         </span>
                       </div>
                     </div>
-                  </form>
                   <br>
                 </div>
               </div>
@@ -357,16 +349,21 @@
     <div class="card">
       <div class="card-header" id="headingFour">
         <h5 class="mb-0">
-          <button disabled class="btn btn-link collapsed btn-coll" id="btn-4" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-            <h3 class="table-label">Order Completed <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
+          <button class="btn btn-link collapsed btn-coll" id="btn-4" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <h3 class="table-label">Complete Order <i class="fa fa-check-circle-o fa-lg"></i> <i class="fa fa-times-circle fa-lg"></i>
             </h3>
 
           </button>
-          <p class="subtitle">Your order details and receive a confirmation email.</p>
+          <p class="subtitle">Complete your order and receive a confirmation email.</p>
 
         </h5>
       </div>
       <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+        <div class="card-body">
+          <div style="text-align:center">
+            <h4>Please fill-up all the necessary forms.</h4>
+          </div>
+        </div>
       </div>
     </div>
     <?php
@@ -431,25 +428,40 @@
     <tfoot>
       <tr>
         <td>
-          <div class="col-sm-2">
-          </div>
           <div class="col-sm-10">
-            <strong>Total</strong> </td>
+            <strong>Total</strong> 
           </div>
+        </td>
         <td class="text-left"><strong> <span>&#8369;</span> <?php echo number_format($total,2); ?></strong></td>
       </tr>
     </tfoot>
     </table>
-  </div>
+
+    <br>
+
+    <div class="div-discount shadow">
+    <label for="txt-discount">Discount</label>
+      <div class="input-group" style="z-index:0">
+        <input type="text" class="form-control" name="txt-discount" id="txt-discount" placeholder="Discount code here">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" id="btn-discount">
+              Submit
+            </button>
+          </span>
+      </div>
+    </div>
+
+    </div>
     <?php
     final_form_footer();
   }
 
   function div_end(){
-  ?>
-    </div>
+    ?>
       </div>
-  <?php
+      </div>
+      </form>
+    <?php
   }
 
   function final_header_message(){
@@ -487,7 +499,7 @@
               <tr>
                 <td class="table-label" style="width: 25%">Email:
                 </td>
-                <td style="width: 75%" id="email">jeppbautista@gmail.com
+                <td style="width: 75%" id="email"> <?php echo $_POST['check-email'] ?>
                 </td>
               </tr>
               <tr>

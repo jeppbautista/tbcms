@@ -7,18 +7,26 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
   	class mydesign {
 
 		public function database_connect() {
-			if (isLocalhost()== true)
+			if ($this->isLocalhost()== true)
 			{
-					$conn = @mysql_connect('localhost', 'root', '');
+
+				$conn = @mysql_connect('custsql-spro-ipg06.ipagemysql.com', 'user_dev', 'password');
+				@mysql_select_db('xdb_tbcmerchant8080', $conn);
+
 			}
 			else{
-					$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
+				$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
+				@mysql_select_db('xdb_tbcmerchantservices', $conn);
+
 			}
 			if (!$conn) {
-					die('Could not connect: ' . mysql_error());
+				die('Could not connect: ' . mysql_error());
 			}
-			mysql_select_db('xdb_tbcmerchantservices', $conn);
-	  }
+		  }
+		  
+		public function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
+			return in_array($_SERVER['REMOTE_ADDR'], $whitelist);
+		}
 
 	  	public function doc_type() {
 	    	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
