@@ -507,7 +507,7 @@
                 <tr>
                   <td class="table-label">Phone:
                   </td>
-                  <td>+639982260493
+                  <td><?php echo $_POST['check-phone'] ?>
                   </td>
                 </tr>
               </tbody>
@@ -524,11 +524,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td id="name">John Jefferson C. Bautista
+                  <td id="name"><?php echo $_POST['check-firstname'] . " " . $_POST['check-lastname'] ?>
                   </td>
                 </tr>
                 <tr>
-                  <td id="address">#21 Don Francisco St. Villa Beatriz Subd., Old Balara Quezon City, PH
+                  <td id="address"> <?php echo $_POST['check-address'] ?>
                   </td>
                 </tr>
               </tbody>
@@ -553,25 +553,25 @@
                 <tr>
                   <td class="table-label" style="width: 40%">Order Number:
                   </td>
-                  <td style="width: 60%" id="order-number">OR0000001
+                  <td style="width: 60%" id="order-number"><?php echo "OR" . str_pad($_POST["orderNumber"], 10, "0", STR_PAD_LEFT); ?>
                   </td>
                 </tr>
                 <tr>
                   <td class="table-label">Type of payment:
                   </td>
-                  <td id="payment-type">Gcash
+                  <td id="payment-type"><?php echo $_POST["paymentType"]; ?>
                   </td>
                 </tr>
                 <tr>
                   <td class="table-label">Transaction Number:
                   </td>
-                  <td id="payment-type">123123123123
+                  <td id="payment-type"><?php echo $_POST["transactionNum"]; ?>
                   </td>
                 </tr>
                 <tr>
                   <td class="table-label">Date of transaction:
                   </td>
-                  <td id="dot">June 12, 2019
+                  <td id="dot"><?php echo date_format($_POST["transactionDate"], "M d, Y"); ?>
                   </td>
                 </tr>
               </tbody>

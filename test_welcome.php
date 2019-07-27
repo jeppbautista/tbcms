@@ -27,6 +27,7 @@ if (!isset($_GET['product'])) {
         $products = getProducts($product);
 
         if ($products['Ctr'] == "") {
+            // $view->missingProduct
             echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
         }
 

@@ -139,6 +139,38 @@ class View{
     </a>
   <?php
   }
+
+  function missingProduct(){
+    ?>
+      <div class="container">
+        <div class="row" >
+          <div class="div-empty">
+            <img src="https://tbcmerchantservices.com/images/empty_cart.png" alt="">
+          </div>
+        </div>
+        <div class="row" style="text-align:center">
+          <b>
+            <h1> Uh Oh! Looks like this product is
+              <span style="color:#F11C30">unavailable.
+              </span>.
+            </h1>
+          </b>
+          <br>
+          <p>This product may have been deleted by the administrator or the merchant.
+            <br>
+            You can find other amazing products in the TBCMS shopping page.
+          </p>
+        </div>
+        <div class="row">
+          <div class="div-go-back">
+            <a href="https://tbcmerchantservices.com/shopping" class="btn btn-md btn-add-to-cart">Back to shopping
+            </a>
+            <br>
+          </div>
+        </div>
+      </div>
+    <?php
+  }
 }
 
 ?>

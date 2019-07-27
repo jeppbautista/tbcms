@@ -83,7 +83,6 @@ if (count($_SESSION['cart']) == 0) {
 
       @mysql_query(insertPayment($payment_type, $transaction_num));
       $payment_id = getLatestCtr('shop_xtbl_payment');
-      echo $payment_id;
 
       @mysql_query(insertOrders($customer_detail_ctr, $payment_id));
       $order_ctr = getLatestCtr('shop_xtbl_orders');
@@ -91,6 +90,11 @@ if (count($_SESSION['cart']) == 0) {
       foreach($_SESSION['cart'] as $id=>$value){
         mysql_query(insertOrderDetail($id, $value['quantity'], $order_ctr));
       }
+
+      $_POST["orderNumber"] = $order_ctr;
+      $_POST["paymentType"] = $payment_type;
+      $_POST["transactionNum"] = $transaction_num;
+      $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
 
       session_destroy();
       // if customer is member{
