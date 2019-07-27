@@ -1,11 +1,14 @@
 <?php
 session_start();
 include 'class3.php';
-$class = new mydesign;
 include_once 'templates/product.php';
 include_once 'objects/product.php';
 include_once 'objects/generic.php';
+
+$class = new mydesign;
 $class->database_connect();
+$view = new View;
+
 date_default_timezone_set('Asia/Manila');
 $sessiondate = date('mdY');
 
@@ -59,11 +62,11 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
     $class->page_home_header_end();
     include 'nav_shop.php';
 
-    product_details_start($products, $tbc_to_peso);
-    product_forms($product);
-    product_merchant_details($main_info, $personal, 0);
-    product_description($products);
-    floating_cart();
+    $view->product_details_start($products, $tbc_to_peso);
+    $view->product_forms($product);
+    $view->product_merchant_details($main_info, $personal, 0);
+    $view->product_description($products);
+    $view->floating_cart();
 
     $class->page_welcome_header_content_start_footer();
     $class->body_end();
@@ -122,11 +125,11 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
         include 'nav_shop.php';
         echo '<div class="container"><h3>Welcome back,  <b>' . $current_email . '</b></h3></div>';
 
-        product_details_start($products, $tbc_to_peso);
-        product_forms($product);
-        product_merchant_details($main_info, $personal, 0);
-        product_description($products);
-        floating_cart();
+        $view->product_details_start($products, $tbc_to_peso);
+        $view->product_forms($product);
+        $view->product_merchant_details($main_info, $personal, 0);
+        $view->product_description($products);
+        $view->floating_cart();
         ?>
 
   <?php

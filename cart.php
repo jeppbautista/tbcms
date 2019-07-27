@@ -6,6 +6,9 @@ include_once 'objects/generic.php';
 include_once 'objects/product.php';
 $class = new mydesign;
 $class->database_connect();
+
+$view = new View;
+
 date_default_timezone_set('Asia/Manila');
 $sessiondate     = date('mdY');
 $GLOBALS['test'] = 0;
@@ -73,9 +76,9 @@ if (count($_SESSION['cart']) > 0) {
     }
     $query = readByID($product_ids);
     $rs    = mysql_query($query);
-    container_start();
-    header_text("Shopping Cart");
-    table_header();
+    $view->container_start();
+    $view->header_text("Shopping Cart");
+    $view->table_header();
 ?>
 
 
@@ -83,14 +86,14 @@ if (count($_SESSION['cart']) > 0) {
     while ($product = mysql_fetch_assoc($rs)) {
         $sub_total = floatval($_SESSION['cart'][$product['Ctr']]['quantity'] * $product['Product_Price']);
         $total += $sub_total;
-        product_row($product, $sub_total);
+        $view->product_row($product, $sub_total);
     }
-    table_footer();
-    order_summary($total, $tax, $shipping);
-    div_end();
+    $view->table_footer();
+    $view->order_summary($total, $tax, $shipping);
+    $view->div_end();
 }
 else {
-  empty_cart();
+  $view->empty_cart();
 }
 
 $class->page_welcome_header_content_start_footer();

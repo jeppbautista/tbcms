@@ -6,6 +6,7 @@ include_once 'objects/generic.php';
 include_once 'objects/product.php';
 $class=new mydesign;
 $class->database_connect();
+$view = new View;
 
 date_default_timezone_set('Asia/Manila');
 $sessiondate=date('mdY');
@@ -147,16 +148,16 @@ if (count($_SESSION['cart']) == 0) {
   </style>
 
   <?php
-    container_start();
-    header_text("Checkout Page");
-    checkout_steps_head();
-    details_card();
-    shipping_card();
-    payment_card();
+    $view->container_start();
+    $view->header_text("Checkout Page");
+    $view->checkout_steps_head();
+    $view->details_card();
+    $view->shipping_card();
+    $view->payment_card();
     // order_card();
-    checkout_steps_foot();
+    $view->checkout_steps_foot();
 
-    cart_head();
+    $view->cart_head();
 
     $product_ids = array();
     foreach($_SESSION['cart'] as $id=>$value){
@@ -167,12 +168,12 @@ if (count($_SESSION['cart']) == 0) {
     while($product = mysql_fetch_assoc($rs)) {
       $sub_total = floatval($_SESSION['cart'][$product['Ctr']]['quantity'] * $product['Product_Price']);
       $total += $sub_total;
-      product_row($product, $sub_total);
+      $view->product_row($product, $sub_total);
     }
 
-    cart_foot($total);
+  $view->cart_foot($total);
 
-    div_end();
+  $view->div_end();
   $class->page_welcome_header_content_start_footer();
   $class->body_end();
   $class->html_end();
