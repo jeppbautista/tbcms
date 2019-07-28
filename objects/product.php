@@ -1,4 +1,14 @@
 <?php
+function getGrandTotal($orderCtr){
+  $sumQuery = "
+    SELECT SUM(Total) AS GrandTotal
+    FROM shop_xtbl_order_detail
+    WHERE Order_Number = '$orderCtr'
+  ";
+  $rs = @mysql_query($sumQuery);
+  return mysql_fetch_assoc($rs)["GrandTotal"];
+}
+
 function readByID($ids){
   $ids_arr = implode(", ", $ids);
   $query = "
@@ -62,8 +72,8 @@ function insertOrderDetail($id, $quantity, $order_ctr){
 function insertOrders($customer_detail_ctr, $payment_id){
   $query = "
     INSERT INTO shop_xtbl_orders
-      (Customer_Ctr, Payment_Ctr, Shipper_Ctr, Tax , Deleted,  Status)
-    VALUES('$customer_detail_ctr', '$payment_id', 0, 0.00, 0, 'PENDING')";
+      (Customer_Ctr, Payment_Ctr, Shipper_Ctr, Tax , Deleted,  Status, Grand_Total)
+    VALUES('$customer_detail_ctr', '$payment_id', 0, 0.00, 0, 'PENDING', 0.00)";
   return $query;
 }
 
@@ -72,6 +82,27 @@ function insertPayment($payment_type, $transaction_num){
     INSERT INTO shop_xtbl_payment 
       (Payment_Type, Transaction, Status)
     VALUES ('$payment_type', '$transaction_num', 'PENDING')";
+  return $query;
+}
+
+function getOrderHistory(){
+  // $query = "
+  //   SELECT b.Order_Number,
+  //     b.Product_Ctr,
+  //     a.Customer_Ctr, 
+  //     a.Payment_Ctr, 
+  //     a.Shipper_Ctr, 
+  //     a.Tax,
+  //     b.Quantity,
+  //     b.Total
+  //   FROM shop_xtbl_orders a
+  //   INNER JOIN shop_xtbl_order_detail b
+  //     ON a.Ctr = b.Order_Number";
+
+  $query = "
+    SELECT * FROM shop_xtbl_
+  ";
+
   return $query;
 }
 

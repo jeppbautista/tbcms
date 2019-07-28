@@ -91,24 +91,16 @@ if (count($_SESSION['cart']) == 0) {
         mysql_query(insertOrderDetail($id, $value['quantity'], $order_ctr));
       }
 
+      $grandTotal = getGrandTotal($order_ctr);
+      echo $grandTotal;
+      @mysql_query(updateWithCondition("shop_xtbl_orders", "Grand_Total", $grandTotal, "Ctr", $order_ctr));
+
       $_POST["orderNumber"] = $order_ctr;
       $_POST["paymentType"] = $payment_type;
       $_POST["transactionNum"] = $transaction_num;
       $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
 
       session_destroy();
-      // if customer is member{
-      //   INSERT TO sho_customer customer_ctr = ctr customer_details = -1
-      // }else{
-      //   INSERT TO shop_customer customer_ctr = 0 customer_details = -1
-      // }
-
-      // insert into customer
-
-      // create payment
-      // get order_number
-      // create order_details
-      // create orders
 
     }
     else{

@@ -24,4 +24,13 @@ function getLatestCtr($table){
   $rs = @mysql_query($query);
   return @mysql_fetch_assoc($rs)['Ctr'];
 }
+function updateWithCondition($table, $updateColumn, $updateValue, $conditionColumn, $conditionValue){
+  $query = "
+    UPDATE ".$table."
+    SET ".$updateColumn." = ".$updateValue."
+    WHERE ".$conditionColumn." = ".$conditionValue."
+  ";
+  return $query;
+}
+
 ?>
