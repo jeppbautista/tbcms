@@ -10,8 +10,8 @@ function isLocalhost($whitelist = ['127.0.0.1', '::1']) {
 			if ($this->isLocalhost()== true)
 			{
 
-				$conn = @mysql_connect('custsql-spro-ipg06.ipagemysql.com', 'user_dev', 'password');
-				@mysql_select_db('xdb_tbcmerchant8080', $conn);
+				$conn = @mysql_connect('localhost', 'root', '');
+				@mysql_select_db('xdb_tbcmerchantservices', $conn);
 
 			}
 			else{

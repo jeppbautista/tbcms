@@ -9,8 +9,8 @@ class mydesign
 		if ($this->isLocalhost()== true)
 		{
 
-			$conn = @mysql_connect('custsql-spro-ipg06.ipagemysql.com', 'user_dev', 'password');
-			@mysql_select_db('xdb_tbcmerchant8080', $conn);
+			$conn = @mysql_connect('localhost', 'root', '');
+			@mysql_select_db('xdb_tbcmerchant', $conn);
 
 		}
 		else{
