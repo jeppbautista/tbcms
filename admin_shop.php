@@ -42,7 +42,7 @@
       $admin->updatePaymentStatus($temvalue, 'APPROVED');
     }
     elseif (isset($_POST['temporary_valueD'])) {
-      $temvalue=str_replace("'", '', $_POST['temporary_value']);
+      $temvalue=str_replace("'", '', $_POST['temporary_valueD']);
 			$temvalue=str_replace('"', '', $temvalue);
 			$temvalue=str_replace("<", '', $temvalue);
       $temvalue=str_replace('>', '', $temvalue);
@@ -60,6 +60,7 @@
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
     $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+    $class->link('https://tbcmerchantservices.com/css/style-admin.css');
     $class->script('https://tbcmerchantservices.com/js/jquery1.4.js');
     $class->head_end();
     $class->body_start('');
@@ -67,25 +68,76 @@
     $class->admin_page_header();
 
     $view->container_start();
-    $view->table_header();
+    // $view->table_header();
     $query = $admin->getPendingPayments();
     $rs=@mysql_query($query);
     while($payment = @mysql_fetch_assoc($rs)){
+      $orderCtr = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", $payment["Ctr"])["Ctr"];
+      $productsQuery = $admin->getOrderedProducts($orderCtr);
+      $productsRs=@mysql_query($productsQuery);
+      $products = @mysql_fetch_assoc($productsRs);
+      ?>
+        <div class="col-12 col-md-12 shadow">
+          <div class="row">
+            <div class="col-12 col-md-6 header-txt">
+            <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
+            <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
+            <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
+            <b>Billing Address: </b> <?php echo $products["Shipping_Address"]; ?><br> 
+
+            </div>
+            <div class="col-12 col-md-6 header-btn">
+              <span>
+                <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment['Ctr']."')";?> >ACCEPT</a>
+                <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btndenied('".$payment['Ctr']."')";?> >DENIED</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+      <?php
+      
+      $view->table_header();
+      do{
+        $temp_total = $products["Grand_Total"];
+        ?>
+        <tr>
+            <td style="width: 50%"> 
+              <div class="row">
+                <div class="col-sm-2">
+                  <img class="img-responsive" src=<?php echo "https://tbcmerchantservices.com/products/".$products["Image"] ?>  alt="">
+                </div>
+                <div class="col-sm-10">
+                  <?php echo $products["Product_Name"] ?> 
+                </div>
+              </div>
+            </td>
+            <td style="width: 20%"> <?php echo $products["Quantity"] . " pcs"?> </td>  
+            <td style="width: 30%"> <?php echo '&#8369;' . $products["Product_Price"] ?> </td>          
+        </tr>
+
+        <?php
+      }while($products = @mysql_fetch_assoc($productsRs));
+
       ?>
         <tr>
-          <td><?php echo $payment["Payment_Date"] ?></td>
-          <td><?php echo $payment["Payment_Type"] ?></td>
-          <td><?php echo $payment["Transaction"] ?></td>
+          <td></td>
+          <td></td>
           <td>
-            <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment[Ctr]."')";?> >ACCEPT</a>
-            <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btnadenied('".$payment[Ctr]."')";?> >DENIED</a>
+          <b>Total: <?php echo '&#8369;' .  $temp_total; ?></b>
           </td>
         </tr>
       <?php
+
+      $view->table_footer();
+      
     }
     $view->container_end();
 
     $view->modal_accept();
     $view->modal_denied();
+
+    
 
 ?>

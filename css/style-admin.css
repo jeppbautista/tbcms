@@ -1,0 +1,15 @@
+.header-btn > span{
+  float: right;
+}
+
+.header-txt{
+  float: left;
+}
+
+.shadow{
+  box-shadow: 0 0.46875rem 2.1875rem rgba(63, 106, 216, 0.03), 0 0.9375rem 1.40625rem rgba(63, 106, 216, 0.03), 0 0.25rem 0.53125rem rgba(63, 106, 216, 0.05), 0 0.125rem 0.1875rem rgba(63, 106, 216, 0.03);
+  border-radius: 1%;
+  padding: 20px;
+  background-color: white;
+}
+

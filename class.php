@@ -347,7 +347,7 @@ public function page_welcome_header_content_start($error)
 			</div>
 			<!-- END - NEWS Update -->
 			<!-- START - Intorduction -->
-			<div class="container-fluid" style="background: url('assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
+			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
 						<h1 style="text-align: left;">WHAT IS TBC AND EDUDONA?</h1>

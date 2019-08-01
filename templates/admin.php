@@ -8,12 +8,9 @@
 
         function table_header(){
         ?>
-            <table class="table table-bordered">
+            <table class="table">
             <tr>
-                <td width="30%">Date</td>
-                <td width="10%">Payment Type</td>
-                <td width="40%">Transaction Number</td>
-                <td width="20%"></td>
+
             </tr>
         <?php
         }
