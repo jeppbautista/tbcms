@@ -55,12 +55,12 @@
           <div class="card-body">
               <div class="form-group col-12 col-md-12">
                 <label for="check-email">Email address</label>
-                <input value="jeppbautista@gmail.com" type="email" class="form-control" name="check-email" id="check-email" aria-describedby="emailHelp" placeholder="Enter email">
+                <input type="email" class="form-control" name="check-email" id="check-email" aria-describedby="emailHelp" placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
               <div class="form-group col-12 col-md-12">
                 <label for="check-phone">Phone number</label>
-                <input value="123" type="text" class="form-control" name="check-phone" id="check-phone" placeholder="+639123456789">
+                <input type="text" class="form-control" name="check-phone" id="check-phone" placeholder="+639123456789">
               </div>
             <button id="check-proceed1"  class="btn check-proceed" type="button">Proceed</button>
               <span style="width:50%; text-align:right"> <small>All information submitted are secured.</small> </span>
@@ -92,23 +92,23 @@
           <div class="card-body">
               <div class="form-group col-12 col-md-6">
                 <label for="check-lastname">Last name</label>
-                <input value="fullasd" type="text" class="form-control" name="check-lastname" id="check-lastname" placeholder="Enter last name">
+                <input type="text" class="form-control" name="check-lastname" id="check-lastname" placeholder="Enter last name">
               </div>
               <div class="form-group col-12 col-md-6">
                 <label for="check-firstname">First name</label>
-                <input value="fullasxxd" type="text" class="form-control" name="check-firstname" id="check-firstname" placeholder="Enter first name">
+                <input type="text" class="form-control" name="check-firstname" id="check-firstname" placeholder="Enter first name">
               </div>
               <div class="form-group col-12 col-md-12">
                 <label for="check-address">Address <small>(House No., Street, Subdivision, Brgy., etc.)</small> </label>
-                <input value="addr1" type="text" class="form-control" name="check-address" id="check-address" placeholder="Enter address">
+                <input type="text" class="form-control" name="check-address" id="check-address" placeholder="Enter address">
               </div>
               <div class="form-group col-12 col-md-12 ">
                 <label for="check-country">Country</label>
-                <input value="Ph" type="text" class="form-control" name="check-country" id="check-country" placeholder="Enter country">
+                <input type="text" class="form-control" name="check-country" id="check-country" placeholder="Enter country">
               </div>
               <div class="form-group col-12 col-md-12">
                 <label for="check-city">City</label>
-                <input value="QC" type="text" class="form-control" name="check-city" id="check-city" placeholder="Enter city">
+                <input type="text" class="form-control" name="check-city" id="check-city" placeholder="Enter city">
               </div>
               <!-- <div class="form-group col-12 col-md-6">
                 <label for="check-brgy">Brgy.</label>
@@ -528,7 +528,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <td id="address"> <?php echo $_POST['check-address'] ?>
+                  <td id="address"> <?php echo $_POST['check-address'] . " " . $_POST["check-city"] . ", " . $_POST["check-country"] ?>
                   </td>
                 </tr>
               </tbody>
@@ -571,7 +571,7 @@
                 <tr>
                   <td class="table-label">Date of transaction:
                   </td>
-                  <td id="dot"><?php echo date_format($_POST["transactionDate"], "M d, Y"); ?>
+                  <td id="dot"><?php echo date_format(new DateTime($_POST["transactionDate"]), "M d, Y"); ?>
                   </td>
                 </tr>
               </tbody>

@@ -49,6 +49,7 @@ if (count($_SESSION['cart']) == 0) {
     $country = trim($class->pre_process_form($_POST['check-country']));
     $city = trim($class->pre_process_form($_POST['check-city']));
     $transaction_num = trim($class->pre_process_form($_POST['txt-trans-'.$payment_type]));
+    $notes = trim($class->pre_process_form($_POST['check-others']));
 
     if(($email !='') && 
     ($phone !='') &&
@@ -75,7 +76,7 @@ if (count($_SESSION['cart']) == 0) {
       $shipping_address = $address . " " . $city . " " . $country;
       $is_member = $customer_ctr==0 ? 0 : 1;
       
-      @mysql_query(insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $phone, $email, $is_member));
+      @mysql_query(insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $notes, $phone, $email, $is_member));
       $customer_ctr = getLatestCtr('shop_xtbl_customer');
 
       @mysql_query(insertCustomerDetail($customer_ctr));
@@ -92,7 +93,6 @@ if (count($_SESSION['cart']) == 0) {
       }
 
       $grandTotal = getGrandTotal($order_ctr);
-      echo $grandTotal;
       @mysql_query(updateWithCondition("shop_xtbl_orders", "Grand_Total", $grandTotal, "Ctr", $order_ctr));
 
       $_POST["orderNumber"] = $order_ctr;
@@ -104,7 +104,7 @@ if (count($_SESSION['cart']) == 0) {
 
     }
     else{
-      echo "BAR";
+      echo "<script>alert('Please fill up all the forms required')</script>";
     }
   }
   elseif((isset($_POST['btn-submit-payment'])) && (!$_SESSION['s'])){

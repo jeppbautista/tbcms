@@ -29,18 +29,18 @@ function getProducts($product){
   return $row;
 }
 
-function insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $phone, $email, $is_member){
+function insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $notes, $phone, $email, $is_member){
   $query = "
     INSERT INTO shop_xtbl_customer 
       (Last_Name, First_Name, 
       Middle_Name, Shipping_Address, 
-      Country, City, 
+      Country, City, Notes,
       Phone, Email, 
       Is_Member)
     VALUES
       ('$lastname', '$firstname',
       '', '$shipping_address',
-      '$country', '$city',
+      '$country', '$city', '$notes',
       '$phone', '$email',
       '$is_member')
   ";
