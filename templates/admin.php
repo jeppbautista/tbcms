@@ -76,5 +76,11 @@
             </div> 
         <?php
         }
+
+        function div_end(){
+        ?>
+            </div>
+        <?php
+        }
     }
 ?>

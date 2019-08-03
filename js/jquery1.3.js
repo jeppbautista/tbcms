@@ -1,9 +1,8 @@
   $( document ).ready(function() {
 
-    function isEmail(email) {
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-      return regex.test(email);
-    }
+    $("[type='number']").keypress(function (evt) {
+      evt.preventDefault();
+    });
 
     function numberWithCommas(number) {
         var parts = number.toString().split(".");
@@ -46,44 +45,6 @@
         $(this).css('display', 'none');
       });
     }
-
-    function proc_details(){
-      var email = $('#check-email').val();
-      var phone = $('#check-phone').val();
-      var proceed = true;
-      if(!isEmail(email) || email==""){
-        proceed = false;
-        $('#check-email').css('border', '1px solid red');
-      }else{
-        $('#check-email').css('border', '1px solid #ccc');
-      }
-      if(phone==""){
-        proceed = false;
-        $('#check-phone').css('border', '1px solid red');
-      }else{
-        $('#check-phone').css('border', '1px solid #ccc');
-      }
-
-      if(proceed){
-        $('#headingTwo > * > button').prop('disabled', false);
-        $('#collapseOne').removeClass('in');
-        $('#collapseTwo').removeClass('collapse');
-        $('#headingOne > * > button > * > .fa.fa-times-circle').hide();
-        $('#headingOne > * > button > * > .fa.fa-check-circle-o').show();
-
-        $('#check-email').css('border', '1px solid #ccc');
-        $('#check-phone').css('border', '1px solid #ccc');
-      }else{
-        $('#headingOne > * > button > * > .fa.fa-times-circle').show();
-        $('#headingOne > * > button > * > .fa.fa-check-circle-o').hide();
-      }
-    }
-
-    function proc_shipping(){
-      $('#headingThree > * > button').prop('disabled', false);
-      $('#headingThree > * > button').click();
-    }
-
 
       var url=window.location.href;
       var res = url.split("#");
@@ -205,7 +166,6 @@
       // Collapsible buttons on checkout steps
       $('.btn-coll').on('click', function(){
         var id = $(this).attr('data-target');
-        console.log(id);
         var aria = $(id).attr('class');
         if(aria=="collapse"){
           $(this).children('h3').css('font-weight','bold');
@@ -236,13 +196,6 @@
       // });
       // QR code changing for Coins.PH
 
-      $('#check-proceed1').on('click', function(){
-        proc_details();
-      });
-
-      $('#check-proceed2').on('click', function(){
-        proc_shipping();
-      });
 
       // Finalize checkout
       // $('#btn-4').on('click', function(){
@@ -260,10 +213,6 @@
         alert('Invalid discount code');
       });
 
-      $('.btn-submit').on('click', function(){
-        var payment_type = this.id;
-        $('#txt-payment-type').val(payment_type);
-        $('#btn-submit-payment').click();
-      });
+      
 
   });

@@ -76,6 +76,7 @@
       $productsQuery = $admin->getOrderedProducts($orderCtr);
       $productsRs=@mysql_query($productsQuery);
       $products = @mysql_fetch_assoc($productsRs);
+
       ?>
         <div class="col-12 col-md-12 shadow">
           <div class="row">
@@ -93,11 +94,10 @@
               </span>
             </div>
           </div>
-        </div>
+          <br>
 
 
       <?php
-      
       $view->table_header();
       do{
         $temp_total = $products["Grand_Total"];
@@ -131,6 +131,7 @@
       <?php
 
       $view->table_footer();
+      $view->div_end();
       
     }
     $view->container_end();

@@ -23,6 +23,7 @@ $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
 $class->link('https://fonts.googleapis.com/css?family=Poppins|Noto+Sans|Open+Sans&display=swap');
 $class->link('https://tbcmerchantservices.com/css/style-shop.css');
+$class->script('https://tbcmerchantservices.com/js/jquery-checkout.js');
 $class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
 // $class->script('https://tbcmerchantservices.com/js/paypal.js');
 $class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -58,54 +59,60 @@ if (count($_SESSION['cart']) == 0) {
     ($address!='') &&
     ($country!='') &&
     ($city!='') &&
-    ($transaction_num!='')
-    ){
+    ($transaction_num!='')){
       $form_complete = true;
     }
     //TODO error
+    if (countRows("shop_xtbl_payment", "Transaction", $transaction_num) == 0){
+      if(($form_complete)){
 
-    if($form_complete){
-
-      $_SESSION['done'] = '1';
-      if(isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-        $customer_ctr = $_SESSION['session_tbcmerchant_ctr'.$sessiondate];
-      } else {
-        $customer_ctr = 0;
+        $_SESSION['done'] = '1';
+        if(isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
+          $customer_ctr = $_SESSION['session_tbcmerchant_ctr'.$sessiondate];
+        } else {
+          $customer_ctr = 0;
+        }
+        
+        $shipping_address = $address . " " . $city . " " . $country;
+        $is_member = $customer_ctr==0 ? 0 : 1;
+        
+        @mysql_query(insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $notes, $phone, $email, $is_member));
+        $customer_ctr = getLatestCtr('shop_xtbl_customer');
+  
+        @mysql_query(insertCustomerDetail($customer_ctr));
+        $customer_detail_ctr = getLatestCtr('shop_xtbl_customer_detail');
+  
+        @mysql_query(insertPayment($payment_type, $transaction_num));
+        $payment_id = getLatestCtr('shop_xtbl_payment');
+  
+        @mysql_query(insertOrders($customer_detail_ctr, $payment_id));
+        $order_ctr = getLatestCtr('shop_xtbl_orders');
+  
+        foreach($_SESSION['cart'] as $id=>$value){
+          mysql_query(insertOrderDetail($id, $value['quantity'], $order_ctr));
+        }
+  
+        $grandTotal = getGrandTotal($order_ctr);
+        @mysql_query(updateWithCondition("shop_xtbl_orders", "Grand_Total", $grandTotal, "Ctr", $order_ctr));
+  
+        $_POST["orderNumber"] = $order_ctr;
+        $_POST["paymentType"] = $payment_type;
+        $_POST["transactionNum"] = $transaction_num;
+        $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
+  
+        session_destroy();
+  
       }
-      
-      $shipping_address = $address . " " . $city . " " . $country;
-      $is_member = $customer_ctr==0 ? 0 : 1;
-      
-      @mysql_query(insertCustomer($lastname, $firstname, $shipping_address, $country, $city, $notes, $phone, $email, $is_member));
-      $customer_ctr = getLatestCtr('shop_xtbl_customer');
-
-      @mysql_query(insertCustomerDetail($customer_ctr));
-      $customer_detail_ctr = getLatestCtr('shop_xtbl_customer_detail');
-
-      @mysql_query(insertPayment($payment_type, $transaction_num));
-      $payment_id = getLatestCtr('shop_xtbl_payment');
-
-      @mysql_query(insertOrders($customer_detail_ctr, $payment_id));
-      $order_ctr = getLatestCtr('shop_xtbl_orders');
-
-      foreach($_SESSION['cart'] as $id=>$value){
-        mysql_query(insertOrderDetail($id, $value['quantity'], $order_ctr));
+      else{
+        echo "<script>alert('There were some errors.')</script>";
+        echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
       }
-
-      $grandTotal = getGrandTotal($order_ctr);
-      @mysql_query(updateWithCondition("shop_xtbl_orders", "Grand_Total", $grandTotal, "Ctr", $order_ctr));
-
-      $_POST["orderNumber"] = $order_ctr;
-      $_POST["paymentType"] = $payment_type;
-      $_POST["transactionNum"] = $transaction_num;
-      $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
-
-      session_destroy();
-
     }
     else{
-      echo "<script>alert('Please fill up all the forms required')</script>";
+      echo "<script>alert('There were some errors.')</script>";
+      echo '<script>window.location.assign("https://tbcmerchantservices.com/checkout/");</script>';
     }
+    
   }
   elseif((isset($_POST['btn-submit-payment'])) && (!$_SESSION['s'])){
     echo '<script>window.location.assign("https://tbcmerchantservices.com/cart/");</script>';

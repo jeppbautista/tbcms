@@ -4,7 +4,8 @@ class Admin{
         $query = "
             SELECT * 
             FROM shop_xtbl_payment
-            WHERE Status='PENDING'";
+            WHERE Status='PENDING'
+            ORDER BY Payment_Date DESC";
 
         return $query;
     }

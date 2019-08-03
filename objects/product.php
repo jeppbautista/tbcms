@@ -106,5 +106,15 @@ function getOrderHistory(){
   return $query;
 }
 
+function countRows($table, $column, $variable){
+  $query = "
+    SELECT *
+    FROM ".$table."
+      WHERE ".$column." = '$variable'
+  ";
+  $rs = mysql_query($query);
+  $num_rows = mysql_num_rows($rs);
+  return $num_rows;
+}
 
 ?>

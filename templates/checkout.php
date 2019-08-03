@@ -6,6 +6,12 @@
       <form method="post">
         <input type="submit" name="btn-submit-payment" id="btn-submit-payment" hidden>
         <input type="text" name="txt-payment-type" id="txt-payment-type" hidden>
+        <div id="hd-form-check">
+          <input type="text" name="hd-details" id="hd-details" value="" hidden>
+          <input type="text" name="hd-shipping" id="hd-shipping" value="" hidden>
+          <input type="text" name="hd-payment" id="hd-payment" value="" hidden>
+        </div>
+        
       <div class="container-fluid" >
       <?php
     }
