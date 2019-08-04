@@ -40,6 +40,7 @@
       $temvalue=str_replace('>', '', $temvalue);
       
       $admin->updatePaymentStatus($temvalue, 'APPROVED');
+      $admin->updateOrderStatus($temvalue, 'SHIPPING');
     }
     elseif (isset($_POST['temporary_valueD'])) {
       $temvalue=str_replace("'", '', $_POST['temporary_valueD']);
@@ -77,17 +78,28 @@
       $productsRs=@mysql_query($productsQuery);
       $products = @mysql_fetch_assoc($productsRs);
 
+      $customerQuery = $admin->getCustomerDetails($orderCtr);
+      $customerRs=@mysql_query($customerQuery);
+      $customer = @mysql_fetch_assoc($customerRs);
+
       ?>
-        <div class="col-12 col-md-12 shadow">
+        <div class="col-12 col-md-12 shadow" style="margin-bottom:15px;">
           <div class="row">
-            <div class="col-12 col-md-6 header-txt">
+            <div class="col-12 col-md-4 header-txt">
             <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
             <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
             <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
-            <b>Billing Address: </b> <?php echo $products["Shipping_Address"]; ?><br> 
 
             </div>
-            <div class="col-12 col-md-6 header-btn">
+
+            <div class="col-12 col-md-5 header-shipping">
+              <b>Billing Address: </b> <?php echo $customer["Shipping_Address"]; ?><br> 
+              <b>Customer: </b> <?php echo $customer["Full_Name"]; ?><br> 
+              <b>Email: </b> <?php echo $customer["Email"]; ?><br> 
+              <b>Phone: </b> <?php echo $customer["Phone"]; ?><br> 
+            </div>
+
+            <div class="col-12 col-md-3 header-btn">
               <span>
                 <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment['Ctr']."')";?> >ACCEPT</a>
                 <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btndenied('".$payment['Ctr']."')";?> >DENIED</a>

@@ -82,5 +82,11 @@
             </div>
         <?php
         }
+
+        function line_break(){
+        ?>
+            <br>
+        <?php
+        }
     }
 ?>
