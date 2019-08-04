@@ -82,65 +82,15 @@
       $customerRs=@mysql_query($customerQuery);
       $customer = @mysql_fetch_assoc($customerRs);
 
-      ?>
-        <div class="col-12 col-md-12 shadow" style="margin-bottom:15px;">
-          <div class="row">
-            <div class="col-12 col-md-4 header-txt">
-            <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
-            <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
-            <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
-
-            </div>
-
-            <div class="col-12 col-md-5 header-shipping">
-              <b>Billing Address: </b> <?php echo $customer["Shipping_Address"]; ?><br> 
-              <b>Customer: </b> <?php echo $customer["Full_Name"]; ?><br> 
-              <b>Email: </b> <?php echo $customer["Email"]; ?><br> 
-              <b>Phone: </b> <?php echo $customer["Phone"]; ?><br> 
-            </div>
-
-            <div class="col-12 col-md-3 header-btn">
-              <span>
-                <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment['Ctr']."')";?> >ACCEPT</a>
-                <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btndenied('".$payment['Ctr']."')";?> >DENIED</a>
-              </span>
-            </div>
-          </div>
-          <br>
-
-
-      <?php
+      $view->orderHeader($payment, $customer);
       $view->table_header();
       do{
         $temp_total = $products["Grand_Total"];
-        ?>
-        <tr>
-            <td style="width: 50%"> 
-              <div class="row">
-                <div class="col-sm-2">
-                  <img class="img-responsive" src=<?php echo "https://tbcmerchantservices.com/products/".$products["Image"] ?>  alt="">
-                </div>
-                <div class="col-sm-10">
-                  <?php echo $products["Product_Name"] ?> 
-                </div>
-              </div>
-            </td>
-            <td style="width: 20%"> <?php echo $products["Quantity"] . " pcs"?> </td>  
-            <td style="width: 30%"> <?php echo '&#8369;' . $products["Product_Price"] ?> </td>          
-        </tr>
-
-        <?php
+        $view->orderRow($products);
+        
       }while($products = @mysql_fetch_assoc($productsRs));
 
-      ?>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>
-          <b>Total: <?php echo '&#8369;' .  $temp_total; ?></b>
-          </td>
-        </tr>
-      <?php
+      $view->orderTotal($temp_total);
 
       $view->table_footer();
       $view->div_end();
