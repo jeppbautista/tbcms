@@ -12,6 +12,12 @@
     date_default_timezone_set('Asia/Manila');
     $sessiondate=date('mdY');
 
+    if((!isset($_SESSION['session_tbcmerchant_ctr_myadmin'.$sessiondate])) || (!isset($_GET['id']))){
+        header("location: https://tbcmerchantservices.com/welcome/");
+    }
+
+    $ctr = $_GET['id'];
+
     $class->doc_type();
     $class->html_start('');
     $class->head_start();
@@ -27,15 +33,23 @@
     $class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
     $class->head_end();
 
+    $customerQuery = getCustomerDetails($ctr);
+    $customerRs=@mysql_query($customerQuery);
+    $customer = @mysql_fetch_assoc($customerRs);
+
     $view->container_start();
     $view->header_text("Order History");
     $view->breakline();
-    $view->table_header();
-    $query = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", "2");
-    $view->product_row();
+    $view->table_header($customer, $ctr);
+
+    $productsQuery = getOrderedProducts($ctr);
+    $productsRs=@mysql_query($productsQuery);
+    while($product = @mysql_fetch_assoc($productsRs)){
+        $view->product_row($product);
+
+    }
     $view->table_footer();
     $view->container_end();
-
 
 
 ?>

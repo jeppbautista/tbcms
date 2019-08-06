@@ -17,24 +17,34 @@
             <?php
         }
 
-        function table_header(){
+        function table_header($customer, $orderCtr){
         ?>
             <table class="table table-hover tabl-condensed">
                 <thead>
-                    <td colspan="2">Order #</td>
-                    <td>Foo</td>
+                    <td colspan="2">Order # <?php echo "OR" . str_pad($orderCtr, 10, "0", STR_PAD_LEFT); ?> </td>
+                    <td> <?php echo $customer['Full_Name'] ?> </td>
                 </thead>
 
         <?php
         }
 
-        function product_row(){
+        function product_row($product){
         ?>
             <tr>
-                <td style="width:60%">Product</td>
-                <td style="width:15%">Quantity</td>
-                <td style="width:25%">Status</td>
+                <td style="width: 50%"> 
+                <div class="row">
+                    <div class="col-sm-2">
+                    <img class="img-responsive" src=<?php echo "https://tbcmerchantservices.com/products/".$product["Image"] ?>  alt="">
+                    </div>
+                    <div class="col-sm-10">
+                    <?php echo $product["Product_Name"] ?> 
+                    </div>
+                </div>
+                </td>
+                <td style="width: 20%"> <?php echo $product["Quantity"] . " pcs"?> </td>  
+                <td style="width: 30%"> <?php echo '&#8369;' . $product["Product_Price"] ?> </td>          
             </tr>
+
         <?php
         }
 

@@ -75,7 +75,7 @@
                     </div>
                     <br>
                     <div class="row" style="text-align:center">
-                        <a href='<?php echo "https://tbcmerchantservices.com/orders?id=".$order["Ctr"] ?>' class="btn btn-warning">View Orders</a>
+                        <a target="_blank" href='<?php echo "https://tbcmerchantservices.com/orders?id=".$order["Ctr"] ?>' class="btn btn-warning">View Orders</a>
                     </div>
                 </div>
             </div>
