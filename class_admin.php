@@ -113,6 +113,7 @@
     	    <a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_cashin/">CASH-IN</a>
 			<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_edudona/">EDUDONA</a>
 			<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_shop/">SHOP</a>
+			<a class="btn btn-primary" href="https://tbcmerchantservices.com/admin_shipping/">SHIPPING</a>
     	  </div><br>
 
         <?php

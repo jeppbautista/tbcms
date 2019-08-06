@@ -44,6 +44,45 @@
         <?php
         }
 
+        function orderHeaderShipping($payment, $customer, $order){
+        ?>
+            <div class="col-12 col-md-12 shadow" style="margin-bottom:15px;">
+            <div class="row">
+                <div class="col-12 col-md-4 header-txt">
+                <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
+                <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
+                <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
+
+                </div>
+
+                <div class="col-12 col-md-5 header-shipping">
+                <b>Billing Address: </b> <?php echo $customer["Shipping_Address"]; ?><br> 
+                <b>Customer: </b> <?php echo $customer["Full_Name"]; ?><br> 
+                <b>Email: </b> <?php echo $customer["Email"]; ?><br> 
+                <b>Phone: </b> <?php echo $customer["Phone"]; ?><br> 
+                </div>
+
+                <div class="col-12 col-md-3 header-btn">
+                    <div class="dropdown" style="text-align:center">
+                        <button id='<?php echo "dropdown-".$order["Ctr"] ?>' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> <?php echo $order['Status'] ?>
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">SHIPPING</a></li>
+                            <li><a href="#">ON DELIVERY</a></li>
+                            <li><a href="#">CANCEL</a></li>
+                        </ul>
+                        <button class="btn btn-success">Confirm</button>
+                    </div>
+                    <br>
+                    <div class="row" style="text-align:center">
+                        <a href='<?php echo "https://tbcmerchantservices.com/orders?id=".$order["Ctr"] ?>' class="btn btn-warning">View Orders</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <?php  
+        }
+
         function orderRow($products){
         ?>
             <tr>

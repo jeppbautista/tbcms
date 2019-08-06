@@ -9,6 +9,16 @@ class Admin{
         return $query;
     }
 
+    function getApprovedOrders(){
+        $query = "
+            SELECT *
+            FROM shop_xtbl_orders ord
+            WHERE Status <> 'PENDING'
+        ";
+
+        return $query;
+    }
+
     function getOrderedProducts($orderCtr){
         // $query = "
         //     SELECT p.Product_Name,
@@ -77,6 +87,8 @@ class Admin{
             SET Status='$status'
             WHERE Payment_Ctr = '$paymentCtr'
         ";
+
+        @mysql_query($query);
     }
 }
 
