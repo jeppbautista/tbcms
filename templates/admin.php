@@ -63,16 +63,22 @@
                 </div>
 
                 <div class="col-12 col-md-3 header-btn">
-                    <div class="dropdown" style="text-align:center">
-                        <button id='<?php echo "dropdown-".$order["Ctr"] ?>' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> <?php echo $order['Status'] ?>
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">SHIPPING</a></li>
-                            <li><a href="#">ON DELIVERY</a></li>
-                            <li><a href="#">CANCEL</a></li>
-                        </ul>
-                        <button class="btn btn-success">Confirm</button>
-                    </div>
+                    <form method="post">
+                        <div class="dropdown" style="text-align:center">
+                            <button id='<?php echo "dropdown-".$order["Ctr"] ?>' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"> <?php echo $order['Status'] ?>
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">SHIPPING</a></li>
+                                <li><a href="#">ON DELIVERY</a></li>
+                                <li><a href="#">CANCEL</a></li>
+                            </ul>
+                            <button id='<?php echo "btn-".$order["Ctr"] ?>' class="btn btn-success btn-shipping-confirm">Confirm</button>
+                        </div>
+                        <input type="text" name="order-id" value='<?php echo $order["Ctr"] ?>' hidden>
+                        <input type="text" id='<?php echo "dropdown-val-".$order["Ctr"] ?>' name="submit" value='<?php echo $order['Status'] ?>' hidden >
+                        <input type="submit" id='<?php echo "submit-".$order["Ctr"] ?>' name="submit" hidden >
+                    </form>
+                    
                     <br>
                     <div class="row" style="text-align:center">
                         <a target="_blank" href='<?php echo "https://tbcmerchantservices.com/orders?id=".$order["Ctr"] ?>' class="btn btn-warning">View Orders</a>

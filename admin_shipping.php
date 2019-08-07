@@ -31,7 +31,20 @@
     if(!isset($_SESSION['session_tbcmerchant_ctr_myadmin'.$sessiondate])){
       header("location: https://tbcmerchantservices.com/tbcmyadmin/");
     }
-    
+
+    if(isset($_POST['submit'])){
+      $action = $_POST['submit'];
+      $orderCtr = $_POST['order-id'];
+      if($action == "ON DELIVERY"){
+        updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);
+        //email
+      }
+      elseif($action == "CANCEL"){
+        updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);
+        //email
+      }
+    }
+
     $class->doc_type();
     $class->html_start('');
     $class->head_start();
@@ -60,6 +73,7 @@
         $payment = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $order['Payment_Ctr']);
 
         $view->orderHeaderShipping($payment, $customer, $order);
+        $view->div_end();
     }
 
 ?>

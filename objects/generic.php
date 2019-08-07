@@ -33,4 +33,13 @@ function updateWithCondition($table, $updateColumn, $updateValue, $conditionColu
   return $query;
 }
 
+function updateWithCondition2($table, $updateColumn, $updateValue, $conditionColumn, $conditionValue){
+  $query = "
+    UPDATE ".$table."
+    SET ".$updateColumn." = '".$updateValue."'
+    WHERE ".$conditionColumn." = ".$conditionValue."
+  ";
+  return @mysql_query($query);
+}
+
 ?>
