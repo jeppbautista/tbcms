@@ -113,12 +113,12 @@ if (count($_SESSION['cart']) == 0) {
   
       }
       else{
-        echo "<script>alert('".$payment_type."')</script>";
+        echo "<script>alert('There were some errors. ERR_CODE: 1')</script>";
         echo '<script>window.location.assign("https://tbcmerchantservices.com/shopping/");</script>';
       }
     }
     else{
-      echo "<script>alert('There were some errors.')</script>";
+      echo "<script>alert('There were some errors. ERR_CODE: 2')</script>";
       echo '<script>window.location.assign("https://tbcmerchantservices.com/checkout/");</script>';
     }
     

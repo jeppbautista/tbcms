@@ -1,6 +1,7 @@
 <?php
     session_start();
     include 'class_admin.php';  
+    include 'assets/utils/mailer/admin.php';
     include_once 'templates/admin.php';
     include_once 'objects/admin.php';
     include_once 'objects/generic.php';
@@ -10,6 +11,7 @@
 
     $view = new View;
     $admin = new Admin;
+    $mailer = new AdminMailer;
 
     date_default_timezone_set('Asia/Manila');
     $sessiondate=date('mdY');
@@ -41,6 +43,19 @@
       
       $admin->updatePaymentStatus($temvalue, 'APPROVED');
       $admin->updateOrderStatus($temvalue, 'SHIPPING');
+      
+      $_orderCtr = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", $temvalue)["Ctr"];
+      $payments = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $temvalue);
+      
+      $customerQuery = $admin->getCustomerDetails($_orderCtr);
+      $customerRs=@mysql_query($customerQuery);
+      $customer = @mysql_fetch_assoc($customerRs);
+
+      $mailer->prepareTemplate($_orderCtr, "", $payments, $customer, "ACCEPT");
+      $mailer->to = $customer["Email"];
+      $mailer->subject = 'Order #OR' . str_pad($_orderCtr, 10, "0", STR_PAD_LEFT). ' has been ACCEPTED';
+      $mailer->sendMail();
+
     }
     elseif (isset($_POST['temporary_valueD'])) {
       $temvalue=str_replace("'", '', $_POST['temporary_valueD']);
@@ -49,6 +64,19 @@
       $temvalue=str_replace('>', '', $temvalue);
       
       $admin->updatePaymentStatus($temvalue, 'DENIED');
+
+      $_orderCtr = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", $temvalue)["Ctr"];
+      $payments = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $temvalue);
+      
+      $customerQuery = $admin->getCustomerDetails($_orderCtr);
+      $customerRs=@mysql_query($customerQuery);
+      $customer = @mysql_fetch_assoc($customerRs);
+
+      $mailer->prepareTemplate($_orderCtr, "", $payments, $customer, "DENIED");
+      $mailer->to = $customer["Email"];
+      $mailer->subject = 'Order #OR' . str_pad($_orderCtr, 10, "0", STR_PAD_LEFT). ' has been DENIED';
+      $mailer->sendMail();
+
     }
 
     $tbc_to_peso = getAllElements("xtbl_adminaccount")['Tbc_to_Peso'];

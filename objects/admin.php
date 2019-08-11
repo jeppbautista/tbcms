@@ -14,6 +14,7 @@ class Admin{
             SELECT *
             FROM shop_xtbl_orders ord
             WHERE Status <> 'PENDING'
+            ORDER BY Ctr DESC
         ";
 
         return $query;

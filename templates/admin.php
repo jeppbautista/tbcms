@@ -70,6 +70,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">SHIPPING</a></li>
                                 <li><a href="#">ON DELIVERY</a></li>
+                                <li><a href="#">COMPLETED</a></li>
                                 <li><a href="#">CANCEL</a></li>
                             </ul>
                             <button id='<?php echo "btn-".$order["Ctr"] ?>' class="btn btn-success btn-shipping-confirm">Confirm</button>

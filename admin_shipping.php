@@ -59,7 +59,6 @@
         $mailer->to = 'tbcmsapp@gmail.com';
         $mailer->sendMail();
 
-
         // $mailer->to = 'accountsaccounts@tbcmerchantservices.com';
         // $mailer->sendMail();
 
@@ -74,7 +73,21 @@
         $mailer->to = 'tbcmsapp@gmail.com';
         $mailer->sendMail();
 
-        //email
+        // $mailer->to = 'accountsaccounts@tbcmerchantservices.com';
+        // $mailer->sendMail();
+      }
+      elseif($action == "COMPLETED"){
+        updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);
+        $mailer->prepareTemplate($orderCtr, $productsRs, $payments, $customer, "COMPLETED");
+        $mailer->to = $customer["Email"];
+        $mailer->subject = 'Order #OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT). ' has been completed';
+        $mailer->sendMail();
+
+        $mailer->to = 'tbcmsapp@gmail.com';
+        $mailer->sendMail();
+
+        // $mailer->to = 'accountsaccounts@tbcmerchantservices.com';
+        // $mailer->sendMail();
       }
     }
 

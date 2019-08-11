@@ -49,14 +49,14 @@
     }
 
     private function messageDivMainShipping($orderCtr, $payment, $customer){
-        return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been approved as is now being shipped
+        return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been approved and is now being shipped
               on '.date('M d,Y').' with Transaction number '.$payment['Transaction'].' via '.$payment['Payment_Type'] . 
               '. You will receive another email after your order has been shipped and is on delivery. 
               <br><br>';
     }
 
     private function messageDivMainDelivery($orderCtr, $payment, $customer){
-        return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been shipped as is now on delivery
+        return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been shipped and is now on delivery
         on '.date('M d,Y').' with Transaction number '.$payment['Transaction'].' via '.$payment['Payment_Type'] . 
         '. You will receive another email once your order has arrived to the shipping address. 
         <br><br>'; 
@@ -178,6 +178,23 @@
             $this->message .= $this->messageDivMainDelivery($orderCtr, $payment, $customer);
         }elseif($type == "CANCELLED"){
             $this->message .= $this->headerText("Your Order has been CANCELLED");
+            $this->message .= $this->messageDivStart($customer);
+            $this->message .= $this->messageDivCanceled($orderCtr, $payment, $customer);
+            $this->message .= $this->divEnd();
+            $this->message .= $this->breakLine();
+            $this->message .= $this->breakLine();
+            $this->message .= $this->bodyEnd();
+            return "";
+        }elseif($type == "COMPLETED"){
+            $this->message .= $this->headerText("Your Order is ON DELIVERY");
+            $this->message .= $this->messageDivStart($customer);
+            $this->message .= $this->messageDivMainDelivery($orderCtr, $payment, $customer);
+        }elseif ($type == "ACCEPT") {
+            $this->message .= $this->headerText("Your Payment has been Accepted");
+            $this->message .= $this->messageDivStart($customer);
+            $this->message .= $this->messageDivMainShipping($orderCtr, $payment, $customer);
+        }elseif ($type == "DENIED"){
+            $this->message .= $this->headerText("Your Payment has been Rejected");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivCanceled($orderCtr, $payment, $customer);
             $this->message .= $this->divEnd();
