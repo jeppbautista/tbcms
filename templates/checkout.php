@@ -328,7 +328,7 @@
                         <div class="input-group" style="z-index:0">
                           <input type="text" class="form-control" name="txt-trans-kringle" id="txt-trans-kringle" placeholder="Transaction number here">
                           <span class="input-group-btn">
-                            <button class="btn btn-primary btn-submit" type="button" id="kirngle">
+                            <button class="btn btn-primary btn-submit" type="button" id="kringle">
                               Submit
                             </button>
                           </span>
