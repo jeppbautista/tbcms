@@ -41,10 +41,13 @@ class Admin{
         // ";
 
         $query = "
-            SELECT p.Product_Name,
+            SELECT 
+            p.Ctr,
+            p.Product_Name,
             p.Image,
             od.Product_Price,
             od.Quantity,
+            ord.Tax,
             ord.Grand_Total
 
             FROM shop_xtbl_order_detail AS od

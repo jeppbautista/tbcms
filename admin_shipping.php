@@ -1,6 +1,7 @@
 <?php
     session_start();
     include 'class_admin.php';  
+    include 'assets/utils/mailer/admin.php';
     include_once 'templates/admin.php';
     include_once 'objects/admin.php';
     include_once 'objects/generic.php';
@@ -10,6 +11,7 @@
 
     $view = new View;
     $admin = new Admin;
+    $mailer = new AdminMailer;
 
     date_default_timezone_set('Asia/Manila');
     $sessiondate=date('mdY');
@@ -35,12 +37,43 @@
     if(isset($_POST['submit'])){
       $action = $_POST['submit'];
       $orderCtr = $_POST['order-id'];
+
+      $paymentCtr = getAllElementsWithCondition("shop_xtbl_orders", "Ctr", $orderCtr)['Payment_Ctr'];
+      $payments = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $paymentCtr);
+
+      $customerQuery = $admin->getCustomerDetails($orderCtr);
+      $customerRs=@mysql_query($customerQuery);
+      $customer = @mysql_fetch_assoc($customerRs);
+
+      $productsQuery = $admin->getOrderedProducts($orderCtr);
+      $productsRs=@mysql_query($productsQuery);
+      // $products = @mysql_fetch_array($productsRs);
+
       if($action == "ON DELIVERY"){
         updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);
-        //email
+        $mailer->prepareTemplate($orderCtr, $productsRs, $payments, $customer, "ON DELIVERY");
+        $mailer->to = $customer["Email"];
+        $mailer->subject = 'Order #OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT). ' on delivery';
+        $mailer->sendMail();
+
+        $mailer->to = 'tbcmsapp@gmail.com';
+        $mailer->sendMail();
+
+
+        // $mailer->to = 'accountsaccounts@tbcmerchantservices.com';
+        // $mailer->sendMail();
+
       }
       elseif($action == "CANCEL"){
         updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);
+        $mailer->prepareTemplate($orderCtr, $productsRs, $payments, $customer, "CANCELLED");
+        $mailer->to = $customer["Email"];
+        $mailer->subject = 'Order #OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT). ' has been cancelled';
+        $mailer->sendMail();
+
+        $mailer->to = 'tbcmsapp@gmail.com';
+        $mailer->sendMail();
+
         //email
       }
     }

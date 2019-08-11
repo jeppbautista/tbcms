@@ -1,12 +1,14 @@
 <?php
 session_start();
 include 'class3.php';
+include 'assets/utils/mailer/admin.php';
 include_once 'templates/checkout.php';
 include_once 'objects/generic.php';
 include_once 'objects/product.php';
 $class=new mydesign;
 $class->database_connect();
 $view = new View;
+$mailer = new AdminMailer;
 
 date_default_timezone_set('Asia/Manila');
 $sessiondate=date('mdY');
@@ -99,7 +101,14 @@ if (count($_SESSION['cart']) == 0) {
         $_POST["paymentType"] = $payment_type;
         $_POST["transactionNum"] = $transaction_num;
         $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
-  
+        
+        $from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
+				$subject = "New Product";
+				$message = "New Product Request";
+				$headers = "From:" . $from. "\r\n";
+				$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+				mail('tbcmsapp@gmail.com',$subject,$message, $headers);
+        mail('accounts@tbcmerchantservices.com',$subject,$message, $headers);
         session_destroy();
   
       }
