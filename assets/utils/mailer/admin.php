@@ -69,6 +69,20 @@
         <br><br>'; 
     }
 
+    private function messageDivCompleted($orderCtr, $payment, $customer){
+      return 'Thanks for shopping with us! We are glad to inform you that your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been delivered and collected in full.
+      Today, '.date('M d,Y').' 
+      We hope that you enjoy your purchase and continue to shop with TBC Merchant Services. <br><br>
+      In case you have experience the following:
+      <ol>
+        <li>You have issues with the item you received.</li>
+        <li>You did not receive the item.</li>
+        <li>Others</li>
+      </ol>
+      Kindly contact us on our <a target="_blank" href="https://tbcmerchantservices.com/contact">Contact Us</a> page.
+      <br><br>'; 
+    }
+
     private function messageDivSubMessage(){
         return 'If the information provided below is incomplete and/or incorrect, you may cancel the initial order
               and place a new order with the correct details.
@@ -78,7 +92,7 @@
 
     private function messageShippingDiv($customer){
         return '<div style="background-color: white; padding: 20px 35px; ">
-                <p style="font-size: 18px">Your Order will be Delivered to:</p>
+                <p style="font-size: 18px">Shipping details:</p>
                 <div style="width: 45%; float:left; padding: 10px">
                   '.$customer["Shipping_Address"].'
                 </div>
@@ -172,10 +186,14 @@
             $this->message .= $this->headerText("Your Order is BEING SHIPPED");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivMainShipping($orderCtr, $payment, $customer);
+            $this->message .= $this->messageDivSubMessage();
+
         }elseif($type == "ON DELIVERY"){
             $this->message .= $this->headerText("Your Order is ON DELIVERY");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivMainDelivery($orderCtr, $payment, $customer);
+            $this->message .= $this->messageDivSubMessage();
+
         }elseif($type == "CANCELLED"){
             $this->message .= $this->headerText("Your Order has been CANCELLED");
             $this->message .= $this->messageDivStart($customer);
@@ -186,13 +204,15 @@
             $this->message .= $this->bodyEnd();
             return "";
         }elseif($type == "COMPLETED"){
-            $this->message .= $this->headerText("Your Order is ON DELIVERY");
+            $this->message .= $this->headerText("Your Order has been Delivered");
             $this->message .= $this->messageDivStart($customer);
-            $this->message .= $this->messageDivMainDelivery($orderCtr, $payment, $customer);
+            $this->message .= $this->messageDivCompleted($orderCtr, $payment, $customer);
         }elseif ($type == "ACCEPT") {
             $this->message .= $this->headerText("Your Payment has been Accepted");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivMainShipping($orderCtr, $payment, $customer);
+            $this->message .= $this->messageDivSubMessage();
+
         }elseif ($type == "DENIED"){
             $this->message .= $this->headerText("Your Payment has been Rejected");
             $this->message .= $this->messageDivStart($customer);
@@ -203,7 +223,6 @@
             $this->message .= $this->bodyEnd();
             return "";
         }
-        $this->message .= $this->messageDivSubMessage();
         $this->message .= $this->divEnd();
         $this->message .= $this->messageShippingDiv($customer);
         $this->message .= $this->messageOrdersDiv($products);
