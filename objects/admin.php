@@ -9,12 +9,31 @@ class Admin{
         return $query;
     }
 
+    function getPayments(){
+        $query = "
+            SELECT * 
+            FROM shop_xtbl_payment
+            ORDER BY FIELD(Status, 'PENDING', 'APPROVED', 'DENIED'), Payment_Date DESC";
+        return $query;
+    }
+
     function getApprovedOrders(){
         $query = "
             SELECT *
             FROM shop_xtbl_orders ord
             WHERE Status <> 'PENDING'
             ORDER BY Ctr DESC
+        ";
+
+        return $query;
+    }
+
+    function getApprovedOrdersWithFilter($filter){
+        $query = "
+        SELECT *
+        FROM shop_xtbl_orders ord
+        WHERE Status = '$filter'
+        ORDER BY Ctr DESC
         ";
 
         return $query;
