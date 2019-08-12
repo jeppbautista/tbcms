@@ -9,6 +9,14 @@ class Admin{
         return $query;
     }
 
+    function getPayments(){
+        $query = "
+            SELECT * 
+            FROM shop_xtbl_payment
+            ORDER BY FIELD(Status, 'PENDING', 'APPROVED', 'DENIED'), Payment_Date DESC";
+        return $query;
+    }
+
     function getApprovedOrders(){
         $query = "
             SELECT *

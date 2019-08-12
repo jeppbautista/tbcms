@@ -98,7 +98,8 @@
 
     $view->container_start();
     // $view->table_header();
-    $query = $admin->getPendingPayments();
+    // $query = $admin->getPendingPayments();
+    $query = $admin->getPayments();
     $rs=@mysql_query($query);
     while($payment = @mysql_fetch_assoc($rs)){
       $orderCtr = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", $payment["Ctr"])["Ctr"];
@@ -110,15 +111,18 @@
       $customerRs=@mysql_query($customerQuery);
       $customer = @mysql_fetch_assoc($customerRs);
 
-      $view->orderHeader($payment, $customer);
+      $view->orderHeader($orderCtr, $payment, $customer);
       $view->table_header();
-      do{
-        $temp_total = $products["Grand_Total"];
-        $view->orderRow($products);
-        
-      }while($products = @mysql_fetch_assoc($productsRs));
+      $temp_total = $products["Grand_Total"];
 
-      $view->orderTotal($temp_total);
+      if ($payment["Status"] == "PENDING") {
+        do{
+          $view->orderRow($products);
+          
+        }while($products = @mysql_fetch_assoc($productsRs));
+        $view->orderTotal($temp_total);
+
+      }
 
       $view->table_footer();
       $view->div_end();

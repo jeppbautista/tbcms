@@ -36,7 +36,7 @@
         <?php
         }
 
-        function orderHeader($payment, $customer){
+        function orderHeader($orderCtr, $payment, $customer){
         ?>
             <div class="col-12 col-md-12 shadow" style="margin-bottom:15px;">
             <div class="row">
@@ -55,10 +55,25 @@
                 </div>
 
                 <div class="col-12 col-md-3 header-btn">
-                <span>
-                    <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment['Ctr']."')";?> >ACCEPT</a>
-                    <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btndenied('".$payment['Ctr']."')";?> >DENIED</a>
-                </span>
+                <div style="text-align: center">
+                <?php 
+                    if($payment["Status"] == "PENDING"){
+                    ?>
+                        <a class="btn btn-success" href="javascript:void(0)" <?php echo "onclick=btnaccept('".$payment['Ctr']."')";?> >ACCEPT</a>
+                        <a class="btn btn-danger" href="javascript:void(0)" <?php echo "onclick=btndenied('".$payment['Ctr']."')";?> >DENIED</a>
+                    <?php
+                    }elseif ($payment["Status"] == "APPROVED") {
+                        echo 'APPROVED';
+                    }else{
+                        echo 'DENIED';
+                    }
+                ?>
+                
+                </div>
+                <br>
+                <div class="row" style="text-align:center">
+                    <a target="_blank" href='<?php echo "https://tbcmerchantservices.com/orders?id=".$orderCtr ?>' class="btn btn-warning">View Orders</a>
+                </div>
                 </div>
             </div>
             <br>
