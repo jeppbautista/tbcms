@@ -106,8 +106,16 @@
 
     $class->admin_page_header();
 
+    $filter = !isset($_POST["filter-submit"]) ? "ALL" : $_POST["filter-value"];
+
     $view->container_start();
-    $query = $admin->getApprovedOrders();
+    $view->filter($filter);
+
+    if ($filter == "ALL"){
+      $query = $admin->getApprovedOrders();
+    }else{
+      $query = $admin->getApprovedOrdersWithFilter($filter);
+    }
     $rs = @mysql_query($query);
 
     while($order = @mysql_fetch_assoc($rs)){

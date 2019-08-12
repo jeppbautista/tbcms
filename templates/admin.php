@@ -15,6 +15,27 @@
         <?php
         }
 
+        function filter($filter){
+        ?>
+            <form method="POST">
+                <input type="submit" id="filter-submit" name="filter-submit" hidden>
+                <input type="text" id="filter-value" name="filter-value" value="*" hidden>
+                <div class="dropdown" style="text-align:center">
+                    Filter : <button id='dropdown-filter' class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown"> <?php echo $filter ?>
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu" id="filter-menu">
+                            <li><a href="#">ALL</a></li>
+                            <li><a href="#">SHIPPING</a></li>
+                            <li><a href="#">ON DELIVERY</a></li>
+                            <li><a href="#">COMPLETED</a></li>
+                            <li><a href="#">CANCEL</a></li>
+                        </ul>
+                </div>
+            </form>
+            <hr>
+        <?php
+        }
+
         function orderHeader($payment, $customer){
         ?>
             <div class="col-12 col-md-12 shadow" style="margin-bottom:15px;">

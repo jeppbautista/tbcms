@@ -20,6 +20,17 @@ class Admin{
         return $query;
     }
 
+    function getApprovedOrdersWithFilter($filter){
+        $query = "
+        SELECT *
+        FROM shop_xtbl_orders ord
+        WHERE Status = '$filter'
+        ORDER BY Ctr DESC
+        ";
+
+        return $query;
+    }
+
     function getOrderedProducts($orderCtr){
         // $query = "
         //     SELECT p.Product_Name,

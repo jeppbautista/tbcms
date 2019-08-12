@@ -38,4 +38,11 @@ $(document).ready(function(){
 		$('#order-id').val(id);
 		$('#submit-'+id).click();
 	});
+
+	$("#filter-menu li a").on('click', function(){
+		var selText = $(this).text();
+		$("#filter-value").val(selText);
+		$("#filter-submit").click();
+	});
+
 });
