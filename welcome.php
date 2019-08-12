@@ -12,12 +12,6 @@ if (isset($_GET['test'])) {
 }
 
 
-//if (!isset($_GET['test']))
-//{
-//header("location: https://tbcmerchantservices.com/maintenance/");
-//}
-//else {
-//$GLOBALS['test'] = 1;
 include 'class.php';
 $class = new mydesign;
 // $class->database_connect();

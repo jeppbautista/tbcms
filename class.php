@@ -292,6 +292,7 @@ public function page_welcome_header_content_start($error)
 		$memberrcountrows = mysql_num_rows($membercountrs);
 
 		?>
+		
 		<!-- START - NEW UI Change content -->
 		<div class="container-fluid" style="background: url(https://tbcmerchantservices.com/images/Picture3.jpg) center no-repeat; min-height: 93vh; background-size: cover; padding: 0; background-attachment: fixed;">
 <!-- 		<div class="container-fluid" style="background: url('./assets/images/btc-blockchain.jpg') center no-repeat; min-height: 90vh; background-size: cover; padding: 0;"> -->
@@ -300,8 +301,18 @@ public function page_welcome_header_content_start($error)
 					<div class="row">
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
 							<h3 style="color: #BC9F3B;">The Billion Coin Merchant Services</h3>
-							<h1> Join with other <strong><?php echo $memberrcountrows; ?></strong> TBCMS users!
+							<h1> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
 							</h1>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+						<form id= "changePassForm" action="" method="post" enctype="multipart/form-data">  
+						<div class="changePass">
+							<div class="changePassBtn">Change Password</div>
+							<input type="password" placeholder="Password" name="password">
+						</div>
+						</form>
 						</div>
 					</div>
 				</div>
@@ -350,9 +361,10 @@ public function page_welcome_header_content_start($error)
 			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
-						<h1 style="text-align: left;">WHAT IS TBC AND EDUDONA?</h1>
+						<h1 style="text-align: left;">WHAT IS TBCMS?</h1>
 						<hr style="width: 18%;">
-						<p> A brief introduction</p>
+						<p>TBCMS is a third party merchant adoption of The Billion Coin. It is an online e-commerce platform that provides the users as buyers and sellers. 
+							This TBCMS system is empowered by the digital currency payment process known as Kringle Cash using 50/50 engagement for purchasing of the products sold in the store.</p>
 					</div>
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
