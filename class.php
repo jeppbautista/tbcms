@@ -10,7 +10,7 @@ class mydesign
 		{
 
 			$conn = @mysql_connect('localhost', 'root', '');
-			@mysql_select_db('xdb_tbcmerchant', $conn);
+			@mysql_select_db('xdb_tbcmerchantservices', $conn);
 
 		}
 		else{

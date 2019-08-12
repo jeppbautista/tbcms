@@ -1,27 +1,9 @@
 <?php 
-require('/libraries/fpdf/fpdf.php');
+require('../../../libraries/fpdf/fpdf.php');
+require(__DIR__.'../../mailer/generic_mailer.php');
 class PDF extends FPDF{
-	// Invoice Header 
-	// function Header(){
-	// 	$title = 'THANK YOU FOR SUPPORTING WITH US';
-	// 	$sub_title1 = 'We have sent you an email/SMS about the confirmation of your order.';
-	// 	$sub_title2 = 'We will send another email/SMS once we confirm your payment. Thank you for your shopping with us.';
-	// 	$this->SetFont('Arial','B',15);
-	// 	$w = $this->GetStringWidth($title)+6;
-	// 	$this->SetX((210-$w)/2);
-	// 	$this->SetFillColor(255,255,255);
-	// 	$this->SetTextColor(50,50,50);
-	// 	$this->SetLineWidth(0);
-	// 	$this->Cell($w,9,$title,'C',true);
-	// 	$this->Ln(3);
-	// 	$this->SetX((219-$w)/2);
-	// 	$this->SetFont('Arial','',9);
-	// 	$this->Cell($w,0,$sub_title1,'C',true);
-	// 	$this->SetX((170-$w)/2);
-	// 	$this->Cell($w,9,$sub_title2,'C',true);
-	// 	$this->Ln(5);
-	// 	$this->y0 = $this->GetY();
-	// }
+
+	private $file;
 
 	function BillingTo($orderNumber,$typeOfPayment,$transactionNumber,$dateOfTransaction,$name,$address,$phone,$email,$city,$country){
 
@@ -44,50 +26,6 @@ class PDF extends FPDF{
 
 		$this->Cell(0,7,$country);
 		$this->Ln(20);
-
-		// // $this->MultiCell(0, 5, "Your Orders");
-		// // $header = ['Details','Quantity','Unit Price'];
-		// $header = ['OUR INFORIMATION','BILLING TO'];
-		// $data = array(
-		// 	['',$name],
-		// 	['',$address],
-		// 	['',$city],
-		// 	['',$country],
-		// );
-		// $this->SetFont('Arial','B',9);
-		// // Column widths
-		// $w = array(80, 20);
-
-  //  		// Header
-		// for($i=0;$i<count($header);$i++){
-		// 	if($i == 1){
-		// 		$this->SetX(120);
-		// 	}
-		// 	$this->Cell(80,10,$header[$i],'B',0,'L');
-		// }
-		// $this->Ln();
-
-  //   	// Data
-		// $this->SetFont('Arial','',9);
-		// foreach($data as $row => $value)
-		// {	
-		// 	$this->SetX(13);
-		// 	$this->Cell($w[0],7,$value[0],0);
-		// 	$this->SetX(123);
-		// 	if($row == 0){
-		// 		$this->SetFont('Arial','B',12);
-		// 		$this->SetTextColor(50,50,50);
-		// 	}else{
-		// 		$this->SetFont('Arial','',9);
-		// 		$this->SetTextColor(50,50,50);
-		// 	}
-			
-		// 	$this->Cell($w[1],7,$value[1],0,0,'L');
-		// 	$this->Ln();
-		// }
-
-  //   	// Closing line
-		// $this->Ln();
 	}
 	function ProductInformation($product){
 		$this->SetFont('Arial','I',9);
@@ -201,33 +139,46 @@ class PDF extends FPDF{
 	}
 	function CompileInvoice($reference,$billingDate,$dueDate,$orderNumber,$typeOfPayment,$transactionNumber,$dateOfTransaction,$name,$address,$phone,$email,$city,$country,$product){
 
+		$this->AddPage();
+		$this->SetTitle("Title");
+		$this->SetFont('Arial','B',16);
 		$this->Invoice("20191564123142","07.31.2019","07.31.2019");
 
 		// Setting Billing To
 		$this->BillingTo(11221,"Gcash",110222,"Dec 20 1997","Amelito Estrada Jr.","acestrada02@gmail.com","0999999","6999 Azalea Street","Caloocan City","PH");
 		$this->ProductInformation($product);
+
+		// This is the diriectory
+		$this->file = __DIR__.'/invoice_pdf/'.$reference.'.pdf';
+		$this->Output($this->file,'F');
+	}
+
+	public function getInvoice(){
+		return $this->file;
 	}
 }
 // Instantiation of classes
 $pdf = new PDF();
-$pdf->AddPage();
-$pdf->SetTitle("Title");
-
-
-/*START - This is a sample input or usage of this class
-
-@Param - 
-
-*/
+/*START - This is a sample input or usage of this class */
 
 // Set value
 $product = array(
 	['B-Boost Oral Vitamin Spray','3','0.00', '1500','1500'],
 	['B-Boost Oral Vitamin Spray','3','0.00', '1500','1500']);
-$pdf->CompileInvoice("20191564123142","07.31.2019","07.31.2019",11221,"Gcash",110222,"Dec 20 1997","Amelito Estrada Jr.","acestrada02@gmail.com","0999999","6999 Azalea Street","Caloocan City","PH",$product);
 
+/*
+The data injection is set thru CompileInvoice method of PDF class
+	@Param = $reference,$billingDate,$dueDate,$orderNumber,$typeOfPayment,$transactionNumber,$dateOfTransaction,$name,$address,$phone,$email,$city,$country,$product
+*/
+$pdf->CompileInvoice(20191564123142,"07.31.2019","07.31.2019",11221,"Gcash",110222,"Dec 20 1997","Amelito Estrada Jr.","acestrada02@gmail.com","0999999","6999 Azalea Street","Caloocan City","PH",$product);
 /*END */
-$pdf->SetFont('Arial','B',16);
-$pdf->Output();
 
+/*
+The data injection is set thru constructor of SendMail class
+	File Class =  \assets\utils\mailer\generic_mailer.php
+	
+		@param = $attachedFile,$sendTo 
+*/
+
+$mail = new SendMail($pdf->getInvoice(),'jeppbautista@gmail.com');
 ?>
