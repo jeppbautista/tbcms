@@ -40,13 +40,13 @@ class SendMail extends PHPMailer{
 
 	private function configureAccountCredentials(){
 	    // Configure Account credential
-	    $this->Username   = 'acestrada0202@gmail.com';              // SMTP username
-	    $this->Password   = 'tgtumtqtquzawnva';                     // SMTP password
+	    $this->Username   = 'tbcmsapp@gmail.com';              // SMTP username
+	    $this->Password   = 'tjyluocxgypcheml';                     // SMTP password
 	}
 
 	private function recipient($sendTo){
 		//Recipients
-	    $this->setFrom('acestrada0202@gmail.com', 'The Bit Coin Merchant Service');
+	    $this->setFrom('tbcmsapp@gmail.com', 'TBCMerchantServices');
 	    // $mail->addAddress($sendTo, 'Joe User');     // Add a recipient
 	    $this->addAddress($sendTo);     // Add a recipient
 	}

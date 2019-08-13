@@ -180,5 +180,5 @@ The data injection is set thru constructor of SendMail class
 		@param = $attachedFile,$sendTo 
 */
 
-$mail = new SendMail($pdf->getInvoice(),'jeppbautista@gmail.com');
+$mail = new SendMail($pdf->getInvoice(),'acestrada0202@gmail.com');
 ?>

@@ -380,9 +380,36 @@ public function page_welcome_header_content_start($error)
 			</div>
 			<!-- END - Intorduction -->
 
+			<div class="container-fluid" style="background-color: #599DC0;" >
+				<div class="col-md-12 col-sm-12 col-lg-12" style="padding: 3rem 6rem;text-align: center; color: #fff;">
+					<div>
+						<div style="margin-bottom: 1rem;">
+							<span class="btn btn-circle btn-xl" style="font-size: 2.5rem; color: #214E11; background: #fff;"><i class="far fa-handshake" style="margin: 10px -2px;"></i></span>
+						</div>
+						<h1>JOIN</h1>
+						<h3 style="color: #EAEAEA;">With Our Latest Merchants</h3>
+					</div>
+					
+					<div class="present-carousel">
+						<div class="present-carousel-item">
+							<img src="./assets/images/dump_images/dump-image-1.jpeg">
+							<p style="color:#D4ECF4;">Tutle</p>
+						</div>
+	    				<div class="present-carousel-item">
+	    					<img src="./assets/images/dump_images/dump-image-2.jpg">
+	    					<p style="color:#D4ECF4;">Man with Glasses</p>
+	    				</div>
+	    				<div class="present-carousel-item">
+	    					<img src="./assets/images/dump_images/dump-image-3.jpg">
+	    					<p style="color:#D4ECF4;">Girl</p>
+	    				</div>
+					</div>		
+				</div>
+			</div>
+
 			<div class="container-fluid" style="background: #fff;">
 				<div class="row">
-					<div class="col-sm-12 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
+					<div class="col-sm-6 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
 						<div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
 						</div>

@@ -23,3 +23,17 @@ body p{
 	color: #214E11;
 }
 
+.present-carousel{
+    margin: auto;
+    min-width: 300px;
+    max-width: 650px;
+}
+
+.present-carousel .present-carousel-item{
+    margin: 1rem;
+}
+.present-carousel .present-carousel-item img{
+    border: 5px solid white;
+    max-height: 350px;
+    width: inherit;
+}

@@ -230,8 +230,17 @@ else {
     $class->link('./assets/lib/fontawesome-free-5.9.0-web/css/all.min.css');
     $class->link('./assets/css/custom.css');
     /* END - Themify and Materialized Font*/
+
+
     $class->title_page('TBC Merchant Services');
     $class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
+
+    /* START - Slick Carousel*/
+    $class->link('./assets/lib/slick/slick.css');    
+    $class->link('./assets/lib/slick/slick-theme.css');        
+    $class->script('./assets/lib/slick/slick.min.js');
+    $class->script('./js/slick_carousel_trigger.js');
+    /* END - Slick Carousel*/
     $class->script('https://tbcmerchantservices.com/js/bootstrap.js');
     $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
     $class->link('https://www.w3schools.com/w3css/4/w3.css');
