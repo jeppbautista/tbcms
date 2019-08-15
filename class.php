@@ -300,7 +300,7 @@ public function page_welcome_header_content_start($error)
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
-							<h3 style="color: #BC9F3B;">The Billion Coin Merchant Services</h3>
+							<h2 style="color: #BC9F3B;">The Billion Coin Merchant Services</h2>
 							<h1> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
 							</h1>
 						</div>
@@ -323,13 +323,13 @@ public function page_welcome_header_content_start($error)
 			<div class="container" style="padding: 2rem;">
 				<div class="row" style="margin-bottom: 1rem;">
 					<div class="col-md-12 text-center" >
-						<h1 style="margin-bottom: 0;">NEWS UPDATE</h1>
-						<small>TBC to BTC Trading is Now Available</small>
+						<h2 style="margin-bottom: 0;">NEWS UPDATE</h2>
+						<h3><small>TBC to BTC Trading is Now Available</small></h3>
 					</div>
 				</div>
 				<div class="row news-update-panels">
 					<div class="col-md-6">
-						<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
+						<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 							<div class="panel-body">
 								<span style="font-size: 3em;"><i class="ti-user" style="color: #BC9F3B;"></i></span>
 								<hr>
@@ -340,7 +340,7 @@ public function page_welcome_header_content_start($error)
 
 					<div class="col-sm-12 col-md-6 col-lg-6">
 						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none;">
-							<div class="panel panel-default" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
+							<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 								<div class="panel-body">
 									<span style="font-size: 3em;"><i class="ti-heart" style="color: #ff9eb5;"></i></span>
 									<hr>
@@ -361,22 +361,22 @@ public function page_welcome_header_content_start($error)
 			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
-						<h1 style="text-align: left;">WHAT IS TBCMS?</h1>
+						<h2 style="text-align: left;">WHAT IS TBCMS?</h2>
 						<hr style="width: 18%;">
 						<p>TBCMS is a third party merchant adoption of The Billion Coin. It is an online e-commerce platform that provides the users as buyers and sellers. 
 							This TBCMS system is empowered by the digital currency payment process known as Kringle Cash using 50/50 engagement for purchasing of the products sold in the store.</p>
 					</div>
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
-							<iframe width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						
 						<div style="margin: 3rem;">
-							<iframe width="100%" height="300" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						
 					</div> 
-				</div>
+				</div>	
 			</div>
 			<!-- END - Intorduction -->
 
@@ -386,21 +386,21 @@ public function page_welcome_header_content_start($error)
 						<div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 2.5rem; color: #214E11; background: #fff;"><i class="far fa-handshake" style="margin: 10px -2px;"></i></span>
 						</div>
-						<h1>JOIN</h1>
-						<h3 style="color: #EAEAEA;">With Our Latest Merchants</h3>
+						<h2 style="color: #003d5d;">JOIN</h2>
+						<h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2>
 					</div>
 					
 					<div class="present-carousel">
 						<div class="present-carousel-item">
-							<img src="./assets/images/dump_images/dump-image-1.jpeg">
+							<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
 							<p style="color:#D4ECF4;">Tutle</p>
 						</div>
 	    				<div class="present-carousel-item">
-	    					<img src="./assets/images/dump_images/dump-image-2.jpg">
+	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
 	    					<p style="color:#D4ECF4;">Man with Glasses</p>
 	    				</div>
 	    				<div class="present-carousel-item">
-	    					<img src="./assets/images/dump_images/dump-image-3.jpg">
+	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
 	    					<p style="color:#D4ECF4;">Girl</p>
 	    				</div>
 					</div>		
@@ -414,13 +414,12 @@ public function page_welcome_header_content_start($error)
 							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
 						</div>
 						<h1 class="header-secondary">THE CURRENT PRICE</h1>
-						<hr style="margin: 1rem 33%; width: 32%">
+						<hr style="margin: 1rem 33%; width: 32%; border: 0.5px solid #214E11;">
 						<p class="light">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
 					</div> 
 				</div>
 			</div>
 		<!-- END - NEW UI Change content -->
-
 
 		<!-- START - OLD VERSION -->
 		<div class="container" align="right" style="padding-bottom: 0px">
@@ -512,7 +511,7 @@ public function page_welcome_header_content_start($error)
 
 						<center>TBC to BTC Trading is Now Available</center>
 						<a href="javascript:void(0)" class="btn btn-warning btn-block btn-lg"
-						style="border-radius: 0px">LOGIN AND START TRADING</a>
+						style="border-radius: 0px">LOGIN AND START TRADING</a>`
 						<a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
 						style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a>
 					</div>
@@ -545,13 +544,15 @@ public function page_welcome_header_content_start($error)
 		public function page_welcome_header_content_start_footer()
 		{
 			?>
-			<br><br><br>
-			<div class="footer" style="background:#008B8B;width:100%;height:42px;position:relative;bottom:0;left:0; font-size: 15px">
+			<div class="footer container-fluid">
 				<div class="container" align="center">
 					<span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
 
 				</div>
+
 			</div>
+
+		
 
 			<!-- <div class="footer" style="background:#008B8B;width:100%;height:42px;position:fixed;bottom:0;left:0; font-size: 15px">
 				<div class="container" align="right">
