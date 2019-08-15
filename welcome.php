@@ -156,11 +156,14 @@ if (isset($_POST['txttbc_email_checksignup']) && !empty($_POST['txttbc_email_che
             $class->link('https://tbcmerchantservices.com/css/bootstrap.css');
 ?>
    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+   
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({
         google_ad_client: "ca-pub-7719044667689153",
         enable_page_level_ads: true
       });
+
+      
     </script>
     <?php
             $class->head_end();

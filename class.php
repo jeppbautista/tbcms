@@ -292,6 +292,7 @@ public function page_welcome_header_content_start($error)
 		$memberrcountrows = mysql_num_rows($membercountrs);
 
 		?>
+
 		
 		<!-- START - NEW UI Change content -->
 		<div class="container-fluid" style="background: url(https://tbcmerchantservices.com/images/Picture3.jpg) center no-repeat; min-height: 93vh; background-size: cover; padding: 0; background-attachment: fixed;">
@@ -307,12 +308,8 @@ public function page_welcome_header_content_start($error)
 					</div>
 					<div class="row">
 						<div class="col-md-12">
-						<form id= "changePassForm" action="" method="post" enctype="multipart/form-data">  
-						<div class="changePass">
-							<div class="changePassBtn">Change Password</div>
-							<input type="password" placeholder="Password" name="password">
-						</div>
-						</form>
+							<button id="btn-get-started">BUtton Here</button>
+							<input id="txt-get-started" type="text" value="foobar" hidden>
 						</div>
 					</div>
 				</div>

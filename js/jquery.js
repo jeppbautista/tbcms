@@ -105,6 +105,7 @@ $( document ).ready(function() {
 		});
     });
 
-    $("#signup_form_submit").attr("onsubmit", "return false");
+	$("#signup_form_submit").attr("onsubmit", "return false");
+
 
 });
