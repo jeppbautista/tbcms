@@ -3,6 +3,11 @@ body{
 }
 body p{
 	font-weight: 100;
+    font-size: 20px;
+}
+
+h1{
+    font-size: 60px !important;
 }
 
 .header-secondary{
@@ -33,7 +38,24 @@ body p{
     margin: 1rem;
 }
 .present-carousel .present-carousel-item img{
-    border: 5px solid white;
     max-height: 350px;
     width: inherit;
+}
+
+.border-frame-light{
+    border: 3px solid #EAEAEA !important; 
+    border-radius: 5px !important;
+    box-shadow: 0px 5px 5px #333;
+}
+.border-frame-dark{
+    border: 3px solid #EAEAEA !important; 
+    border-radius: 5px !important;
+    box-shadow: 0px 5px 5px #333;
+}
+
+
+
+.footer{
+    background: #25292b;
+    padding: 2rem;
 }
