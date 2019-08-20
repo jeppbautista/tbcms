@@ -6,12 +6,12 @@ $sessiondate     = date('mdY');
 include 'class3.php';
 include_once 'templates/main.php';
 include_once 'templates/contact.php';
-include 'assets/utils/mailer/admin.php';
+include 'assets/utils/mailer/contact.php';
 
 $class = new mydesign;
 $view = new ContactView;
 $main = new MainView;
-$mailer = new AdminMailer;
+$mailer = new ContactMailer;
 
 if(isset($_POST["send"])){
     $name = $_REQUEST['name'];
@@ -19,7 +19,6 @@ if(isset($_POST["send"])){
     $from = $_REQUEST['email'];
     $subject = $_REQUEST['subject'];
 
-    $mailer->message = $message;
     $mailer->subject = $subject;
     $mailer->message .= "From: ".$name."<br> Email: ".$from."<br>";
     $mailer->message .= $message;
@@ -52,7 +51,7 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
     <div class="container"> 
         <div class="row" style="margin-top: 10vh" >
           <div class="div-email" style="text-align:center">
-            <img id="open-email" src="https://tbcmerchantservices.com/images/open-email.jpg" alt="">
+            <img id="open-email" src="https://tbcmerchantservices.com/images/open-email.jpg" alt="" style="max-height: 150px;">
           </div>
         </div>
         <div class="row" style="text-align:center">
@@ -66,7 +65,7 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
         <br><br>
         <form method="post">
           <div class="row">
-            <div class="col-12 col-md-8 shadow">
+            <div class="col-12 col-md-8 shadow" style="margin-bottom: 100px">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="name">Name</label>
@@ -87,6 +86,15 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
                   <textarea class="form-control" id="message" name="message" cols="30" rows="10" style="width:100%"></textarea>
                 </div>
               </div>
+              <br>
+              <div class="row">
+                <div class="col-12 col-md-4">
+                  <button class="btn btn-success" type="submit" name="send" style="float:right">
+                    Send Mail
+                  </button>
+                </div>
+              
+              </div>
             </div>
 
             <div class="col-12 col-md-4">
@@ -101,14 +109,7 @@ if (!isset($_SESSION['session_tbcmerchant_ctr' . $sessiondate])) {
             </div>
               
           </div>
-          <div class="row">
-            <div class="col-12 col-md-4">
-              <button class="btn btn-success" type="submit" name="send" style="float:right">
-                Send Mail
-              </button>
-            </div>
-           
-          </div>
+          
         </form>
        
       </div>

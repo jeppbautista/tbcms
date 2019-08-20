@@ -209,7 +209,7 @@ if (isset($_POST['txttbc_email_checksignup']) && !empty($_POST['txttbc_email_che
         $class->page_welcome_header_end();
         $class->page_welcome_header_content_start_body($logerror);
         // $class->page_welcome_displaymerchants_carousel();
-        $class->page_welcome_displaymerchants_marquee();
+        // $class->page_welcome_displaymerchants_marquee();
         $class->chatscript();
 
         $class->body_end();
@@ -290,7 +290,7 @@ else {
     $class->page_welcome_header_end();
     $class->page_welcome_header_content_start_body($logerror);
     // $class->page_welcome_displaymerchants_carousel();
-    $class->page_welcome_displaymerchants_marquee();
+    // $class->page_welcome_displaymerchants_marquee();
 
     $class->page_welcome_header_content_start_footer();
     $class->chatscript();

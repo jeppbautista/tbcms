@@ -9,10 +9,6 @@ body{
     background-color: white;
   }
 
-.div-email{
-    background-color: red;
-}
-
 #open-email{
     max-height: 150px;
 }

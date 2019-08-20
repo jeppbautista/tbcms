@@ -302,15 +302,23 @@ public function page_welcome_header_content_start($error)
 					<div class="row">
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
 							<h2 style="color: #BC9F3B;">The Billion Coin Merchant Services</h2>
-							<h1> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
-							</h1>
+							<h3> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
+							</h3>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
-							<button id="btn-get-started">BUtton Here</button>
-							<input id="txt-get-started" type="text" value="foobar" hidden>
+						<div class="center">
+							<div class="col-md-12">
+							<div class="input-group">
+								<input type="text" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-warning" type="button">
+								Get Started! </button>
+								</span>
+							</div>
+							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -417,124 +425,6 @@ public function page_welcome_header_content_start($error)
 				</div>
 			</div>
 		<!-- END - NEW UI Change content -->
-
-		<!-- START - OLD VERSION -->
-		<div class="container" align="right" style="padding-bottom: 0px">
-			<div class="col-md-9" align="left">
-				<h3><b>Welcome to The Billion Coin Merchant Services</b></h3>
-			</div>
-			<div class="col-md-3" align="center">
-				<h4>Total TBCMS Users: <b><?php
-				echo $memberrcountrows;
-				?></b></h4>
-			</div>
-		</div>
-		<div class="container alert">
-			<div class="col-md-7">
-
-				<div style="">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner" role="listbox">
-
-							<iframe width="100%" height="315" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-						</div>
-					</div>
-				</div>
-
-				<div style="width:80%; margin:auto; margin-bottom:20px">                        <a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
-					style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a></div>
-
-					<div style="height: 280px;">
-						<div id="myCarousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner" role="listbox">
-
-
-								<iframe width="100%" height="365" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-							</div>
-						</div>
-					</div>
-					<br></br><br></br>
-					<br></br>
-					<h3>The Current Price</h3>
-					<h4><h4 style="text-align: justify;">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</h4><br>
-
-				</div>
-				<div class="col-md-5">
-					<div class="alert " style="background-color: #20B2AA">
-						<center><h3><b>SIGN IN TO GAIN ACCESS</b></h3></center>
-
-						<center>
-							<div><?php
-							echo $error;
-							?></div>
-							<form method="POST">
-								<?php
-								$randomcapcha = mt_rand(1, 12);
-								?>
-								<div class="input-group" style="padding-left: 40px;padding-right: 40px;">
-									<span class="input-group-addon" id="sizing-addon2" style="width:50px">
-										<span class="glyphicon glyphicon-user"></span>
-									</span>
-									<input name="tbctxt_username_login" class="form-control" style="font-size: 20px; height: 48px" placeholder="Username" />
-								</div><br>
-
-								<div class="input-group" style="padding-left: 40px;padding-right: 40px;">
-									<span class="input-group-addon" id="sizing-addon2" style="width:50px">
-										<span class="glyphicon glyphicon-lock"></span>
-									</span>
-									<input name="tbctxt_password_login" class="form-control" style="font-size: 20px; height: 48px" placeholder="Password"
-									type="password" />
-								</div><a href="https://tbcmerchantservices.com/reset/">Forgot Password?</a><br>
-								Type the characters you see below<br>to prove you are human.
-								<div class="input-group" style="padding-left: 50px;padding-right: 50px;">
-									<?php
-									echo '<input name="tbctxt_capchaval_login" hidden value="' . $randomcapcha . '"/>';
-									echo '<img width="100%" src="https://tbcmerchantservices.com/captcha/' . $randomcapcha . '.jpg">';
-									?>
-
-									<input name="tbctxt_captcha_login" class="form-control" style="font-size: 20px; height: 48px;" width="70%" placeholder="Captcha Here" />
-								</div><br>
-								<input hidden id="loginsubmit" type="submit" />
-								<a href="javascript:void(0)" onclick="$('#loginsubmit').click()" class="btn btn-primary btn-lg btn-block"
-								style="width: 50%; border-radius: 0px">LOGIN</a>
-							</form>
-						</center>
-					</div>
-
-					<center><h3>NEWS UPDATE</h3></center>
-					<div class="container-fluid">
-
-						<center>TBC to BTC Trading is Now Available</center>
-						<a href="javascript:void(0)" class="btn btn-warning btn-block btn-lg"
-						style="border-radius: 0px">LOGIN AND START TRADING</a>`
-						<a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
-						style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a>
-					</div>
-
-					<center><h3>Other Services</h3></center>
-					<div class="container-fluid">
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/tbc.png"></center>
-						</div>
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/paypal.png"></center>
-						</div>
-					</div><br>
-
-					<div class="container-fluid">
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/coinph.png"></center>
-						</div>
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/bitcoin.png"></center>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<!-- END - OLD VERSION -->
 			<?php
 		}
 
