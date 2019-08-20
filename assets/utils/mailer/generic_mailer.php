@@ -5,13 +5,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 
-require('../../../libraries/PHPMailer/src/PHPMailer.php');
-require('../../../libraries/PHPMailer/src/Exception.php');
-require('../../../libraries/PHPMailer/src/SMTP.php');
+require($_SERVER['DOCUMENT_ROOT'].'/libraries/PHPMailer/src/PHPMailer.php');
+require($_SERVER['DOCUMENT_ROOT'].'/libraries/PHPMailer/src/Exception.php');
+require($_SERVER['DOCUMENT_ROOT'].'/libraries/PHPMailer/src/SMTP.php');
 
 class SendMail extends PHPMailer{
 
-	public function __construct($invoiceFile,$sendTo){
+	public function __construct($invoiceFile,$sendTo,$attachmentName){
 		try{
 			new PHPMailer(true);
 
@@ -19,7 +19,7 @@ class SendMail extends PHPMailer{
 			$this->configureAccountCredentials();
 			$this->recipient($sendTo);
 			$this->content();
-			$this->attachment($invoiceFile);
+			$this->attachment($invoiceFile, $attachmentName);
 
 			$this->send();
 			echo 'Message has been sent';
@@ -35,25 +35,25 @@ class SendMail extends PHPMailer{
 	    $this->Port       = 587;                                    // TCP port to connect to
        	$this->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
 		$this->SMTPAuth   = true;                                   // Enable SMTP authentication			
-	    $this->Host       = 'smtp.gmail.com';  						// Specify main and backup SMTP servers
+	    $this->Host       = 'smtp.ipage.com';  						// Specify main and backup SMTP servers
 	}
 
 	private function configureAccountCredentials(){
 	    // Configure Account credential
-	    $this->Username   = 'tbcmsapp@gmail.com';              // SMTP username
-	    $this->Password   = 'tjyluocxgypcheml';                     // SMTP password
+	    $this->Username   = 'ebitshares';              // SMTP username
+	    $this->Password   = '2019TBCMScsbn7270#####$$$$$$';                     // SMTP password
 	}
 
 	private function recipient($sendTo){
 		//Recipients
-	    $this->setFrom('tbcmsapp@gmail.com', 'TBCMerchantServices');
+	    $this->setFrom('automail@tbcmerchantservices.com', 'TBCMerchantServices');
 	    // $mail->addAddress($sendTo, 'Joe User');     // Add a recipient
 	    $this->addAddress($sendTo);     // Add a recipient
 	}
 
-	private function attachment($invoiceFile){
+	private function attachment($invoiceFile, $attachmentName){
 		// Attachments
-	    $this->addAttachment($invoiceFile, 'new.pdf');    // Optional name
+	    $this->addAttachment($invoiceFile, $attachmentName);    // Optional name
 	}
 
 	private function content(){

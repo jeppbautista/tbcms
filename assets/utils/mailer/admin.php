@@ -177,6 +177,35 @@
         mail($this->to, $this->subject, $this->message, $this->header);
     }
 
+    public function sendInvoice($attachment, $attachmentName){
+        $eol = PHP_EOL;  
+        $separator = md5(time());
+
+        $headers  = "From: " . $this->from .$eol;
+        $headers .= "MIME-Version: 1.0".$eol; 
+        $headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"";
+
+        $message = "Attached here is your invoice as proof of transaction.";
+
+        $body = "--".$separator.$eol;
+        $body .= "Content-Transfer-Encoding: 7bit".$eol.$eol;
+        $body .= "".$eol;
+
+        $body .= "--".$separator.$eol;
+        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"".$eol;
+        $body .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
+        $body .= $message.$eol;
+
+        $body .= "--".$separator.$eol;
+        $body .= "Content-Type: application/octet-stream; name=\"".$attachmentName."\"".$eol; 
+        $body .= "Content-Transfer-Encoding: base64".$eol;
+        $body .= "Content-Disposition: attachment".$eol.$eol;
+        $body .= $attachment.$eol;
+        $body .= "--".$separator."--";
+
+        mail($this->to, 'Invoice for TBCMS transaction', $body, $headers);
+    }
+
     public function prepareTemplate($orderCtr, $products, $payment, $customer, $type){
         $this->message .= $this->bodyStart();
         $this->message .= $this->topDiv();
@@ -208,6 +237,7 @@
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivCompleted($orderCtr, $payment, $customer);
         }elseif ($type == "ACCEPT") {
+
             $this->message .= $this->headerText("Your Payment has been Accepted");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivMainShipping($orderCtr, $payment, $customer);

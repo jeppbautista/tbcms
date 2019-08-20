@@ -6,6 +6,10 @@
     include_once 'objects/admin.php';
     include_once 'objects/generic.php';
 
+    require_once('libraries/fpdf/fpdf.php');
+    require_once('assets/utils/pdf/pdf_maker.php');
+    require_once('assets/utils/mailer/generic_mailer.php');
+
     $class = new mydesign;
     $class->database_connect();
 
@@ -46,15 +50,49 @@
       
       $_orderCtr = getAllElementsWithCondition("shop_xtbl_orders", "Payment_Ctr", $temvalue)["Ctr"];
       $payments = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $temvalue);
-      
+
+      $productsQuery2 = $admin->getOrderedProducts($_orderCtr);
+      $productsRs2=@mysql_query($productsQuery2);
+
       $customerQuery = $admin->getCustomerDetails($_orderCtr);
       $customerRs=@mysql_query($customerQuery);
       $customer = @mysql_fetch_assoc($customerRs);
 
-      $mailer->prepareTemplate($_orderCtr, "", $payments, $customer, "ACCEPT");
+      $mailer->prepareTemplate($_orderCtr, $productsRs2, $payments, $customer, "ACCEPT");
       $mailer->to = $customer["Email"];
       $mailer->subject = 'Order #OR' . str_pad($_orderCtr, 10, "0", STR_PAD_LEFT). ' has been ACCEPTED';
       $mailer->sendMail();
+
+      $productsQuery3 = $admin->getOrderedProducts($_orderCtr);
+      $productsRs3=@mysql_query($productsQuery3);
+
+      $product_arr = array();
+      while($p = @mysql_fetch_assoc($productsRs3)){
+          $tempo = array($p["Product_Name"], $p["Quantity"], $p["Tax"], $p["Product_Price"], $p["Grand_Total"]);
+          array_push($product_arr, $tempo);
+      }
+
+
+      $pdf = new PDF();
+
+      $date = date('YmdHi', time());
+      $reference = $date."".$_orderCtr."".$customer["Ctr"];
+      $paymentDate = $payments["Payment_Date"];
+      $paymentType = $payments["Payment_Type"];
+      $name = $customer["Full_Name"];
+      $email = $customer["Email"];
+      $phone = $customer["Phone"];
+      $address = $customer["Shipping_Address"];
+
+      $pdf->CompileInvoice($reference,$paymentDate,$paymentDate,
+                            $_orderCtr,$paymentType,$reference,
+                            $paymentDate,$name,$email,
+                            $phone,$address,$product_arr);
+
+      $pdfdoc = $pdf->getFile();
+      $attachment = chunk_split(base64_encode($pdfdoc));
+      $attachmentName = $reference . ".pdf";
+      $mailer->sendInvoice($attachment, $attachmentName);
 
     }
     elseif (isset($_POST['temporary_valueD'])) {
@@ -97,8 +135,6 @@
     $class->admin_page_header();
 
     $view->container_start();
-    // $view->table_header();
-    // $query = $admin->getPendingPayments();
     $query = $admin->getPayments();
     $rs=@mysql_query($query);
     while($payment = @mysql_fetch_assoc($rs)){
