@@ -301,21 +301,27 @@ public function page_welcome_header_content_start($error)
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
-							<h2 style="color: #BC9F3B;">The Billion Coin Merchant Services</h2>
-							<h3> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
-							</h3>
+							<h1 style="color: #BC9F3B;">The Billion Coin Merchant Services</h1>
+							<h3>A Digital Store Powered By The Billion Coin</h3>
+							<h5> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
+							</h5>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" style="margin-top: 12%">
 						<div class="center">
 							<div class="col-md-12">
-							<div class="input-group">
-								<input type="text" class="form-control">
-								<span class="input-group-btn">
-									<button class="btn btn-warning" type="button">
-								Get Started! </button>
-								</span>
-							</div>
+							<p style="color: white; text-align: center">Enter your email to get started.</p>
+							<form method="POST">
+								<div class="input-group" style="width: 40%; margin: auto;" id="email-group">
+									<input type="text" id="txttbc_email_checksignup" name="txttbc_email_checksignup" class="form-control" placeholder="your_email@email.com">
+									<span class="input-group-btn">
+										<input name="submit_email_signup" hidden type="submit" />
+										<button class="btn btn-warning" type="button" onclick='$("[name=submit_email_signup]").click();'>
+									Get Started! </button>
+									</span>
+								</div>
+							</form>
+							
 							</div>
 						</div>
 						
@@ -329,16 +335,19 @@ public function page_welcome_header_content_start($error)
 				<div class="row" style="margin-bottom: 1rem;">
 					<div class="col-md-12 text-center" >
 						<h2 style="margin-bottom: 0;">NEWS UPDATE</h2>
-						<h3><small>TBC to BTC Trading is Now Available</small></h3>
+						<h3><small></small></h3>
 					</div>
 				</div>
 				<div class="row news-update-panels">
 					<div class="col-md-6">
+						
 						<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 							<div class="panel-body">
-								<span style="font-size: 3em;"><i class="ti-user" style="color: #BC9F3B;"></i></span>
+							<a href="https://tbcmerchantservices.com/shopping/"  style="text-decoration: none;">
+								<span style="font-size: 3em;"><i class="ti-shopping-cart" style="color: #BC9F3B;"></i></span>
 								<hr>
-								<h3 style="text-transform: uppercase;">Login and start trading</h3>
+								<h3 style="text-transform: uppercase;">NEW AND IMPROVED SHOP</h3>
+							</a>
 							</div>
 						</div>
 					</div>
@@ -365,62 +374,378 @@ public function page_welcome_header_content_start($error)
 			<!-- START - Intorduction -->
 			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
-					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 8% 3rem; color: #fff; "> 
 						<h2 style="text-align: left;">WHAT IS TBCMS?</h2>
 						<hr style="width: 18%;">
 						<p>TBCMS is a third party merchant adoption of The Billion Coin. It is an online e-commerce platform that provides the users as buyers and sellers. 
 							This TBCMS system is empowered by the digital currency payment process known as Kringle Cash using 50/50 engagement for purchasing of the products sold in the store.</p>
-					</div>
+							</div>
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
 							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						
+					</div> 
+				</div>	
+				<div class="row">
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 8% 3rem; color: #fff; "> 
+						<h2 style="text-align: left;">Mission & Vision</h2>
+						<hr style="width: 18%;">
+						<p>To uphold the mission & vision of  The Billion Coin & Kringle Cash in the promotion and usage as money to pay for products and services in 50/50% process until it would be strongly developed into 100% full TBC lifetime.</p>
+							</div>
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
 							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
-						
-					</div> 
-				</div>	
+					</div> 		
+				</div>
 			</div>
 			<!-- END - Intorduction -->
 
-			<div class="container-fluid" style="background-color: #599DC0;" >
-				<div class="col-md-12 col-sm-12 col-lg-12" style="padding: 3rem 6rem;text-align: center; color: #fff;">
+			<div class="container-fluid" style="background-color: #fff;" >
+				<div class="col-md-12 col-sm-12 col-lg-12" style="padding: 2rem 0rem;text-align: center; color: #fff;">
 					<div>
-						<div style="margin-bottom: 1rem;">
+						<!-- <div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 2.5rem; color: #214E11; background: #fff;"><i class="far fa-handshake" style="margin: 10px -2px;"></i></span>
-						</div>
-						<h2 style="color: #003d5d;">JOIN</h2>
-						<h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2>
+						</div> -->
+						<h2 style="color: #333;">OUR LATEST MERCHANTS</h2>
+								<br> 
+						<hr width="50%" style="margin:auto">
+						<br>
+						<!-- <h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2> -->
 					</div>
-					
+<!-- 					
 					<div class="present-carousel">
 						<div class="present-carousel-item">
-							<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
-							<p style="color:#D4ECF4;">Tutle</p>
+							<div class="wrap">
+								<div class="overlay">
+									<div class="text">Turtle1</div>
+								</div>	
+								<img class="border-frame-light img-responsive" src="./assets/images/dump_images/dump-image-1.jpeg">
+							</div>
 						</div>
 	    				<div class="present-carousel-item">
-	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-	    					<p style="color:#D4ECF4;">Man with Glasses</p>
+							<div class="wrap">
+								<div class="overlay">
+									<div class="text">Foobar</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
 	    				</div>
 	    				<div class="present-carousel-item">
-	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
-	    					<p style="color:#D4ECF4;">Girl</p>
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Girl</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
+							</div>
+						</div>
+						<div class="present-carousel-item">
+							<div class="wrap">
+								<div class="overlay">
+									<div class="text">Turtle</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
+							</div>
+						</div>
+	    				<div class="present-carousel-item">
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Turtle</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
 	    				</div>
-					</div>		
+	    				<div class="present-carousel-item">
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Girl2</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
+							</div>
+						</div>
+						<div class="present-carousel-item">
+							<div class="wrap">
+								<div class="overlay">
+									<div class="text">Turtle3</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
+							</div>
+						</div>
+	    				<div class="present-carousel-item">
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+	    				</div>
+	    				<div class="present-carousel-item">
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+						</div>
+						<div class="present-carousel-item">
+							<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+						</div>
+	    				<div class="present-carousel-item">
+	    					<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+	    				</div>
+	    				<div class="present-carousel-item">
+						<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+						</div>
+						<div class="present-carousel-item">
+						<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+						</div>
+	    				<div class="present-carousel-item">
+						<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+	    				</div>
+	    				<div class="present-carousel-item">
+						<div class="wrap">
+								<div class="overlay">
+									<div class="text">Man with Glasses</div>
+								</div>	
+								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
+							</div>
+	    				</div>
+					</div>	 -->
+	<section class="carousel-wrapper">
+		<div class="">
+		<div class="row">
+
+			<ul class="col-md-12 present-carousel text-center">
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4>content</h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+
+			</ul>
+
+		</div>
+		</div>
+	</section>
+					
+					
+
 				</div>
 			</div>
 
-			<div class="container-fluid" style="background: #fff;">
+			<div class="container-fluid" style="background: #599DC0;">
 				<div class="row">
 					<div class="col-sm-6 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
 						<div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
 						</div>
-						<h1 class="header-secondary">THE CURRENT PRICE</h1>
+						<h1 class="header-secondary" style="color:white">THE CURRENT PRICE</h1>
 						<hr style="margin: 1rem 33%; width: 32%; border: 0.5px solid #214E11;">
-						<p class="light">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
+						<p class="light" style="color:white">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
 					</div> 
 				</div>
 			</div>
