@@ -9,8 +9,8 @@
         public function __construct(){
             $this->message = "";
             $this->from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
-            // $this->to = "tbcmservices@gmail.com";
-            $this->to = "tbcmsapp@gmail.com";
+            $this->to = "tbcmservices@gmail.com";
+            // $this->to = "tbcmsapp@gmail.com";
         }
 
         public function sendMail(){

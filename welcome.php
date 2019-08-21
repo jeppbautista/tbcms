@@ -12,9 +12,9 @@ if (isset($_GET['test'])) {
 }
 
 
-include 'class-temp.php';
+include 'class.php';
 $class = new mydesign;
-$class->database_connect();
+// $class->database_connect();
 
 date_default_timezone_set('Asia/Manila');
 $sessiondate = date('mdY');
@@ -229,9 +229,9 @@ else {
     echo '<link rel="shortcut icon" type="image/x-icon" href="https://tbcmerchantservices.com/images/tbslogo.png" />';
 
     /* START - Themify and Materialized Font*/
-    $class->link('https://tbcmerchantservices.com/assets/lib/themify-icons/themify-icons.css');
-    $class->link('https://tbcmerchantservices.com/assets/lib/fontawesome-free-5.9.0-web/css/all.min.css');
-    $class->link('https://tbcmerchantservices.com/assets/css/custom.css');
+    $class->link('./assets/lib/themify-icons/themify-icons.css');
+    $class->link('./assets/lib/fontawesome-free-5.9.0-web/css/all.min.css');
+    $class->link('./assets/css/custom.css');
     /* END - Themify and Materialized Font*/
 
 
