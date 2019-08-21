@@ -303,7 +303,7 @@ public function page_welcome_header_content_start($error)
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
 							<h1 style="color: #BC9F3B;">The Billion Coin Merchant Services</h1>
 							<h3>A Digital Store Powered By The Billion Coin</h3>
-							<h5> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
+							<h5> Join us with <strong><?php echo $memberrcountrows; ?> </strong> other TBCMS users!
 							</h5>
 						</div>
 					</div>
@@ -538,7 +538,10 @@ public function page_welcome_header_content_start($error)
 							</div>
 							<div style="float:left">
 								<a href="https://www.facebook.com/tbcmerchantservices/"><span style="color: white; margin: 0 5px" class="ti-facebook"></span></a>
-								<a href="https://twitter.com/Tbcmsshop"><span style="color: white" class="ti-twitter-alt"></span></a>
+								<a href="https://twitter.com/Tbcmsshop"><span style="color: white; margin: 0 5px" class="ti-twitter-alt"></span></a>
+								<a href="https://www.youtube.com/channel/UCvM6o2yveIHMICslz5yovBg"><span style="color: white; margin: 0 5px" class="ti-youtube"></a>
+								<a href="https://play.google.com/store/apps/details?id=tbcservices.thebillioncoinapp&hl=en"><span style="color: white; margin: 0 5px" class="ti-android"></a>
+								
 							</div>
 						</div>
 						

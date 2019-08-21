@@ -35,7 +35,7 @@
     }
 
     if(isset($_POST['submit'])){
-      $action = $_POST['submit'];
+      $action = $_REQUEST['submit-2'];
       $orderCtr = $_POST['order-id'];
 
       $paymentCtr = getAllElementsWithCondition("shop_xtbl_orders", "Ctr", $orderCtr)['Payment_Ctr'];
@@ -47,7 +47,8 @@
 
       $productsQuery = $admin->getOrderedProducts($orderCtr);
       $productsRs=@mysql_query($productsQuery);
-      // $products = @mysql_fetch_array($productsRs);
+
+      $products = @mysql_fetch_array($productsRs);
 
       if($action == "ON DELIVERY"){
         updateWithCondition2("shop_xtbl_orders", "Status", $action, "Ctr", $orderCtr);

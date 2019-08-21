@@ -33,7 +33,6 @@ $(document).ready(function(){
 	});
 
 	$(".btn-shipping-confirm").on('click', function(){
-
 		var id = $(this).attr('id').split('-')[1];
 		$('#order-id').val(id);
 		$('#submit-'+id).click();

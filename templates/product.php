@@ -15,6 +15,13 @@ class View{
             </div>
     <?php
           }
+          if ($_GET['action'] == "exists"){
+    ?>
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                Item already in cart.
+            </div>
+    <?php
+          }
         }
     ?>
       <div class="col-md-7 product-image-outer">
