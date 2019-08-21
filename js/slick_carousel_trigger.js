@@ -2,7 +2,6 @@ $(document).ready(function(){
 	$('.present-carousel').slick({
 		autoplay: true,
 		autoplaySpeed: 8000,
-		// rows: 2,
 		draggable: false,
 		swipeToSlide: false,
 		touchMove: false,
@@ -10,7 +9,6 @@ $(document).ready(function(){
 		slidesToShow: 5, // default desktop values
 		slidesToScroll: 1,
 		rows: 2,
-		dots: true,
 		arrows: true,
 		responsive: [
 			{
@@ -23,8 +21,8 @@ $(document).ready(function(){
 			{
 				breakpoint: 480, // mobile breakpoint
 				settings: {
-					slidesToShow: 2,
-					slidesToScroll: 2
+					slidesToShow: 1,
+					slidesToScroll: 1
 				}
 			}
 		]

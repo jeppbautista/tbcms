@@ -372,7 +372,7 @@ public function page_welcome_header_content_start($error)
 			</div>
 			<!-- END - NEWS Update -->
 			<!-- START - Intorduction -->
-			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
+			<div class="container-fluid" style="background: url('https://tbcmerchantservices.com/assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 8% 3rem; color: #fff; "> 
 						<h2 style="text-align: left;">WHAT IS TBCMS?</h2>
@@ -414,317 +414,50 @@ public function page_welcome_header_content_start($error)
 						<br>
 						<!-- <h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2> -->
 					</div>
-<!-- 					
-					<div class="present-carousel">
-						<div class="present-carousel-item">
-							<div class="wrap">
-								<div class="overlay">
-									<div class="text">Turtle1</div>
-								</div>	
-								<img class="border-frame-light img-responsive" src="./assets/images/dump_images/dump-image-1.jpeg">
-							</div>
-						</div>
-	    				<div class="present-carousel-item">
-							<div class="wrap">
-								<div class="overlay">
-									<div class="text">Foobar</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Girl</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
-							</div>
-						</div>
-						<div class="present-carousel-item">
-							<div class="wrap">
-								<div class="overlay">
-									<div class="text">Turtle</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
-							</div>
-						</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Turtle</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Girl2</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
-							</div>
-						</div>
-						<div class="present-carousel-item">
-							<div class="wrap">
-								<div class="overlay">
-									<div class="text">Turtle3</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
-							</div>
-						</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-						</div>
-						<div class="present-carousel-item">
-							<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-						</div>
-	    				<div class="present-carousel-item">
-	    					<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-	    				<div class="present-carousel-item">
-						<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-						</div>
-						<div class="present-carousel-item">
-						<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-						</div>
-	    				<div class="present-carousel-item">
-						<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-	    				<div class="present-carousel-item">
-						<div class="wrap">
-								<div class="overlay">
-									<div class="text">Man with Glasses</div>
-								</div>	
-								<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-							</div>
-	    				</div>
-					</div>	 -->
+
 	<section class="carousel-wrapper">
 		<div class="">
 		<div class="row">
 
 			<ul class="col-md-12 present-carousel text-center">
+				
+				<?php
+				$queryMerchants = "select Main_Ctr from xtbl_account_info WHERE
+				Email_Status='ACTIVE' AND Account_Type='MERCHANT' AND Account_Status='ACTIVE'
+				AND Card_Status='ACTIVE' ORDER BY Ctr DESC LIMIT 100";
+				$rsMerchants    = mysql_query($queryMerchants);
+
+
+				while ($row = mysql_fetch_assoc($rsMerchants)) {
+					$query2 = "select * from xtbl_main_info WHERE Ctr='" . $row['Main_Ctr'] . "'";
+					$rs2    = mysql_query($query2);
+					$row2   = mysql_fetch_assoc($rs2);
+					$img = "";
+					if (file_exists('business/' . $row2['Business_Logo'])) {
+						$img = "https://tbcmerchantservices.com/business/" . $row2['Business_Logo'];
+						$label = $row2['Business_Name'];
+					}else{
+						// $img = "https://tbcmerchantservices.com/images/blank.jpeg";
+						// $label = $row2['Business_Name'];
+						continue;
+					}
+					?>
+
 			<li>
 				<a href="#">
 				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
+					<img class="img-responsive" src="<?php echo $img; ?>" alt="">
 
 					<div class="overlay">
 					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
+						<h4><?php echo $label; ?></h4>
 					</div>
 					</div>
 				</div>
 				</a>
 			</li>
 
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-				<div class="img_cont">
-					<img class="img-responsive" src="../assets/images/dump_images/dump-image-1.jpeg" alt="">
-
-					<div class="overlay">
-					<div class="overlay-content">
-						<h4>content</h4>
-					</div>
-					</div>
-				</div>
-				</a>
-			</li>
+				<?php } ?>
 
 			</ul>
 
