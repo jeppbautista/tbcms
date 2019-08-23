@@ -12,6 +12,7 @@ if(isset($_GET['key']))
   $rs=mysql_query($query);
   $rows=mysql_num_rows($rs);
   $row=mysql_fetch_assoc($rs);
+  
 
   if($rows==1)
   {

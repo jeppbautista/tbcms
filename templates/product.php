@@ -71,7 +71,7 @@ class View{
           <button type="submit" id = "btn-add-to-cart" class="btn  btn-md btn-add-to-cart">Add to Cart
           </button>
         </form>
-        <a href= <?php echo "https://tbcmerchantservices.com/checkout?proceed&product=" ?>  class="btn btn-md btn-checkout" onclick="alert('This is not yet available')">Go to Checkout
+        <a href= "" class="btn btn-md btn-checkout" onclick="alert('This is not yet available')">Go to Checkout
         </a>
       </div>
     <?php
