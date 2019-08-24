@@ -3,24 +3,32 @@
 
 class mydesign
 {
-
+	private $conn;
 	public function database_connect()
 	{
 		if ($this->isLocalhost()== true)
 		{
+			$username="root";
+			$password="";
+			$database="xdb_tbcmerchantservices";
+			$servername = "127.0.0.1";
 
-			$conn = @mysql_connect('localhost', 'root', '');
-			@mysql_select_db('xdb_tbcmerchantservices', $conn);
+			// Create connection
+			$this->conn = new mysqli($servername, $username, $password, $database);
+			$this->conn->select_db($database) or die( "Unable to select database");
+
+			// $conn->close();
 
 		}
 		else{
 			$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
 			@mysql_select_db('xdb_tbcmerchantservices', $conn);
+			if (!$conn) {
+				die('Could not connect: ' . mysql_error());
+			}
 
 		}
-		if (!$conn) {
-			die('Could not connect: ' . mysql_error());
-		}
+		
 
 	}
 
@@ -288,8 +296,15 @@ public function page_welcome_header_content_start($error)
 	public function page_welcome_header_content_start_body($error)
 	{
 		$membercountquery = "select * from xtbl_main_info";
-		$membercountrs    = mysql_query($membercountquery);
-		$memberrcountrows = mysql_num_rows($membercountrs);
+
+		if ($this->isLocalhost()== true)
+		{
+			$memberrcountrows = $this->conn->query($membercountquery)->num_rows;
+
+		}else{
+			$membercountrs    = mysql_query($membercountquery);
+			$memberrcountrows = mysql_num_rows($membercountrs);
+		}
 
 		?>
 
@@ -352,8 +367,8 @@ public function page_welcome_header_content_start($error)
 						</div>
 					</div>
 
-					<div class="col-sm-12 col-md-6 col-lg-6">
-						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none;">
+					<div class="col-sm-12 col-md-6">
+						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none; width: 100%;" >
 							<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 								<div class="panel-body">
 									<span style="font-size: 3em;"><i class="ti-heart" style="color: #ff9eb5;"></i></span>
@@ -472,7 +487,7 @@ public function page_welcome_header_content_start($error)
 
 			<div class="container-fluid" style="background: #599DC0;">
 				<div class="row">
-					<div class="col-sm-6 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
+					<div class="col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
 						<div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
 						</div>
@@ -498,7 +513,7 @@ public function page_welcome_header_content_start($error)
 							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.066336361882!2d121.08279428422526!3d14.68527764210799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ba0692c1d0c5%3A0xb5254793a2126741!2s30+Sta.+Catalina+St%2C+Quezon+City%2C+1127+Metro+Manila!5e0!3m2!1sen!2sph!4v1566368430462!5m2!1sen!2sph" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 						</div>
 						<div class="col-md-6 col-12" style="">
-							<p style="text-align: left; font-size: 16px">Everyone is invite to attend TBCMS' regular seminars and orientation and to be updated of the blog news from the admin of TBC.</p>
+							<p style="text-align: left; font-size: 16px">Everyone is invited to attend TBCMS' regular seminars and orientation and to be updated of the blog news from the admin of TBC.</p>
 							<br>
 							<div class="col-md-6">
 								<p style="text-align: left; font-size: 18px">
