@@ -3,24 +3,32 @@
 
 class mydesign
 {
-
+	private $conn;
 	public function database_connect()
 	{
 		if ($this->isLocalhost()== true)
 		{
+			$username="root";
+			$password="";
+			$database="xdb_tbcmerchantservices";
+			$servername = "127.0.0.1";
 
-			$conn = @mysql_connect('localhost', 'root', '');
-			@mysql_select_db('xdb_tbcmerchantservices', $conn);
+			// Create connection
+			$this->conn = new mysqli($servername, $username, $password, $database);
+			$this->conn->select_db($database) or die( "Unable to select database");
+
+			// $conn->close();
 
 		}
 		else{
 			$conn = @mysql_connect('ebitshares.ipagemysql.com', 'urfren_samson', '091074889701_a');
 			@mysql_select_db('xdb_tbcmerchantservices', $conn);
+			if (!$conn) {
+				die('Could not connect: ' . mysql_error());
+			}
 
 		}
-		if (!$conn) {
-			die('Could not connect: ' . mysql_error());
-		}
+		
 
 	}
 
@@ -288,10 +296,18 @@ public function page_welcome_header_content_start($error)
 	public function page_welcome_header_content_start_body($error)
 	{
 		$membercountquery = "select * from xtbl_main_info";
-		$membercountrs    = mysql_query($membercountquery);
-		$memberrcountrows = mysql_num_rows($membercountrs);
+
+		if ($this->isLocalhost()== true)
+		{
+			$memberrcountrows = $this->conn->query($membercountquery)->num_rows;
+
+		}else{
+			$membercountrs    = mysql_query($membercountquery);
+			$memberrcountrows = mysql_num_rows($membercountrs);
+		}
 
 		?>
+
 		
 		<!-- START - NEW UI Change content -->
 		<div class="container-fluid" style="background: url(https://tbcmerchantservices.com/images/Picture3.jpg) center no-repeat; min-height: 93vh; background-size: cover; padding: 0; background-attachment: fixed;">
@@ -300,20 +316,30 @@ public function page_welcome_header_content_start($error)
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12" style="color: #fff; margin-top: 30vh;">
-							<h2 style="color: #BC9F3B;">The Billion Coin Merchant Services</h2>
-							<h1> Join us with <strong><?php echo $memberrcountrows; ?> 200 </strong> other TBCMS users!
-							</h1>
+							<h1 style="color: #BC9F3B;">The Billion Coin Merchant Services</h1>
+							<h3>A Digital Store Powered By The Billion Coin</h3>
+							<h5> Join us with <strong><?php echo $memberrcountrows; ?> </strong> other TBCMS users!
+							</h5>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-						<form id= "changePassForm" action="" method="post" enctype="multipart/form-data">  
-						<div class="changePass">
-							<div class="changePassBtn">Change Password</div>
-							<input type="password" placeholder="Password" name="password">
+					<div class="row" style="margin-top: 12%">
+						<div class="center">
+							<div class="col-md-12">
+							<p style="color: white; text-align: center">Enter your email to get started.</p>
+							<form method="POST">
+								<div class="input-group" style="width: 40%; margin: auto;" id="email-group">
+									<input type="text" id="txttbc_email_checksignup" name="txttbc_email_checksignup" class="form-control" placeholder="your_email@email.com">
+									<span class="input-group-btn">
+										<input name="submit_email_signup" hidden type="submit" />
+										<button class="btn btn-warning" type="button" onclick='$("[name=submit_email_signup]").click();'>
+									Get Started! </button>
+									</span>
+								</div>
+							</form>
+							
+							</div>
 						</div>
-						</form>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -324,22 +350,25 @@ public function page_welcome_header_content_start($error)
 				<div class="row" style="margin-bottom: 1rem;">
 					<div class="col-md-12 text-center" >
 						<h2 style="margin-bottom: 0;">NEWS UPDATE</h2>
-						<h3><small>TBC to BTC Trading is Now Available</small></h3>
+						<h3><small></small></h3>
 					</div>
 				</div>
 				<div class="row news-update-panels">
 					<div class="col-md-6">
+						
 						<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 							<div class="panel-body">
-								<span style="font-size: 3em;"><i class="ti-user" style="color: #BC9F3B;"></i></span>
+							<a href="https://tbcmerchantservices.com/shopping/"  style="text-decoration: none;">
+								<span style="font-size: 3em;"><i class="ti-shopping-cart" style="color: #BC9F3B;"></i></span>
 								<hr>
-								<h3 style="text-transform: uppercase;">Login and start trading</h3>
+								<h3 style="text-transform: uppercase;">NEW AND IMPROVED SHOP</h3>
+							</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="col-sm-12 col-md-6 col-lg-6">
-						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none;">
+					<div class="col-sm-12 col-md-6">
+						<a href="https://tbcmerchantservices.com/edudona/" style="text-decoration: none; width: 100%;" >
 							<div class="panel panel-default border-frame-dark" style="padding: 3rem; text-align: center; width: auto; height: 250px;">
 								<div class="panel-body">
 									<span style="font-size: 3em;"><i class="ti-heart" style="color: #ff9eb5;"></i></span>
@@ -358,186 +387,117 @@ public function page_welcome_header_content_start($error)
 			</div>
 			<!-- END - NEWS Update -->
 			<!-- START - Intorduction -->
-			<div class="container-fluid" style="background: url('./assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
+			<div class="container-fluid" style="background: url('https://tbcmerchantservices.com/assets/images/backgrounds-blank-blue.jpg') fixed; background-size: cover;">
 				<div class="row">
-					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 20% 3rem; color: #fff; "> 
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 8% 3rem; color: #fff; "> 
 						<h2 style="text-align: left;">WHAT IS TBCMS?</h2>
 						<hr style="width: 18%;">
 						<p>TBCMS is a third party merchant adoption of The Billion Coin. It is an online e-commerce platform that provides the users as buyers and sellers. 
 							This TBCMS system is empowered by the digital currency payment process known as Kringle Cash using 50/50 engagement for purchasing of the products sold in the store.</p>
-					</div>
+							</div>
 					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
 							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						
+					</div> 
+				</div>	
+				<div class="row">
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 8% 3rem; color: #fff; "> 
+						<h2 style="text-align: left;">Mission & Vision</h2>
+						<hr style="width: 18%;">
+						<p>To uphold the mission & vision of  The Billion Coin & Kringle Cash in the promotion and usage as money to pay for products and services in 50/50% process until it would be strongly developed into 100% full TBC lifetime.</p>
+							</div>
+					<div class="col-sm-12 col-md-6 col-lg-6" style="padding: 3rem;"> 
 						<div style="margin: 3rem;">
 							<iframe class="border-frame-light" width="100%" height="300" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
-						
-					</div> 
-				</div>	
+					</div> 		
+				</div>
 			</div>
 			<!-- END - Intorduction -->
 
-			<div class="container-fluid" style="background-color: #599DC0;" >
-				<div class="col-md-12 col-sm-12 col-lg-12" style="padding: 3rem 6rem;text-align: center; color: #fff;">
+			<div class="container-fluid" style="background-color: #fff;" >
+				<div class="col-md-12 col-sm-12 col-lg-12" style="padding: 2rem 0rem;text-align: center; color: #fff;">
 					<div>
-						<div style="margin-bottom: 1rem;">
+						<!-- <div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 2.5rem; color: #214E11; background: #fff;"><i class="far fa-handshake" style="margin: 10px -2px;"></i></span>
-						</div>
-						<h2 style="color: #003d5d;">JOIN</h2>
-						<h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2>
+						</div> -->
+						<h2 style="color: #333;">OUR LATEST MERCHANTS</h2>
+								<br> 
+						<hr width="50%" style="margin:auto">
+						<br>
+						<!-- <h2> <small style="color: #fff;">With Our Latest Merchants</small> </h2> -->
 					</div>
+
+	<section class="carousel-wrapper">
+		<div class="">
+		<div class="row">
+
+			<ul class="col-md-12 present-carousel text-center">
+				
+				<?php
+				$queryMerchants = "select Main_Ctr from xtbl_account_info WHERE
+				Email_Status='ACTIVE' AND Account_Type='MERCHANT' AND Account_Status='ACTIVE'
+				AND Card_Status='ACTIVE' ORDER BY Ctr DESC LIMIT 100";
+				$rsMerchants    = mysql_query($queryMerchants);
+
+
+				while ($row = mysql_fetch_assoc($rsMerchants)) {
+					$query2 = "select * from xtbl_main_info WHERE Ctr='" . $row['Main_Ctr'] . "'";
+					$rs2    = mysql_query($query2);
+					$row2   = mysql_fetch_assoc($rs2);
+					$img = "";
+					if (file_exists('business/' . $row2['Business_Logo'])) {
+						$img = "https://tbcmerchantservices.com/business/" . $row2['Business_Logo'];
+						$label = $row2['Business_Name'];
+					}else{
+						// $img = "https://tbcmerchantservices.com/images/blank.jpeg";
+						// $label = $row2['Business_Name'];
+						continue;
+					}
+					?>
+
+			<li>
+				<a href="#">
+				<div class="img_cont">
+					<img class="img-responsive" src="<?php echo $img; ?>" alt="">
+
+					<div class="overlay">
+					<div class="overlay-content">
+						<h4><?php echo $label; ?></h4>
+					</div>
+					</div>
+				</div>
+				</a>
+			</li>
+
+				<?php } ?>
+
+			</ul>
+
+		</div>
+		</div>
+	</section>
 					
-					<div class="present-carousel">
-						<div class="present-carousel-item">
-							<img class="border-frame-light" src="./assets/images/dump_images/dump-image-1.jpeg">
-							<p style="color:#D4ECF4;">Tutle</p>
-						</div>
-	    				<div class="present-carousel-item">
-	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-2.jpg">
-	    					<p style="color:#D4ECF4;">Man with Glasses</p>
-	    				</div>
-	    				<div class="present-carousel-item">
-	    					<img class="border-frame-light" src="./assets/images/dump_images/dump-image-3.jpg">
-	    					<p style="color:#D4ECF4;">Girl</p>
-	    				</div>
-					</div>		
+					
+
 				</div>
 			</div>
 
-			<div class="container-fluid" style="background: #fff;">
+			<div class="container-fluid" style="background: #599DC0;">
 				<div class="row">
-					<div class="col-sm-6 col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
+					<div class="col-md-12 col-lg-12" style="padding: 13%; text-align: center;"> 
 						<div style="margin-bottom: 1rem;">
 							<span class="btn btn-circle btn-xl" style="font-size: 3rem; color: #fff; background: #214E11;"><i class="fas fa-hand-holding-usd"></i></span>
 						</div>
-						<h1 class="header-secondary">THE CURRENT PRICE</h1>
+						<h1 class="header-secondary" style="color:white">THE CURRENT PRICE</h1>
 						<hr style="margin: 1rem 33%; width: 32%; border: 0.5px solid #214E11;">
-						<p class="light">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
+						<p class="light" style="color:white">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</p>
 					</div> 
 				</div>
 			</div>
 		<!-- END - NEW UI Change content -->
-
-		<!-- START - OLD VERSION -->
-		<div class="container" align="right" style="padding-bottom: 0px">
-			<div class="col-md-9" align="left">
-				<h3><b>Welcome to The Billion Coin Merchant Services</b></h3>
-			</div>
-			<div class="col-md-3" align="center">
-				<h4>Total TBCMS Users: <b><?php
-				echo $memberrcountrows;
-				?></b></h4>
-			</div>
-		</div>
-		<div class="container alert">
-			<div class="col-md-7">
-
-				<div style="">
-					<div id="myCarousel" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner" role="listbox">
-
-							<iframe width="100%" height="315" src="https://www.youtube.com/embed/gnQjV8gTk88" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-						</div>
-					</div>
-				</div>
-
-				<div style="width:80%; margin:auto; margin-bottom:20px">                        <a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
-					style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a></div>
-
-					<div style="height: 280px;">
-						<div id="myCarousel" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner" role="listbox">
-
-
-								<iframe width="100%" height="365" src="https://www.youtube-nocookie.com/embed/2IDLo0lWeOg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-							</div>
-						</div>
-					</div>
-					<br></br><br></br>
-					<br></br>
-					<h3>The Current Price</h3>
-					<h4><h4 style="text-align: justify;">The Current Price is increased once every 24 hours according to the Formula embedded within the software until it reaches its Ultimate Price. The value of The Billion Coin is not attached to the volatility of the markets, and both Buyers and Sellers of TBC use the Current Price to conduct transactions.</h4><br>
-
-				</div>
-				<div class="col-md-5">
-					<div class="alert " style="background-color: #20B2AA">
-						<center><h3><b>SIGN IN TO GAIN ACCESS</b></h3></center>
-
-						<center>
-							<div><?php
-							echo $error;
-							?></div>
-							<form method="POST">
-								<?php
-								$randomcapcha = mt_rand(1, 12);
-								?>
-								<div class="input-group" style="padding-left: 40px;padding-right: 40px;">
-									<span class="input-group-addon" id="sizing-addon2" style="width:50px">
-										<span class="glyphicon glyphicon-user"></span>
-									</span>
-									<input name="tbctxt_username_login" class="form-control" style="font-size: 20px; height: 48px" placeholder="Username" />
-								</div><br>
-
-								<div class="input-group" style="padding-left: 40px;padding-right: 40px;">
-									<span class="input-group-addon" id="sizing-addon2" style="width:50px">
-										<span class="glyphicon glyphicon-lock"></span>
-									</span>
-									<input name="tbctxt_password_login" class="form-control" style="font-size: 20px; height: 48px" placeholder="Password"
-									type="password" />
-								</div><a href="https://tbcmerchantservices.com/reset/">Forgot Password?</a><br>
-								Type the characters you see below<br>to prove you are human.
-								<div class="input-group" style="padding-left: 50px;padding-right: 50px;">
-									<?php
-									echo '<input name="tbctxt_capchaval_login" hidden value="' . $randomcapcha . '"/>';
-									echo '<img width="100%" src="https://tbcmerchantservices.com/captcha/' . $randomcapcha . '.jpg">';
-									?>
-
-									<input name="tbctxt_captcha_login" class="form-control" style="font-size: 20px; height: 48px;" width="70%" placeholder="Captcha Here" />
-								</div><br>
-								<input hidden id="loginsubmit" type="submit" />
-								<a href="javascript:void(0)" onclick="$('#loginsubmit').click()" class="btn btn-primary btn-lg btn-block"
-								style="width: 50%; border-radius: 0px">LOGIN</a>
-							</form>
-						</center>
-					</div>
-
-					<center><h3>NEWS UPDATE</h3></center>
-					<div class="container-fluid">
-
-						<center>TBC to BTC Trading is Now Available</center>
-						<a href="javascript:void(0)" class="btn btn-warning btn-block btn-lg"
-						style="border-radius: 0px">LOGIN AND START TRADING</a>`
-						<a href="https://tbcmerchantservices.com/edudona/" class="btn btn-warning btn-block btn-lg"
-						style="border-radius: 0px">DONATE AND EARN USING EDUDONA</a>
-					</div>
-
-					<center><h3>Other Services</h3></center>
-					<div class="container-fluid">
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/tbc.png"></center>
-						</div>
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/paypal.png"></center>
-						</div>
-					</div><br>
-
-					<div class="container-fluid">
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/coinph.png"></center>
-						</div>
-						<div class="col-md-6" style="padding: 15px">
-							<center><img width="100%" src="https://tbcmerchantservices.com/images/bitcoin.png"></center>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<!-- END - OLD VERSION -->
 			<?php
 		}
 
@@ -546,8 +506,63 @@ public function page_welcome_header_content_start($error)
 			?>
 			<div class="footer container-fluid">
 				<div class="container" align="center">
-					<span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
+					<div class="row" style="color: #eee">
+						<h3>Location</h3>
+						<br>
+						<div class="col-md-6 col-12">
+							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.066336361882!2d121.08279428422526!3d14.68527764210799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ba0692c1d0c5%3A0xb5254793a2126741!2s30+Sta.+Catalina+St%2C+Quezon+City%2C+1127+Metro+Manila!5e0!3m2!1sen!2sph!4v1566368430462!5m2!1sen!2sph" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+						</div>
+						<div class="col-md-6 col-12" style="">
+							<p style="text-align: left; font-size: 16px">Everyone is invited to attend TBCMS' regular seminars and orientation and to be updated of the blog news from the admin of TBC.</p>
+							<br>
+							<div class="col-md-6">
+								<p style="text-align: left; font-size: 18px">
+								<b>Address</b>
+								</p>
+								<p style="text-align: left; font-size: 16px">
+								30-B Sta. Catalina Street Holy Spirit, Quezon City, Philippines
+								</p>
+								<br>
+								<p style="text-align: left; font-size: 18px">
+								<b>Contacts</b>
+								</p>
+								<ul style="text-align: left">
+									<li>+639 45-883-3876</li>
+									<li>tbcmservices@gmail.com</li>
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<p style="text-align: left; font-size: 18px">
+								<b>Useful links</b>
+								</p>
+								<ul style="text-align: left">
+									<li><a href="https://tbcmerchantservices.com/shopping">Shop</a></li>
+									<li><a href="https://tbcmerchantservices.com/edudona">Edudona trading</a></li>
+									<li><a href="https://tbcmerchantservices.com/contact">Contact Us</a></li>
+								</ul>
+								
+							</div>
+						</div>
+					</div>
+					<br>
+					<hr style="border: 1px solid #333">
+					<div class="row">
+						<div class="col-md-12">
+							<div style="float:right">
+								<span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
+							</div>
+							<div style="float:left">
+								<a href="https://www.facebook.com/tbcmerchantservices/"><span style="color: white; margin: 0 5px" class="ti-facebook"></span></a>
+								<a href="https://twitter.com/Tbcmsshop"><span style="color: white; margin: 0 5px" class="ti-twitter-alt"></span></a>
+								<a href="https://www.youtube.com/channel/UCvM6o2yveIHMICslz5yovBg"><span style="color: white; margin: 0 5px" class="ti-youtube"></a>
+								<a href="https://play.google.com/store/apps/details?id=tbcservices.thebillioncoinapp&hl=en"><span style="color: white; margin: 0 5px" class="ti-android"></a>
+								
+							</div>
+						</div>
+						
 
+					</div>
+					
 				</div>
 
 			</div>

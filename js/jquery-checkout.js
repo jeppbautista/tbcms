@@ -103,6 +103,9 @@ $( document ).ready(function() {
         var completeForm = true;
         var payment_type = this.id;
 
+        $('#check-proceed1').click();
+        $('#check-proceed2').click();
+
         if ($('#txt-trans-'+payment_type).val() == "" ){
             $('#txt-trans-'+payment_type).css('border', '1px solid red');
             $('#hd-payment').val("");

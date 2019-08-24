@@ -42,6 +42,7 @@
             <div class="row">
                 <div class="col-12 col-md-4 header-txt">
                 <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
+                <b>Order Number: </b> <?php echo '#OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT); ?><br>
                 <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
                 <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
 
@@ -86,6 +87,7 @@
             <div class="row">
                 <div class="col-12 col-md-4 header-txt">
                 <b>Date of Transaction: </b> <?php echo $payment["Payment_Date"] ?><br>
+                <b>Order Number: </b> <?php echo '#OR' . str_pad($order["Ctr"], 10, "0", STR_PAD_LEFT); ?><br>
                 <b>Mode of Payment:</b> <?php echo $payment["Payment_Type"] ?><br>
                 <b>Transaction Number:</b> <?php echo $payment["Transaction"] ?><br>
 
@@ -112,7 +114,7 @@
                             <button id='<?php echo "btn-".$order["Ctr"] ?>' class="btn btn-success btn-shipping-confirm">Confirm</button>
                         </div>
                         <input type="text" name="order-id" value='<?php echo $order["Ctr"] ?>' hidden>
-                        <input type="text" id='<?php echo "dropdown-val-".$order["Ctr"] ?>' name="submit" value='<?php echo $order['Status'] ?>' hidden >
+                        <input type="text" id='<?php echo "dropdown-val-".$order["Ctr"] ?>' name="submit-2" value='<?php echo $order['Status'] ?>' hidden >
                         <input type="submit" id='<?php echo "submit-".$order["Ctr"] ?>' name="submit" hidden >
                     </form>
                     

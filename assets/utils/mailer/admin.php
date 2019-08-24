@@ -6,7 +6,7 @@
     public $subject;
     private $header;
     public $message;
-
+    public $adminEmail;
 
     public function __construct(){
         $this->message = "<html>";
@@ -18,7 +18,7 @@
     }
 
     private function topDiv(){
-      return '<div style="width: 80%; margin: auto; 
+      return '<div style="width: 95%; margin: auto; 
                 box-shadow: 0 0.46875rem 2.1875rem rgba(63, 106, 216, 0.03), 
                 0 0.9375rem 1.40625rem rgba(63, 106, 216, 0.03), 
                 0 0.25rem 0.53125rem rgba(63, 106, 216, 0.05), 
@@ -47,6 +47,20 @@
                   Dear <b>'.$customer['Full_Name'].',</b> <br>
                   <br>';
     }
+
+    private function messageDivStart2($customer){
+      return '<div style="background-color: #F0F0F0; padding: 20px 35px">
+                <p style="font-size: 15px">
+                  Dear <b>'.$customer.',</b> <br>
+                  <br>';
+    }
+
+
+    private function messageDivRequested($orderCtr, $payment, $customer){
+      return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been sent and is now being evaluated by the administrators 
+            on '.date('M d,Y').'. You will receive another email after your order has been confirmed. 
+            <br><br>';
+  }
 
     private function messageDivMainShipping($orderCtr, $payment, $customer){
         return 'Your Order OR' . str_pad($orderCtr, 10, "0", STR_PAD_LEFT) . ' has been approved and is now being shipped
@@ -177,6 +191,35 @@
         mail($this->to, $this->subject, $this->message, $this->header);
     }
 
+    public function sendInvoice($attachment, $attachmentName){
+        $eol = PHP_EOL;  
+        $separator = md5(time());
+
+        $headers  = "From: " . $this->from .$eol;
+        $headers .= "MIME-Version: 1.0".$eol; 
+        $headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"";
+
+        $message = "Attached here is your invoice as proof of transaction.";
+
+        $body = "--".$separator.$eol;
+        $body .= "Content-Transfer-Encoding: 7bit".$eol.$eol;
+        $body .= "".$eol;
+
+        $body .= "--".$separator.$eol;
+        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"".$eol;
+        $body .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
+        $body .= $message.$eol;
+
+        $body .= "--".$separator.$eol;
+        $body .= "Content-Type: application/octet-stream; name=\"".$attachmentName."\"".$eol; 
+        $body .= "Content-Transfer-Encoding: base64".$eol;
+        $body .= "Content-Disposition: attachment".$eol.$eol;
+        $body .= $attachment.$eol;
+        $body .= "--".$separator."--";
+
+        mail($this->to, 'Invoice for TBCMS transaction', $body, $headers);
+    }
+
     public function prepareTemplate($orderCtr, $products, $payment, $customer, $type){
         $this->message .= $this->bodyStart();
         $this->message .= $this->topDiv();
@@ -208,6 +251,7 @@
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivCompleted($orderCtr, $payment, $customer);
         }elseif ($type == "ACCEPT") {
+
             $this->message .= $this->headerText("Your Payment has been Accepted");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivMainShipping($orderCtr, $payment, $customer);
@@ -217,6 +261,16 @@
             $this->message .= $this->headerText("Your Payment has been Rejected");
             $this->message .= $this->messageDivStart($customer);
             $this->message .= $this->messageDivCanceled($orderCtr, $payment, $customer);
+            $this->message .= $this->divEnd();
+            $this->message .= $this->breakLine();
+            $this->message .= $this->breakLine();
+            $this->message .= $this->bodyEnd();
+            return "";
+        }
+        elseif ($type == "REQUEST"){
+            $this->message .= $this->headerText("Your Order request has been received");
+            $this->message .= $this->messageDivStart2($customer);
+            $this->message .= $this->messageDivRequested($orderCtr, $payment, $customer);
             $this->message .= $this->divEnd();
             $this->message .= $this->breakLine();
             $this->message .= $this->breakLine();

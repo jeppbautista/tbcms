@@ -15,6 +15,13 @@ class View{
             </div>
     <?php
           }
+          if ($_GET['action'] == "exists"){
+    ?>
+            <div class="alert alert-info" role="alert" style="text-align:center">
+                Item already in cart.
+            </div>
+    <?php
+          }
         }
     ?>
       <div class="col-md-7 product-image-outer">
@@ -64,7 +71,7 @@ class View{
           <button type="submit" id = "btn-add-to-cart" class="btn  btn-md btn-add-to-cart">Add to Cart
           </button>
         </form>
-        <a href= <?php echo "https://tbcmerchantservices.com/checkout?proceed&product=" ?>  class="btn btn-md btn-checkout" onclick="alert('This is not yet available')">Go to Checkout
+        <a href= "" class="btn btn-md btn-checkout" onclick="alert('This is not yet available')">Go to Checkout
         </a>
       </div>
     <?php

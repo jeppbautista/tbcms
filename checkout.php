@@ -103,12 +103,19 @@ if (count($_SESSION['cart']) == 0) {
         $_POST["transactionDate"] = getAllElementsWithCondition("shop_xtbl_payment", "Ctr", $payment_id)["Payment_Date"];
         
         $from = "TBCMerchantServices<automail@tbcmerchantservices.com>";
-				$subject = "New Product";
-				$message = "New Product Request";
+				$subject = "New Order";
+        $message = "New Order Request <br>";
+        $message .= "Transaction number: " . $transaction_num. "<br>";
+        $message .= "Order number: ".$order_ctr;
 				$headers = "From:" . $from. "\r\n";
 				$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-				mail('tbcmsapp@gmail.com',$subject,$message, $headers);
-        mail('accounts@tbcmerchantservices.com',$subject,$message, $headers);
+        mail('tbcmsapp@gmail.com',$subject,$message, $headers);
+        mail('tbcmservices@gmail.com',$subject,$message, $headers);
+
+        $mailer->prepareTemplate($order_ctr,"","",$firstname . " ". $lastname,"REQUEST");
+        $mailer->to = $email;
+        $mailer->subject = "Order Request submitted";
+        $mailer->sendMail();
         session_destroy();
   
       }

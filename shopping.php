@@ -1,8 +1,10 @@
 <?php
 	session_start();
 	include 'class3.php';
+	include_once 'templates/product.php';
 	$class=new mydesign;
 	$class->database_connect();
+	$view = new View;
 
 	date_default_timezone_set('Asia/Manila');
 	$sessiondate=date('mdY');
@@ -52,6 +54,8 @@
 				$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 				$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 				$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+				$class->link('https://tbcmerchantservices.com/css/style-shop.css');
+				$class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 				$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
 			$class->head_end();
 
@@ -59,6 +63,7 @@
 				$class->page_home_header_start();
 					$class->page_shopping_header_content1();
 				$class->page_home_header_end();
+				include 'nav_shop.php';
 				$class->page_shopping_navbar_content1();
 ?>
 <style media="screen">
@@ -128,7 +133,7 @@ width: 500px;
 
 							<div style="height: 20px;">
 								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
+									style="font-size: 20px; border-radius: 0px">BUY NOW</a>
 							</div>
 
 						</div>
@@ -160,6 +165,7 @@ width: 500px;
 			<?php
 				}
 				echo '</div><br><br><br>';
+			$view->floating_cart();
 			$class->page_welcome_header_content_start_footer();
                         $class->chatscript();
 			$class->body_end();
@@ -198,6 +204,8 @@ width: 500px;
 					$class->script('https://tbcmerchantservices.com/js/jquery-3.1.1.js');
 					$class->script('https://tbcmerchantservices.com/js/bootstrap.js');
 					$class->link('https://tbcmerchantservices.com/css/bootstrap.css');
+					$class->link('https://tbcmerchantservices.com/css/style-shop.css');
+					$class->link('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 					$class->script('https://tbcmerchantservices.com/js/jquery1.3.js');
 				$class->head_end();
 				$class->body_start('');
@@ -205,12 +213,14 @@ width: 500px;
 					$class->page_home_header_start();
 						$class->page_home2_header_content();
 					$class->page_home_header_end();
+					
 				}
 				else { //if buyer
 					$class->page_home_header_start();
 						$class->page_home3_header_content();
 					$class->page_home_header_end();
 				}
+				include 'nav_shop.php';
 				echo '<div class="container"><h3>Welcome back,  <b>'.$current_email.'</b></h3></div>';
 				$query="select * from xtbl_product_request where From_Ctr='$ctr' order by Ctr DESC LIMIT 20";
 				$rs=mysql_query($query);
@@ -333,7 +343,7 @@ width: 500px;
 
 							<div style="height: 20px;">
 								<a <?php echo 'href="https://tbcmerchantservices.com/item/?product='.$row['Ctr'].'"';?> class="btn btn-info btn-block"
-									style="font-size: 20px; border-radius: 0px">FULL INFO</a>
+									style="font-size: 20px; border-radius: 0px">BUY NOW</a>
 							</div>
 
 						</div>
@@ -365,7 +375,7 @@ width: 500px;
 				<?php
 					}
 					echo '</div><br><br><br>';
-
+					$view->floating_cart();
 					$class->page_welcome_header_content_start_footer();
                                         $class->chatscript();
 				$class->body_end();

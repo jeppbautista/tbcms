@@ -94,7 +94,7 @@
         <tfoot>
          <tr>
            <td>
-             <a href="https://tbcmerchantservices/shopping" >
+             <a href="https://tbcmerchantservices.com/shopping" >
                <i class="fa fa-angle-left"></i> Continue Shopping
              </a>
            </td>
