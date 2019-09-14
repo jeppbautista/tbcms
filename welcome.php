@@ -14,7 +14,7 @@ if (isset($_GET['test'])) {
 
 include 'class.php';
 $class = new mydesign;
-$class->database_connect();
+// $class->database_connect();
 
 date_default_timezone_set('Asia/Manila');
 $sessiondate = date('mdY');

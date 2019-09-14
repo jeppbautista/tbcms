@@ -1,6 +1,6 @@
 <?php
 if(!isset($_SESSION['session_tbcmerchant_ctr'.$sessiondate])){
-  header("location: https://tbcmerchantservices.com/shopping/");
+//   header("location: https://tbcmerchantservices.com/shopping/");
 }
  ?>
 <div class="navbar navbar-default navbar-static-top" role="navigation">

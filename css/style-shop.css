@@ -454,3 +454,79 @@ img.qrcode{
 .navbar {
   z-index: 0;
 }
+
+
+/* shopping */
+.more-info {
+  display: inherit;
+  background-color: #C4A101;
+}
+
+.popover{
+  max-width: 100%;
+}
+.popover-content {
+  overflow-y : scroll;
+  width: 500px;
+}
+
+.promotion {
+  padding: 20px;
+}
+
+.shopping-product{
+  padding: 20px;
+}
+
+.product-img {
+  text-align: center;
+}
+
+.product-name {
+  padding-top: 5px;
+  margin-bottom: -10px;
+  text-align: center;
+}
+
+.product-name > p{
+  font-size: 18px;
+}
+
+.product-price {
+  margin-top: -10px;
+  text-align: center;
+}
+
+.product-price > p{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.subheader {
+  font-size: 25px;
+}
+
+.wrapper {
+  margin-top: 0px; /* place it under navbar */
+  height: 47vh;
+  overflow: scroll;
+  padding-bottom: 48px; /* compensate margin top */
+}
+
+.category.notclickable{
+  pointer-events: none;
+  cursor: default;
+}
+
+.category.clickable{
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .category.notclickable{
+    display: none;
+  }
+  .category.clickable{
+    display: inline;
+  }
+}

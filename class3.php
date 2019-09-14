@@ -352,7 +352,90 @@
 				</div>
 			</div>
 		<?php
-	    }
+      }
+      
+      public function page_welcome_header_content_start_footer_new()
+      {
+        ?>
+        <div class="footer container-fluid">
+          <div class="container" align="center">
+            <div class="row" style="color: #eee">
+              <h3>Location</h3>
+              <br>
+              <div class="col-md-6 col-12">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2729.066336361882!2d121.08279428422526!3d14.68527764210799!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ba0692c1d0c5%3A0xb5254793a2126741!2s30+Sta.+Catalina+St%2C+Quezon+City%2C+1127+Metro+Manila!5e0!3m2!1sen!2sph!4v1566368430462!5m2!1sen!2sph" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+              </div>
+              <div class="col-md-6 col-12" style="">
+                <p style="text-align: left; font-size: 16px">Everyone is invited to attend TBCMS' regular seminars and orientation and to be updated of the blog news from the admin of TBC.</p>
+                <br>
+                <div class="col-md-6">
+                  <p style="text-align: left; font-size: 18px">
+                  <b>Address</b>
+                  </p>
+                  <p style="text-align: left; font-size: 16px">
+                  30-B Sta. Catalina Street Holy Spirit, Quezon City, Philippines
+                  </p>
+                  <br>
+                  <p style="text-align: left; font-size: 18px">
+                  <b>Contacts</b>
+                  </p>
+                  <ul style="text-align: left">
+                    <li>+639 45-883-3876</li>
+                    <li>tbcmservices@gmail.com</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <p style="text-align: left; font-size: 18px">
+                  <b>Useful links</b>
+                  </p>
+                  <ul style="text-align: left">
+                    <li><a href="https://tbcmerchantservices.com/shopping">Shop</a></li>
+                    <li><a href="https://tbcmerchantservices.com/edudona">Edudona trading</a></li>
+                    <li><a href="https://tbcmerchantservices.com/contact">Contact Us</a></li>
+                  </ul>
+                  
+                </div>
+              </div>
+            </div>
+            <br>
+            <hr style="border: 1px solid #333">
+            <div class="row">
+              <div class="col-md-12">
+                <div style="float:right">
+                  <span style="color: white">Copyright @ 2016-2018 TheBillionCoin Merchant Services</span>
+                </div>
+                <div style="float:left">
+                  <a href="https://www.facebook.com/tbcmerchantservices/"><span style="color: white; margin: 0 5px" class="ti-facebook"></span></a>
+                  <a href="https://twitter.com/Tbcmsshop"><span style="color: white; margin: 0 5px" class="ti-twitter-alt"></span></a>
+                  <a href="https://www.youtube.com/channel/UCvM6o2yveIHMICslz5yovBg"><span style="color: white; margin: 0 5px" class="ti-youtube"></a>
+                  <a href="https://play.google.com/store/apps/details?id=tbcservices.thebillioncoinapp&hl=en"><span style="color: white; margin: 0 5px" class="ti-android"></a>
+                  
+                </div>
+              </div>
+              
+  
+            </div>
+            
+          </div>
+  
+        </div>
+  
+      
+  
+        <!-- <div class="footer" style="background:#008B8B;width:100%;height:42px;position:fixed;bottom:0;left:0; font-size: 15px">
+          <div class="container" align="right">
+            <span style="color: white">Copyright @TheBillionCoin Merchant</span>
+            <span style="color: white; text-align: right;" >
+              <a style="color: white;" href="javascript:void(0)">About</a> |
+              <a style="color: white;" href="javascript:void(0)">Advertise</a> |
+              <a style="color: white;" href="javascript:void(0)">Online Store</a> |
+              <a style="color: white;" href="javascript:void(0)">Exchange</a> |
+              <a style="color: white;" href="javascript:void(0)">Terms and Condition</a>
+            </span>
+          </div>
+        </div> -->
+        <?php
+      }
 
       public function show_user_details($fullname, $lastname, $firstname, $middlename, $cellphone, $birthday, $address) {
         ?>
